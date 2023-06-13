@@ -1,0 +1,17 @@
+Week 1
+Group was formed and "himmybutler" was chosen as the name. 
+Had a discussion on which project to do. Event, Mortgage and Wait System were our final selections.
+After a discussion with our tutor, we decided to choose Wait System.
+Discussed with the team regarding the novelties for the project.
+
+Week 2
+Created the GitHub for the project.
+Team discussion with the tutor and brainstormed on more functions/novelties.
+Decided with the team that I will also be doing the frontend.
+Discussed that we will use React for frontend.
+Wrote some user stories in the proposal.
+Started on creating the proposal storyboard on figma.
+
+Week 3
+Had a team discussion to finalise our roles to finish off the proposal.
+Showed the team parts of my storyboard.
