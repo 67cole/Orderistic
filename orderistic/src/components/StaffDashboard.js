@@ -3,7 +3,7 @@ import { Card, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-export default function Dashboard() {
+export default function StaffDashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
 
@@ -23,14 +23,17 @@ export default function Dashboard() {
     <>
       <Card style={{ width: "75vw", maxWidth: "600px" }}>
         <Card.Body>
-          <h2 className="text-center mb-4">Dashboard</h2>
+          <h2 className="text-center mb-4">Staff Dashboard</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email:</strong> {currentUser.email}
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            View Menu
+            Update Menu
           </Link>
-          <Link to="/update-profile" className="btn btn-danger w-100 mt-3">
-            Update Profile
+          <Link to="/update-profile" className="btn btn-success w-100 mt-3">
+            View Tables
+          </Link>
+          <Link to="/test-api" className="btn btn-danger w-100 mt-3">
+            Test Firebase
           </Link>
         </Card.Body>
       </Card>
