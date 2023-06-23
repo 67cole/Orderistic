@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import "./Login.css";
 
-export default function Login() {
+export default function StaffLogin() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
@@ -19,7 +19,7 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
+      navigate("/staff-dashboard");
     } catch (error2) {
       setError("Failed to log in");
       console.log(error2);
@@ -32,7 +32,7 @@ export default function Login() {
       <h1>Orderistic</h1>
       <Card style={{ width: "75vw", maxWidth: "600px" }}>
         <Card.Body>
-          <h2 className="text-center mb-4">Log In</h2>
+          <h2 className="text-center mb-4">Staff Log In</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
@@ -53,10 +53,10 @@ export default function Login() {
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
+        Need an account? <Link to="/signup">Staff Sign Up</Link>
       </div>
       <div className="w-100 text-center mt-2">
-        <Link to="/staff-login">Staff Login</Link>
+        <Link to="/login">Customer Login</Link>
       </div>
     </>
   );
