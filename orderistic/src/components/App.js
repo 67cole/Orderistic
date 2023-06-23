@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
+import Menu from "./Menu";
 
 function App() {
   document.body.style.backgroundColor = "#edeff3";
@@ -39,6 +40,7 @@ function App() {
                   </PrivateRoute>
                 }
               ></Route>
+              <Route path="/menu" element={<Menu />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
