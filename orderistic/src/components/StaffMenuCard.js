@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-function MenuCard() {
+function StaffMenuCard() {
   const imgStyle = {
     maxWidth: "260px",
     maxHeight: "260px",
@@ -23,11 +23,12 @@ function MenuCard() {
             Some quick example text to build on the card title and make up the
             bulk of the card's content.
           </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
+          <Button variant="primary">Update Item</Button>
+          <Button variant="danger">Remove Item</Button> 
         </Card.Body>
       </Card>
     </>
   )
 }
 
-export default MenuCard;
+export default StaffMenuCard;
