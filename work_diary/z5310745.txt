@@ -1,0 +1,23 @@
+Week 1:
+- Created a group with members with the name "himmybutler"
+- Formed the Jira page and read over the specifications with the grouup
+- Discussed different products to create in tutorial with ourselves and tutor
+- Decided on a wait management system
+- Discussed novelty functions and general functionalities with team
+
+Week 2:
+- Discussed more about novelty functions with tutor and group
+- Concluded two novelty functions; estimated wait time and a review system on each dish
+- Talked about what tech stack to use; concluded with React for front end, Firebase for database and JavaScript for backend
+- Researched about existing wait systems and found evidence of flaws/functionalities
+
+Week 3:
+- Started on project proposal; worked on background information
+- Researched greater on drawbacks of existing systems, especially within competitors
+- Created some user stories to guide the group on the requirements and purpose of functions
+- Worked on project objectives which linked to our user stories
+
+Week 4:
+- Started creating the database and information which supported the frontend (dish information, authentication of login, user infromation)
+- Worked dwith the frontend to carry backend information for the users to see
+- Pair programmed to create the database

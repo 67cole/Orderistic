@@ -17,3 +17,9 @@ Week 3:
 - Contributed some user stories to functions
 - Linked the project objectives with the user stories
 - Helped with formatting the project
+
+Week 4:
+- Discussed Jira ticket responsiblities of Sprint 1 with team 
+- Delegated roles to team members
+- Pair programmed with Colin to complete tickets HIMMY-20,21,22
+- Assisted with connecting backend code to frontend
