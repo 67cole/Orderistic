@@ -26,7 +26,7 @@ function StaffMenuCard({ element, reloadMenu }) {
   return (
     <>
       <Card style={cardStyle}>  
-        <Card.Img variant="top" src="logo192.png" style={imgStyle}/>
+        <Card.Img variant="top" src={element.image} style={imgStyle}/>
         <Card.Body>
           <Card.Title>{element.name}</Card.Title>
           <Card.Text>

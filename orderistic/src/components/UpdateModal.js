@@ -12,7 +12,7 @@ function UpdateModal({show, closeForm, element, reloadMenu}) {
   const [description, setDescription] = React.useState(element.description);
   const [price, setPrice] = React.useState(element.price);
   const [category, setCategory] = React.useState(element.category);
-  const [image, setImage] = React.useState("");
+  const [image, setImage] = React.useState(element.image);
 
   function submitForm() {
     const item = {
@@ -36,7 +36,7 @@ function UpdateModal({show, closeForm, element, reloadMenu}) {
     <> 
     <Modal show={show} onHide={closeForm} centered>
       <Modal.Header closeButton>
-      <Modal.Title>Add New Item to the Menu</Modal.Title>
+      <Modal.Title>Update Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
       <Form>
@@ -72,9 +72,9 @@ function UpdateModal({show, closeForm, element, reloadMenu}) {
               onChange={e => setPrice(e.target.value)}
           />
         </Form.Group>
-        <Image src={element.image} rounded />
         <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Image</Form.Label>
+          <Form.Label>Image</Form.Label><br/>
+          <Image src={image} width="260px" fluid/>
           <Form.Control type="file" onChange={convertImg}/>
         </Form.Group>
       </Form>
