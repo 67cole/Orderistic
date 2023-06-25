@@ -13,6 +13,7 @@ import StaffDashboard from "./StaffDashboard";
 import TestApi from "./TestApi";
 import Nav from "./Nav";
 import PreviousOrder from "./PreviousOrder";
+import Cart from "./Cart";
 
 function App() {
   document.body.style.backgroundColor = "#edeff3";
@@ -64,6 +65,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/staff-login" element={<StaffLogin />} />
           <Route path="/previous" element={<PreviousOrder />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </AuthProvider>
       </div>

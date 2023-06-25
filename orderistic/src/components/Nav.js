@@ -25,6 +25,10 @@ function Nav () {
     const home = () => {
       navigate('/');
     }
+    const cart = () => {
+      navigate('/cart');
+    }
+    
     return (
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position="static">
@@ -41,7 +45,7 @@ function Nav () {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={home}>
                 Orderistic
               </Typography>
-              {isLoggedIn ? (<><Button color="inherit" onClick={previousOrder}>Previous Orders</Button><Button color="inherit">Request Assistance</Button><Button color="inherit">Cart</Button></>) : (<Button color="inherit">Login</Button>)
+              {isLoggedIn ? (<><Button color="inherit" onClick={previousOrder}>Previous Orders</Button><Button color="inherit">Request Assistance</Button><Button color="inherit" onClick={cart}>Cart</Button></>) : (<Button color="inherit">Login</Button>)
               }
             </Toolbar>
           </AppBar>

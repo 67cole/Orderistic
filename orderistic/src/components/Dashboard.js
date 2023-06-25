@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import SearchBar from "./SearchBar";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
+  const [searchString, setSearchString] = useState("");
 
   const navigate = useNavigate();
   async function handleLogout() {
@@ -18,9 +20,13 @@ export default function Dashboard() {
       console.log(errorName);
     }
   }
+  const search = (string) => {
+    setSearchString(string);
+  }
 
   return (
     <>
+    <SearchBar onSearch={search} />
       <Card style={{ width: "75vw", maxWidth: "600px" }}>
         <Card.Body>
           <h2 className="text-center mb-4">Dashboard</h2>
