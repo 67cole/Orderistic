@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem } from "../api/MenuApi";
+import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnData } from "../api/MenuApi";
 
 export default function TestApi() {
   const [error, setError] = useState("");
@@ -12,6 +12,10 @@ export default function TestApi() {
 
   async function handleMenu() {
     ViewMenu();
+  }
+
+  async function handleData() {
+    returnData();
   }
 
   async function handleAdd() {
@@ -45,6 +49,9 @@ export default function TestApi() {
           <strong>Email:</strong> {currentUser.email}
           <Button className="btn btn-primary w-100 mt-3" onClick={handleMenu}>
             View Menu
+          </Button>
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleData}>
+            View Data
           </Button>
           <Button className="btn btn-primary w-100 mt-3" onClick={handleAdd}>
             Add Item

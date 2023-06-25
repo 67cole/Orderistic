@@ -7,7 +7,15 @@ import {
   onSnapshot,
   addDoc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
+
+
+// Grabbing all information for front-end purposes
+export async function returnData() {
+  const docRef = await getDocs(collection(db, "menu"));
+  
+}
 
 //Allows all users to view the menu HIMMY-19
 export async function ViewMenu() {
