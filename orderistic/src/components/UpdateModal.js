@@ -1,16 +1,17 @@
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Image from 'react-bootstrap/Image';
 import React from "react";
 import { fileToDataUrl } from "./helper";
-import { AddItem } from "../api/MenuApi";
+import { UpdateItem } from "../api/MenuApi";
 
-function AddModal({show, closeForm, reloadMenu}) {
+function UpdateModal({show, closeForm, element, reloadMenu}) {
 
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [price, setPrice] = React.useState(1.00.toFixed(2));
-  const [category, setCategory] = React.useState("");
+  const [name, setName] = React.useState(element.name);
+  const [description, setDescription] = React.useState(element.description);
+  const [price, setPrice] = React.useState(element.price);
+  const [category, setCategory] = React.useState(element.category);
   const [image, setImage] = React.useState("");
 
   function submitForm() {
@@ -21,7 +22,7 @@ function AddModal({show, closeForm, reloadMenu}) {
       category: category,
       image: image
     }
-    AddItem(item);
+    UpdateItem(element.id, item);
     closeForm();
     reloadMenu();
   }
@@ -71,6 +72,7 @@ function AddModal({show, closeForm, reloadMenu}) {
               onChange={e => setPrice(e.target.value)}
           />
         </Form.Group>
+        <Image src={element.image} rounded />
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Image</Form.Label>
           <Form.Control type="file" onChange={convertImg}/>
@@ -79,7 +81,7 @@ function AddModal({show, closeForm, reloadMenu}) {
       </Modal.Body>
       <Modal.Footer>
       <Button variant="primary" onClick={submitForm}>
-          Add
+          Update
       </Button>
       <Button variant="secondary" onClick={closeForm}>
           Close
@@ -91,4 +93,4 @@ function AddModal({show, closeForm, reloadMenu}) {
   )
 }
 
-export default AddModal;
+export default UpdateModal;

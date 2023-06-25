@@ -1,7 +1,10 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import RemoveModal from './RemoveModal';
+import UpdateModal from './UpdateModal';
+import React from 'react';
 
-function StaffMenuCard() {
+function StaffMenuCard({ element, reloadMenu }) {
   const imgStyle = {
     maxWidth: "260px",
     maxHeight: "260px",
@@ -13,20 +16,28 @@ function StaffMenuCard() {
     maxWidth: "650px",
     maxHeight: "260px",
   }
+  const [showRemove, setShowRemove] = React.useState(false);
+  const [showUpdate, setShowUpdate] = React.useState(false);
+  const closeRemForm = () => setShowRemove(false);
+  const showRemForm = () => setShowRemove(true);
+  const closeUpdateForm = () => setShowUpdate(false);
+  const showUpdateForm = () => setShowUpdate(true);
+
   return (
     <>
       <Card style={cardStyle}>  
         <Card.Img variant="top" src="logo192.png" style={imgStyle}/>
         <Card.Body>
-          <Card.Title>Card Title</Card.Title>
+          <Card.Title>{element.name}</Card.Title>
           <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            {element.description}
           </Card.Text>
-          <Button variant="primary">Update Item</Button>
-          <Button variant="danger">Remove Item</Button> 
+          <Button variant="primary" onClick={showUpdateForm}>Update Item</Button>
+          <Button variant="danger" onClick={showRemForm}>Remove Item</Button> 
         </Card.Body>
       </Card>
+      <RemoveModal show={showRemove} closeForm={closeRemForm} id={element["id"]} reloadMenu={reloadMenu}/>
+      <UpdateModal show={showUpdate} closeForm={closeUpdateForm} element={element} reloadMenu={reloadMenu}/>
     </>
   )
 }
