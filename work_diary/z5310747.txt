@@ -17,3 +17,6 @@ Week 3:
 - Contributed some user stories to functions
 - Linked the project objectives with the user stories
 - Helped with formatting the project
+
+Week 4:
+- 
