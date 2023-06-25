@@ -25,10 +25,6 @@ function App() {
           <Nav />
         </nav>
       </header></>
-      <Container
-      className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
-      >
       <div className="main-container">
       <AuthProvider>
         <Routes>
@@ -69,7 +65,6 @@ function App() {
         </Routes>
       </AuthProvider>
       </div>
-      </Container>
       </Router>
   );
 }

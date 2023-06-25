@@ -10,9 +10,7 @@ const SearchBar = () => {
         console.log(searchString)
     };
     return (
-        <div>
-            <TextField fullWidth id="filled-basic" placeholder={'Search Menu'} onChange={searchMenu} sx={{bgcolor: "white"}}/>
-        </div>
+            <TextField  id="filled-basic" placeholder={'Search Menu'} onChange={searchMenu} sx={{bgcolor: "white"}}/>
     );
 }
 export default SearchBar;

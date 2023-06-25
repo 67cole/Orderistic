@@ -33,19 +33,14 @@ function Nav () {
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position="static">
             <Toolbar>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-              >
-                <MenuIcon />
-              </IconButton>
+              
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={home}>
                 Orderistic
               </Typography>
-              {isLoggedIn ? (<><Button color="inherit" onClick={previousOrder}>Previous Orders</Button><Button color="inherit">Request Assistance</Button><Button color="inherit" onClick={cart}>Cart</Button></>) : (<Button color="inherit">Login</Button>)
+              {isLoggedIn ? (<><Button color="inherit" onClick={previousOrder}>Previous Orders</Button>
+              <Button color="inherit">Request Assistance</Button>
+              <Button color="inherit" onClick={cart}>Cart</Button></>) 
+              : (<><Button color="inherit">Login</Button><Button color="inherit">Register</Button></>)
               }
             </Toolbar>
           </AppBar>
