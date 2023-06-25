@@ -11,8 +11,8 @@ import {
 } from "firebase/firestore";
 
 
-// Grabbing all information for front-end purposes
-export async function returnData() {
+// Grabbing all food information for front-end purposes
+export async function returnFoodData() {
   const docRef = await getDocs(collection(db, "menu"));
   const foodMenu = [];
   docRef.forEach((doc) => {
