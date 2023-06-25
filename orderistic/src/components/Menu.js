@@ -1,5 +1,5 @@
 import NavBar from './NavBar';
-import MenuCard from './MenuCard'
+import MenuCard from './MenuCard';
 function Menu() {
   return (
     <>

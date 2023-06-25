@@ -2,13 +2,31 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import React from "react";
+import { fileToDataUrl } from "./helper";
 
 function AddModal({show, closeForm}) {
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState(1.00.toFixed(2));
-
+  const [category, setCategory] = React.useState("");
+  const [image, setImage] = React.useState("");
   // SUBMIT FORM
+  function submitForm() {
+    const item = {
+      name: name,
+      description: description,
+      price: price,
+      category: category,
+      image: image
+    }
+    
+  }
+  function convertImg(e) {
+    fileToDataUrl(e.target.files[0])
+      .then((data) => {
+        setImage(data);
+      })
+  }
   return (
     <>
       <Modal show={show} onHide={closeForm} centered>
@@ -24,6 +42,14 @@ function AddModal({show, closeForm}) {
                   autoFocus
                   value={name}
                   onChange={e => setName(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                  type="text"
+                  value={category}
+                  onChange={e => setCategory(e.target.value)}
               />
             </Form.Group>
             <Form.Group
@@ -43,12 +69,12 @@ function AddModal({show, closeForm}) {
             </Form.Group>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Image</Form.Label>
-              <Form.Control type="file" />
+              <Form.Control type="file" onChange={convertImg}/>
             </Form.Group>
         </Form>
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="primary" onClick={closeForm}>
+        <Button variant="primary" onClick={submitForm}>
             Add
         </Button>
         <Button variant="secondary" onClick={closeForm}>
