@@ -27,7 +27,7 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <Card>
+      <Card style={{ justifyContent:"center", marginLeft:"300px", marginRight:"300px"}}>
         <Card.Body>
           <h2 className="text-center mb-4">Password Reset</h2>
           {error && <Alert variant="danger">{error}</Alert>}

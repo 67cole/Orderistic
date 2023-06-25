@@ -7,7 +7,8 @@ function Cart () {
 
   return (
     <>
-      Cart
+      <h2 className="text-center mb-4">Cart</h2>
+      <div className="text-center">Your cart is empty!</div>
     </>
   );
 }
