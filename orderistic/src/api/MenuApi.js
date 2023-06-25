@@ -14,7 +14,11 @@ import {
 // Grabbing all information for front-end purposes
 export async function returnData() {
   const docRef = await getDocs(collection(db, "menu"));
-  
+  const foodMenu = [];
+  docRef.forEach((doc) => {
+    foodMenu.push(doc.data());
+  });
+  return foodMenu;
 }
 
 //Allows all users to view the menu HIMMY-19
@@ -26,6 +30,7 @@ export async function ViewMenu() {
     // doc.data() is never undefined for query doc snapshots
     console.log(doc.id, " => ", doc.data());
   });
+  
 }
 
 //Allows staff to add items to the menu HIMMY-20
