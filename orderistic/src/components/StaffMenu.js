@@ -3,7 +3,7 @@ import StaffMenuCard from './StaffMenuCard';
 import Button from 'react-bootstrap/Button';
 import React from "react";
 import AddModal from "./AddModal";
-import { returnData } from "../api/MenuApi";
+import { returnFoodData } from "../api/MenuApi";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
@@ -11,7 +11,7 @@ function StaffMenu() {
   const [show, setShow] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
   React.useEffect(() => {
-    returnData()
+    returnFoodData()
       .then((data) => {
         setMenu(data);
       })
@@ -19,7 +19,7 @@ function StaffMenu() {
   const closeForm = () => setShow(false);
   const showForm = () => setShow(true);
   function reloadMenu() {
-    returnData()
+    returnFoodData()
       .then((data) => {
         setMenu(data);
       })

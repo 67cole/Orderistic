@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-function MenuCard({ element }) {
+function MenuCard({ element, updateCart, cart }) {
   const [quantity, setQuantity] = React.useState(1);
   const imgStyle = {
     width: "210px",
@@ -21,6 +21,11 @@ function MenuCard({ element }) {
   }
   function subtractQuantity() {
     setQuantity(quantity - 1);
+  }
+  function cartChange() {
+    let cartItem = element;
+    cartItem["quantity"] = quantity;
+    updateCart([...cart, cartItem])
   }
   return (  
     <>
@@ -48,7 +53,7 @@ function MenuCard({ element }) {
             <div style={{ margin: "auto", paddingLeft: "10px", paddingRight: "10px", userSelect: "none" }}>{quantity}</div>
             <Button variant="light" onClick={addQuantity} style={{ backgroundColor: "white"}}>+</Button>
           </ButtonGroup>
-          <Button variant="dark" style={{ position: "absolute", bottom: "15px", right: "15px"}}>Add to order</Button> 
+          <Button variant="dark" style={{ position: "absolute", bottom: "15px", right: "15px"}} onClick={cartChange}>Add to order</Button> 
         </Card.Body>
       </Card>
     </>
