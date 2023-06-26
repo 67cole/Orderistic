@@ -1,4 +1,4 @@
-import NavBar from './NavBar';
+import StaffNav from './StaffNav';
 import StaffMenuCard from './StaffMenuCard';
 import Button from 'react-bootstrap/Button';
 import React from "react";
@@ -24,7 +24,7 @@ function StaffMenu() {
   }
   return (
     <>
-      <NavBar />
+      <StaffNav />
       <AddModal show={show} closeForm={closeForm} reloadMenu={reloadMenu}/>
       {menu.map((element, index) => (
         <StaffMenuCard key={index} element={element} reloadMenu={reloadMenu}/>

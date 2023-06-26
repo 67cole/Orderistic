@@ -30,7 +30,9 @@ export default function Signup() {
 
     setLoading(false);
   }
-
+  const menu = () => {
+    navigate('../menu');
+  }
   return (
     <>
       <h1 className="text-center">Orderistic</h1>
@@ -59,6 +61,9 @@ export default function Signup() {
       </Card>
       <div className="w-100 text-center mt-2">
         Already have an account? <Link to="/login">Log In</Link>
+      </div>
+      <div class="text-center mt-2">
+        <button type="button" class="btn btn-primary" onClick={menu}>Continue as guest</button>
       </div>
     </>
   );
