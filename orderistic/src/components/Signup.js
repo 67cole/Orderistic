@@ -33,8 +33,8 @@ export default function Signup() {
 
   return (
     <>
-      <h1>Orderistic</h1>
-      <Card style={{ width: "75vw", maxWidth: "600px" }}>
+      <h1 className="text-center">Orderistic</h1>
+      <Card style={{ justifyContent:"center", marginLeft:"300px", marginRight:"300px"}}>
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}

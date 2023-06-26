@@ -1,0 +1,25 @@
+Week 1
+'himmybutler' selected as group name
+I was selected as the scrum master due to previous react experience
+After discussion on possible projects, we selected Waitery System
+Made a list of what novelties we could do after talking to our tutor.
+
+Week 2:
+Joined the Jira for our group
+Chose the novelties: estimated wait time and review system
+Discussed with team the tech stack that we would use: react for frontend, firebase database
+Researched existing wait systems to see customer issues
+
+Week 3:
+Delegated project proposal tasks to team members
+Joined the GitHub Classroom
+I was responsible for system architecture in project proposal
+Created system architecture using figma, and also reviewed the user stories on Jira 
+
+Week 4:
+Delegated the Jira Tickets of the sprint to my team
+Created the react app for our system.
+Created the firebase
+Completed user authentication tickets 
+Created a page with sample buttons for my backend members to test their functions.
+Assisted backend team members with Firebase API and JavaScript.
