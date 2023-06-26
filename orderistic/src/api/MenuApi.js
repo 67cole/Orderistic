@@ -16,11 +16,14 @@ export async function returnData() {
   const docRef = await getDocs(collection(db, "menu"));
   const foodMenu = [];
   docRef.forEach((doc) => {
-    foodMenu.push(doc.data());
+    
+    // object holder so I can alter
+    let foodInfo = doc.data();
+    foodInfo["id"] = doc.id;
+    foodMenu.push(foodInfo);
   });
   return foodMenu;
 }
-
 //Allows all users to view the menu HIMMY-19
 export async function ViewMenu() {
   const q = collection(db, "menu");
