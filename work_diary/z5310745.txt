@@ -19,5 +19,11 @@ Week 3:
 
 Week 4:
 - Started creating the database and information which supported the frontend (dish information, authentication of login, user infromation)
-- Worked dwith the frontend to carry backend information for the users to see
+- Worked with the frontend to carry backend information for the users to see
 - Pair programmed to create the database
+- Created two different API's regarding menu and order to access both databases
+
+Week 5:
+- Added finishing touches for the first demo
+- Pair programmed to help with the backend fulfil the databases
+- Pair programmed to assist with frontend work conveying backend duties
