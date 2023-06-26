@@ -12,7 +12,7 @@ import Menu from "./Menu";
 import StaffLogin from "./StaffLogin";
 import StaffDashboard from "./StaffDashboard";
 import TestApi from "./TestApi";
-import Nav from "./Nav";
+import Nav from "./MenuNav";
 import PreviousOrder from "./PreviousOrder";
 import Cart from "./Cart";
 
@@ -22,11 +22,7 @@ function App() {
   
   return (
     <Router>
-      <><header>
-        <nav>
-					<Nav />
-        </nav>
-      </header></>
+      
 			<div className="main-container">
 				<AuthProvider>
 					<Routes>

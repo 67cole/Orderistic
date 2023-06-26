@@ -26,7 +26,9 @@ export default function Login() {
     }
     setLoading(false);
   }
-
+  const menu = () => {
+    navigate('../menu');
+  }
   return (
     <>
       <h1 className="text-center">Orderistic</h1>
@@ -55,7 +57,10 @@ export default function Login() {
       <div className="w-100 text-center mt-2">
         Need an account? <Link to="/signup">Sign Up</Link>
       </div>
-      <div className="w-100 text-center mt-2">
+      <div class="text-center mt-2">
+        <button type="button" class="btn btn-primary" onClick={menu}>Continue as guest</button>
+      </div>
+      <div className="w-100 text-center mb-4 fixed-bottom">
         <Link to="/staff-login">Staff Login</Link>
       </div>
     </>

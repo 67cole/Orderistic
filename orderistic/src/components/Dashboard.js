@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-
+import MenuNav from "./MenuNav"
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
@@ -21,6 +21,7 @@ export default function Dashboard() {
 
   return (
   <>
+  <MenuNav />
     <Card style={{ flex:"display", marginLeft:"300px", marginRight:"300px"}}>
       <Card.Body>
         <h2 className="text-center mb-4">Dashboard</h2>

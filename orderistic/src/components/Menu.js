@@ -7,6 +7,7 @@ import { returnData } from "../api/MenuApi";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import MenuNav from "./MenuNav";
 function Menu() {
   const [searchString, setSearchString] = useState("");
   const [menu, setMenu] = React.useState([]);
@@ -23,7 +24,9 @@ function Menu() {
     setSearchString(string);
   }
   return (
-    <><IconButton
+    <>
+    <MenuNav />
+    <IconButton
 		size="large"
 		edge="start"
 		color="inherit"

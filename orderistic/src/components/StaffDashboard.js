@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import StaffNav from "./StaffNav";
 
 export default function StaffDashboard() {
   const [error, setError] = useState("");
@@ -21,6 +22,7 @@ export default function StaffDashboard() {
 
   return (
     <>
+      <StaffNav />
       <Card style={{ flex:"display", marginLeft:"300px", marginRight:"300px"}}>
         <Card.Body>
           <h2 className="text-center mb-4">Staff Dashboard</h2>
