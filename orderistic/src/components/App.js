@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
+import Menu from "./Menu";
 import StaffLogin from "./StaffLogin";
 import StaffDashboard from "./StaffDashboard";
 import TestApi from "./TestApi";
@@ -15,9 +16,10 @@ import Nav from "./Nav";
 import PreviousOrder from "./PreviousOrder";
 import Cart from "./Cart";
 
+import StaffMenu from "./StaffMenu";
 function App() {
   document.body.style.backgroundColor = "#edeff3";
-
+  
   return (
     <Router>
       <><header>
@@ -56,6 +58,16 @@ function App() {
               <UpdateProfile />
             </PrivateRoute>}
           ></Route>
+          <Route
+            path="/staff-menu"
+            exact
+            element={
+              <PrivateRoute>
+                <StaffMenu />
+              </PrivateRoute>
+            }
+            ></Route>
+          <Route path="/menu" element={<Menu />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
