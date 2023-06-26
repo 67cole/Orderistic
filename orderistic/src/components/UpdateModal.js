@@ -10,7 +10,7 @@ function UpdateModal({show, closeForm, element, reloadMenu}) {
 
   const [name, setName] = React.useState(element.name);
   const [description, setDescription] = React.useState(element.description);
-  const [price, setPrice] = React.useState(element.price);
+  const [price, setPrice] = React.useState(parseFloat(element.price).toFixed(2));
   const [category, setCategory] = React.useState(element.category);
   const [image, setImage] = React.useState(element.image);
 
@@ -74,8 +74,8 @@ function UpdateModal({show, closeForm, element, reloadMenu}) {
         </Form.Group>
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Image</Form.Label><br/>
-          <Image src={image} width="260px" fluid/>
-          <Form.Control type="file" onChange={convertImg}/>
+          <Form.Control type="file" onChange={convertImg}/><br/>
+          {image ? <Image src={image} width="260px" fluid/> : <></>}
         </Form.Group>
       </Form>
       </Modal.Body>

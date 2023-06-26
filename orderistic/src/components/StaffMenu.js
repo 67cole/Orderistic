@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import React from "react";
 import AddModal from "./AddModal";
 import { returnData } from "../api/MenuApi";
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 function StaffMenu() {
   const [show, setShow] = React.useState(false);
@@ -26,9 +28,13 @@ function StaffMenu() {
     <>
       <StaffNav />
       <AddModal show={show} closeForm={closeForm} reloadMenu={reloadMenu}/>
-      {menu.map((element, index) => (
-        <StaffMenuCard key={index} element={element} reloadMenu={reloadMenu}/>
-      ))}
+      <Row xs={1} md={2} lg={3} className="g-4" style={{ margin: "40px 40px 40px 40px"}}>
+        {menu.map((element, index) => (
+          <Col key={index} >
+            <StaffMenuCard element={element} reloadMenu={reloadMenu}/>
+          </Col>
+        ))}
+      </Row>
       <Button variant="primary" onClick={showForm}>Add Item</Button>
     </>    
   )
