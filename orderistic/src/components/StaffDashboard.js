@@ -21,7 +21,7 @@ export default function StaffDashboard() {
 
   return (
     <>
-      <Card style={{ width: "75vw", maxWidth: "600px" }}>
+      <Card style={{ flex:"display", marginLeft:"300px", marginRight:"300px"}}>
         <Card.Body>
           <h2 className="text-center mb-4">Staff Dashboard</h2>
           {error && <Alert variant="danger">{error}</Alert>}
