@@ -28,7 +28,7 @@ function StaffMenu() {
     <>
       <NavBar />
       <AddModal show={show} closeForm={closeForm} reloadMenu={reloadMenu}/>
-      <Row xs={1} md={2} lg={3} className="g-4" style={{ marginTop: "40px"}}>
+      <Row xs={1} md={2} lg={3} className="g-4" style={{ margin: "40px 40px 40px 40px"}}>
         {menu.map((element, index) => (
           <Col key={index} >
             <StaffMenuCard element={element} reloadMenu={reloadMenu}/>

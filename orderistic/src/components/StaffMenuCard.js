@@ -9,18 +9,14 @@ function StaffMenuCard({ element, reloadMenu }) {
   const [showRemove, setShowRemove] = React.useState(false);
   const [showUpdate, setShowUpdate] = React.useState(false);
   const imgStyle = {
-    // maxWidth: "260px",
-    // maxHeight: "260px",
-    width: "100%",
+    width: "200px",
     objectFit: "cover",
-    height: "200px"
+    height: "100%"
   }
   const cardStyle = {
-    display: "inline-block",
-    // flexDirection: "row",
-    height: "100%",
+    flexDirection: "row",
+    height: "200px",
     width: "100%",
-    maxHeight: "500px",
   }
   const closeRemForm = () => setShowRemove(false);
   const showRemForm = () => setShowRemove(true);
@@ -30,12 +26,11 @@ function StaffMenuCard({ element, reloadMenu }) {
   return (  
     <>
       <Card style={cardStyle}>  
-        {/* {element.image 
+        {element.image 
           ? <Card.Img variant="top" src={element.image} style={imgStyle}/>
           : <></>
-        } */}
-        <Card.Img variant="top" src={element.image} style={imgStyle}/>
-        <Card.Body style={{position: "relative", maxHeight: "200px", height: "200px"}}>
+        }
+        <Card.Body style={{position: "relative"}}>
           <Card.Title>
             {element.name}
           </Card.Title>

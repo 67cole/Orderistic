@@ -1,29 +1,54 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import React from 'react';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-function MenuCard() {
+function MenuCard({ element }) {
+  const [quantity, setQuantity] = React.useState(1);
   const imgStyle = {
-    maxWidth: "260px",
-    maxHeight: "260px",
+    width: "210px",
+    objectFit: "cover",
+    height: "100%"
   }
   const cardStyle = {
     flexDirection: "row",
-    width: "auto",
-    height: "auto",
-    maxWidth: "650px",
-    maxHeight: "260px",
+    height: "210px",
+    width: "100%",
+    maxHeight: "500px",
   }
-  return (
+  function addQuantity() {
+    setQuantity(quantity + 1);
+  }
+  function subtractQuantity() {
+    setQuantity(quantity - 1);
+  }
+  return (  
     <>
       <Card style={cardStyle}>  
-        <Card.Img variant="top" src="logo192.png" style={imgStyle}/>
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+        {element.image 
+          ? <Card.Img variant="top" src={element.image} style={imgStyle}/>
+          : <></>
+        }
+        <Card.Body style={{position: "relative"}}>
+          <Card.Title>
+            {element.name}
+          </Card.Title>
+          <Card.Text style={{ fontSize: "14px"}}>
+            {element.description}
           </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
+          <Card.Text style={{ position: "absolute", bottom: "5px" }}>
+            ${parseFloat(element.price).toFixed(2)}
+          </Card.Text>
+          <ButtonGroup aria-label="Choose quantity of food" style={{ border: "2px solid black", borderRadius: "5px"}}>
+            {quantity === 1 
+              ? <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white"}} disabled>-</Button>
+              : <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white"}}>-</Button>
+            }
+            
+            <div style={{ margin: "auto", paddingLeft: "10px", paddingRight: "10px", userSelect: "none" }}>{quantity}</div>
+            <Button variant="light" onClick={addQuantity} style={{ backgroundColor: "white"}}>+</Button>
+          </ButtonGroup>
+          <Button variant="dark" style={{ position: "absolute", bottom: "15px", right: "15px"}}>Add to order</Button> 
         </Card.Body>
       </Card>
     </>
