@@ -14,9 +14,11 @@ import { validStaff } from "../api/AuthApi";
 function Menu() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-
   async function checkStaff() {
-    if ((await validStaff(currentUser.email)) === true) {
+    if (
+      currentUser !== null &&
+      (await validStaff(currentUser.email)) === true
+    ) {
       navigate("/staff-menu");
     }
   }

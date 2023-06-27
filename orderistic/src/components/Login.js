@@ -65,8 +65,8 @@ export default function Login() {
         <div className="w-100 text-center mt-2">
           Need an account? <Link to="/signup">Sign Up</Link>
         </div>
-        <div class="text-center mt-2">
-          <button type="button" class="btn btn-primary" onClick={menu}>
+        <div className="text-center mt-2">
+          <button type="button" className="btn btn-primary" onClick={menu}>
             Continue as guest
           </button>
         </div>
