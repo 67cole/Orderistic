@@ -2,24 +2,21 @@ import React from "react";
 import Modal from 'react-bootstrap/Modal';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { ListGroup } from "react-bootstrap";
-import Image from 'react-bootstrap/Image';
+import CartItem from './CartItem';
 import Card from 'react-bootstrap/Card';
 
 function Cart ({ show, closeCart, cart, updateCart }) {
-  const imgStyle = {
-    width: "200px",
-    objectFit: "cover",
-    height: "100%"
-  }
-  const cardStyle = {
-    flexDirection: "row",
-    height: "210px",
-    width: "100%",
-    maxHeight: "500px",
-    borderRight: "0px",
-    borderLeft: "0px",
-    borderRadius: "0px"
-  }
+  const [totalPrice, setTotalPrice] = React.useState(0);
+  const [checkoutCart, setCheckoutCart] = React.useState(cart);
+  // GET CART FROM DATABASE AND CALCULATE TOTAL PRICE
+  React.useEffect(() => {
+    let tempPrice = 0;
+    for (let item of checkoutCart) {
+      tempPrice += parseFloat(item.price * item.quantity);
+    }
+    setTotalPrice(tempPrice);
+  }, [checkoutCart])
+
   return (
     <>
       <Modal show={show} fullscreen={true} onHide={closeCart}>
@@ -28,42 +25,26 @@ function Cart ({ show, closeCart, cart, updateCart }) {
           <Modal.Title style={{margin: "auto"}}>Cart</Modal.Title>
           <div style={{ width: "16px", height: "16px", padding: "8px 8px 8px 8px", margin: "8px 8px 8px 0px"}}></div>
         </Modal.Header>
-        <Modal.Body style={{ display: "flex", justifyContent: "center"}}>      
-          {!cart 
+        <Modal.Body style={{ display: "flex", justifyContent: "center", marginTop: "20px"}}>      
+          {cart.length === 0 
             ? "Your cart is empty!"
             : <ListGroup>
                 {cart.map((element, index) => (
-                  <Card style={cardStyle}>  
-                    {element.image 
-                      ? <Card.Img variant="top" src={element.image} style={imgStyle}/>
-                      : <></>
-                    }
-                    <Card.Body style={{position: "relative", width: "500px"}}>
-                      <Card.Title style={{ display: "inline-block", marginRight: "300px" }}>
-                        {element.name}
-                      </Card.Title>
-                      <Card.Title style={{ float: "right" }}>
-                        ${parseFloat(element.price).toFixed(2)}
-                      </Card.Title>
-                      <Card.Text style={{ fontSize: "14px", }}>
-                        {element.description}
-                      </Card.Text>
-                      <Card.Text style={{ fontSize: "14px", }}>
-                        Quantity: {element.quantity}
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                //   <ListGroup.Item key={index}>
-                    
-                //     {element.image 
-                //       ? <Image variant="top" src={element.image} style={imgStyle}/>
-                //       : <></>
-                //     }
-                //     <Modal.Title>{element.name}</Modal.Title>
-                //   </ListGroup.Item>
+                  <CartItem key={index} element={element} index={index} updateCart={updateCart}/>
                 ))}
+                <Card style={{ border: "0", paddingTop: "10px"}}>
+                  <Card.Body>
+                    <Card.Title>
+                      Total
+                      <Card.Title style={{ float: "right", fontSize: "30px" }}>
+                        ${parseFloat(totalPrice).toFixed(2)}
+                      </Card.Title>
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
               </ListGroup>
           } 
+
         </Modal.Body>
       </Modal>
     </>

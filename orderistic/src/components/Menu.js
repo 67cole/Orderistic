@@ -33,10 +33,12 @@ function Menu() {
   }, [])
   const cartButtonStyle = {
     backgroundColor: "black", 
-    paddingLeft: "200px", 
-    paddingRight: "200px", 
+    paddingLeft: "250px", 
+    paddingRight: "250px", 
     position: "fixed", 
-    bottom: "20px"
+    bottom: "20px",
+    fontWeight: "600",
+    borderRadius: "6px"
   }
   return (
     <>

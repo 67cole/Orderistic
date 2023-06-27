@@ -19,7 +19,7 @@ export default function StaffLogin() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/staff-dashboard");
+      navigate("/staff-menu");
     } catch (error2) {
       setError("Failed to log in");
       console.log(error2);

@@ -49,7 +49,6 @@ function MenuCard({ element, updateCart, cart }) {
               ? <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white"}} disabled>-</Button>
               : <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white"}}>-</Button>
             }
-            
             <div style={{ margin: "auto", paddingLeft: "10px", paddingRight: "10px", userSelect: "none" }}>{quantity}</div>
             <Button variant="light" onClick={addQuantity} style={{ backgroundColor: "white"}}>+</Button>
           </ButtonGroup>

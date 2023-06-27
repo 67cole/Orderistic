@@ -17,16 +17,16 @@ function MenuNav () {
     
       return (
         <div className="sticky-top">
-        <Navbar  bg="light" data-bs-theme="dark" >
+        <Navbar bg="light" data-bs-theme="dark">
           <Container>
             <Navbar.Brand as={Link} to="/menu">Orderistic</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/menu">Home</Nav.Link>
               {isLoggedIn ? (<><Nav.Link as={Link} to="/previous">Previous Orders</Nav.Link>
               <Nav.Link >Request Assistance</Nav.Link>
-              <Nav.Link as={Link} to="/cart">Cart</Nav.Link></>) 
+              </>) 
               : <> <Nav.Link >Request Assistance</Nav.Link>
-              <Nav.Link as={Link} to="/cart">Cart</Nav.Link></>}            
+              </>}      
             </Nav>
           </Container>
         </Navbar>
