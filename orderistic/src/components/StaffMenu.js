@@ -51,9 +51,6 @@ function StaffMenu() {
           </Col>
         ))}
       </Row>
-      <Button variant="primary" onClick={showForm}>
-        Add Item
-      </Button>
     </>
   );
 }

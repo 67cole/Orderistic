@@ -20,7 +20,7 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
+      navigate("/menu");
     } catch (error2) {
       setError("Failed to log in");
       console.log(error2);
@@ -65,7 +65,7 @@ export default function Login() {
         <div className="w-100 text-center mt-2">
           Need an account? <Link to="/signup">Sign Up</Link>
         </div>
-        <div class="text-center mt-2">
+        <div className="text-center mt-2">
           <button type="button" class="btn btn-primary" onClick={menu}>
             Continue as guest
           </button>

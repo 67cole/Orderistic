@@ -24,7 +24,7 @@ function StaffNav({ showForm }) {
     }
   }
   return (
-    <div class="sticky-top">
+    <div className="sticky-top">
     {error && <Alert variant="danger">{error}</Alert>}
     <Navbar style={{ backgroundColor: "white", boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)"}} >
       <Container>
