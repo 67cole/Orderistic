@@ -24,6 +24,23 @@ export async function returnFoodData() {
   });
   return foodMenu;
 }
+
+// For the given ID, return the data of the food
+export async function returnSpecificFood(id) {
+  const docRef = await getDocs(collection(db, "menu"));
+  docRef.forEach((doc) => {
+
+    // if the specific ID matches the current one, return data
+    if (id == doc.id) {
+      console.log(doc.data());
+      return doc.data();
+    }
+  });
+
+  // otherwise, no matches are found and return an empty dictionary
+  return {};
+}
+
 //Allows all users to view the menu HIMMY-19
 export async function ViewMenu() {
   const q = collection(db, "menu");
