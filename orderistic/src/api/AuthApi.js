@@ -13,7 +13,7 @@ export async function validStaff(email) {
   let valid = false;
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    if (email == doc.data()["email"]) {
+    if (email === doc.data()["email"]) {
       valid = true;
     }
   });
