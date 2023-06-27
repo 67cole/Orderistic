@@ -14,7 +14,6 @@ export async function validStaff(email) {
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     if (email == doc.data()["email"]) {
-      console.log("entered here");
       valid = true;
     }
   });

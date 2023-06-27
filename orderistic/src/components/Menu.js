@@ -16,7 +16,7 @@ function Menu() {
   const navigate = useNavigate();
 
   async function checkStaff() {
-    if ((await validStaff(currentUser)) === true) {
+    if ((await validStaff(currentUser.email)) === true) {
       navigate("/staff-menu");
     }
   }
