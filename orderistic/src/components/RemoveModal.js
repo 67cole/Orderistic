@@ -3,11 +3,13 @@ import Button from "react-bootstrap/Button";
 import React from "react";
 import { RemoveItem } from "../api/MenuApi";
 
-function RemoveModal({show, closeForm, id, reloadMenu}) {
+function RemoveModal({ show, closeForm, id, menu, index, handleMenu }) {
   function remove() {
     RemoveItem(id)
     closeForm();
-    reloadMenu();
+    let tempMenu = [...menu];
+    tempMenu.splice(index, 1);
+    handleMenu(tempMenu);
   }
   return (
     <> 

@@ -1,6 +1,5 @@
 import StaffNav from "./StaffNav";
 import StaffMenuCard from "./StaffMenuCard";
-import Button from "react-bootstrap/Button";
 import React from "react";
 import AddModal from "./AddModal";
 import { returnFoodData } from "../api/MenuApi";
@@ -22,22 +21,40 @@ function StaffMenu() {
   checkStaff();
   const [show, setShow] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
+  function handleMenu(newMenu) {
+    setMenu(newMenu);
+    console.log(newMenu);
+  }
   React.useEffect(() => {
     returnFoodData().then((data) => {
-      setMenu(data);
+      let tempMenu = [];
+      let tempDict = {};
+      for (const [key, value] of Object.entries(data)) {
+        tempDict = value;
+        tempDict.id = key;
+        tempMenu.push(tempDict);
+      }
+      setMenu(tempMenu);
     });
   }, []);
   const closeForm = () => setShow(false);
   const showForm = () => setShow(true);
   function reloadMenu() {
     returnFoodData().then((data) => {
-      setMenu(data);
+      let tempMenu = [];
+      let tempDict = {};
+      for (const [key, value] of Object.entries(data)) {
+        tempDict = value;
+        tempDict.id = key;
+        tempMenu.push(tempDict);
+      }
+      setMenu(tempMenu);
     });
   }
   return (
     <>
-      <StaffNav />
-      <AddModal show={show} closeForm={closeForm} reloadMenu={reloadMenu} />
+      <StaffNav showForm={showForm}/>
+      <AddModal show={show} closeForm={closeForm} reloadMenu={reloadMenu} menu={menu} handleMenu={handleMenu}/>
       <Row
         xs={1}
         md={2}
@@ -47,13 +64,10 @@ function StaffMenu() {
       >
         {menu.map((element, index) => (
           <Col key={index}>
-            <StaffMenuCard element={element} reloadMenu={reloadMenu} />
+            <StaffMenuCard element={element} reloadMenu={reloadMenu} handleMenu={handleMenu} menu={menu} index={index}/>
           </Col>
         ))}
       </Row>
-      <Button variant="primary" onClick={showForm}>
-        Add Item
-      </Button>
     </>
   );
 }

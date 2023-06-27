@@ -20,7 +20,7 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
+      navigate("/menu");
     } catch (error2) {
       setError("Failed to log in");
       console.log(error2);

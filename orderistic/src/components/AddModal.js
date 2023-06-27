@@ -5,7 +5,7 @@ import React from "react";
 import { fileToDataUrl } from "./helper";
 import { AddItem } from "../api/MenuApi";
 
-function AddModal({show, closeForm, reloadMenu}) {
+function AddModal({ show, closeForm, menu, handleMenu }) {
 
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -21,9 +21,14 @@ function AddModal({show, closeForm, reloadMenu}) {
       category: category,
       image: image
     }
-    AddItem(item);
+    AddItem(item)
+      .then((data) => {
+        item.id = data;
+    });
     closeForm();
-    reloadMenu();
+    let tempMenu = [...menu];
+    tempMenu.push(item);
+    handleMenu(tempMenu);
   }
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])

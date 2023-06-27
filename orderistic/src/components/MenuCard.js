@@ -2,8 +2,9 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { addToCart } from '../api/TableApi';
 
-function MenuCard({ element }) {
+function MenuCard({ element, cart, changeCart }) {
   const [quantity, setQuantity] = React.useState(1);
   const imgStyle = {
     width: "210px",
@@ -21,6 +22,17 @@ function MenuCard({ element }) {
   }
   function subtractQuantity() {
     setQuantity(quantity - 1);
+  }
+  function addToOrder() {
+    let cartItem = {
+      id: element.id,
+      quantity: quantity,
+      price: element.price
+    };
+    addToCart(1, cartItem);
+    let tempCart = [...cart];
+    tempCart.push(cartItem);
+    changeCart(tempCart);
   }
   return (  
     <>
@@ -41,14 +53,13 @@ function MenuCard({ element }) {
           </Card.Text>
           <ButtonGroup aria-label="Choose quantity of food" style={{ border: "2px solid black", borderRadius: "5px"}}>
             {quantity === 1 
-              ? <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white"}} disabled>-</Button>
-              : <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white"}}>-</Button>
+              ? <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white", boxShadow: "none" }} disabled>-</Button>
+              : <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white", boxShadow: "none"}}>-</Button>
             }
-            
             <div style={{ margin: "auto", paddingLeft: "10px", paddingRight: "10px", userSelect: "none" }}>{quantity}</div>
-            <Button variant="light" onClick={addQuantity} style={{ backgroundColor: "white"}}>+</Button>
+            <Button variant="light" onClick={addQuantity} style={{ backgroundColor: "white", boxShadow: "none"}}>+</Button>
           </ButtonGroup>
-          <Button variant="dark" style={{ position: "absolute", bottom: "15px", right: "15px"}}>Add to order</Button> 
+          <Button variant="dark" style={{ position: "absolute", bottom: "15px", right: "15px", boxShadow: "none"}} onClick={addToOrder}>Add to order</Button> 
         </Card.Body>
       </Card>
     </>
