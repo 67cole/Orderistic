@@ -1,15 +1,21 @@
 Week 1
-Formed a group named himmybutler and selected scrum master.
-We joined moodle group and created Jira board.
-We decided on the wait management system after having a discussion during our tutorial.
-Decided on novelty features.
+- Formed a group named himmybutler and selected scrum master.
+- We joined moodle group and created Jira board.
+- We decided on the wait management system after having a discussion during our tutorial.
+- Decided on novelty features.
 Week 2
-Joined the GitHub for our group.
-Researched and discussed ideas for features. 
-We decided to use React for the frontend, Python for the backend and either firebase or PostgreSQL for the database.
-Began researching and finding evidence for our project.
+- Joined the GitHub for our group.
+- Researched and discussed ideas for features. 
+- We decided to use React for the frontend, Python for the backend and either firebase or PostgreSQL for the database.
+- Began researching and finding evidence for our project.
 Week 3
-We planned to finish the proposal and we submitted it.
-I wrote user stories and a couple of acceptance criteria into the proposal and Jira backlog. 
-Created the sprint structure.
-Next week, we are planning to start working on our project and work towards completing features listed in the first sprint.
+- We planned to finish the proposal and we submitted it.
+- I wrote user stories and a couple of acceptance criteria into the proposal and Jira backlog. 
+- Created the sprint structure.
+- Next week, we are planning to start working on our project and work towards completing features listed in the first sprint.
+Week 4
+- This week's plan was to begin coding, I was tasked with the frontend.
+- Implemented functionality for menu pages and styled them.
+- Had several meetings to establish what each person needs to do.
+- One obstacle was that it was hard to find times when people were available.
+- Next week, we will finish sprint 1 and complete our retrospective. Later in the week, we will begin planning what to do for sprint 2.
