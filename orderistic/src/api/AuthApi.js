@@ -1,14 +1,5 @@
 import { db } from "../firebase";
-import {
-  collection,
-  setDoc,
-  doc,
-  getDocs,
-  onSnapshot,
-  addDoc,
-  deleteDoc,
-  getDoc,
-} from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 
 // Grabbing all food information for front-end purposes
 export async function addStaff(email) {

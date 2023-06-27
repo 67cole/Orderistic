@@ -18,7 +18,6 @@ export default function StaffLogin() {
     if ((await validStaff(emailRef.current.value)) === false) {
       return setError("Not a valid staff member");
     }
-
     try {
       setError("");
       setLoading(true);

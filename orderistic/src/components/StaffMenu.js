@@ -19,9 +19,7 @@ function StaffMenu() {
       navigate("/menu");
     }
   }
-
   checkStaff();
-
   const [show, setShow] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
   React.useEffect(() => {
