@@ -17,63 +17,72 @@ import PreviousOrder from "./PreviousOrder";
 import Cart from "./Cart";
 
 import StaffMenu from "./StaffMenu";
+import StaffSignup from "./StaffSignup";
 function App() {
   document.body.style.backgroundColor = "#edeff3";
-  
+
   return (
     <Router>
-      
-			<div className="main-container">
-				<AuthProvider>
-					<Routes>
-					<Route
-						path="/"
-						exact
-						element={<PrivateRoute>
-						<Dashboard />
-						</PrivateRoute>}
-					></Route>
-					<Route
-						path="/staff-dashboard"
-						exact
-						element={<PrivateRoute>
-						<StaffDashboard />
-						</PrivateRoute>}
-					></Route>
-					<Route
-						path="/test-api"
-						exact
-						element={<PrivateRoute>
-						<TestApi />
-						</PrivateRoute>}
-					></Route>
-					<Route
-						path="/update-profile"
-						exact
-						element={<PrivateRoute>
-						<UpdateProfile />
-						</PrivateRoute>}
-					></Route>
-					<Route
-						path="/staff-menu"
-						exact
-						element={
-						<PrivateRoute>
-							<StaffMenu />
-						</PrivateRoute>
-						}
-						></Route>
-					<Route path="/menu" element={<Menu />} />
-					<Route path="/signup" element={<Signup />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/forgot-password" element={<ForgotPassword />} />
-					<Route path="/staff-login" element={<StaffLogin />} />
-					<Route path="/previous" element={<PreviousOrder />} />
-					<Route path="/cart" element={<Cart />} />
-					</Routes>
-				</AuthProvider>
+      <div className="main-container">
+        <AuthProvider>
+          <Routes>
+            <Route
+              path="/"
+              exact
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/staff-dashboard"
+              exact
+              element={
+                <PrivateRoute>
+                  <StaffDashboard />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/test-api"
+              exact
+              element={
+                <PrivateRoute>
+                  <TestApi />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/update-profile"
+              exact
+              element={
+                <PrivateRoute>
+                  <UpdateProfile />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/staff-menu"
+              exact
+              element={
+                <PrivateRoute>
+                  <StaffMenu />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/staff-login" element={<StaffLogin />} />
+            <Route path="/staff-signup" element={<StaffSignup />} />
+            <Route path="/previous" element={<PreviousOrder />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
+        </AuthProvider>
       </div>
-		</Router>
+    </Router>
   );
 }
 

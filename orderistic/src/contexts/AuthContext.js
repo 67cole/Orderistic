@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
+import { addStaff } from "../api/AuthApi";
 
 // We want to access the current user anywhere in the app
 

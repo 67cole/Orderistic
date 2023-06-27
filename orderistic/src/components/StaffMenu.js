@@ -6,8 +6,20 @@ import AddModal from "./AddModal";
 import { returnFoodData } from "../api/MenuApi";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { validStaff } from "../api/AuthApi";
 
 function StaffMenu() {
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  async function checkStaff() {
+    if ((await validStaff(currentUser)) === false) {
+      navigate("/menu");
+    }
+  }
+  checkStaff();
   const [show, setShow] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
   React.useEffect(() => {

@@ -31,12 +31,18 @@ export default function Signup() {
     setLoading(false);
   }
   const menu = () => {
-    navigate('../menu');
-  }
+    navigate("../menu");
+  };
   return (
     <>
       <h1 className="text-center">Orderistic</h1>
-      <Card style={{ justifyContent:"center", marginLeft:"300px", marginRight:"300px"}}>
+      <Card
+        style={{
+          justifyContent: "center",
+          marginLeft: "300px",
+          marginRight: "300px",
+        }}
+      >
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -63,7 +69,9 @@ export default function Signup() {
         Already have an account? <Link to="/login">Log In</Link>
       </div>
       <div class="text-center mt-2">
-        <button type="button" class="btn btn-primary" onClick={menu}>Continue as guest</button>
+        <button type="button" class="btn btn-primary" onClick={menu}>
+          Continue as guest
+        </button>
       </div>
     </>
   );
