@@ -41,16 +41,21 @@ function Menu() {
   return (
     <>
       <MenuNav />
+      {/*
+      <div className="nav-bar">
+
       <IconButton
         size="large"
         edge="start"
         color="inherit"
         aria-label="menu"
         sx={{ mr: 2 }}
-      >
+        >
         <MenuIcon />
       </IconButton>
       <SearchBar onSearch={search} style={{ flex: "display" }} />
+      </div>
+  */}
       <Row
         xs={1}
         md={2}
