@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnFoodData } from "../api/MenuApi";
+import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnFoodData, returnSpecificFood } from "../api/MenuApi";
 import { returnOrderData, viewOrder, addOrder, removeOrder } from "../api/OrderApi";
 import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart } from "../api/TableApi";
 
@@ -18,6 +18,10 @@ export default function TestApi() {
 
   async function handleFoodData() {
     returnFoodData();
+  }
+
+  async function handleSpecificFood() {
+    returnSpecificFood("D75SzzFfA8Jso9t29DBV");
   }
 
   async function handleAdd() {
@@ -87,6 +91,9 @@ export default function TestApi() {
           </Button>
           <Button className="btn btn-primary w-100 mt-3" onClick={handleFoodData}>
             View Food Data
+          </Button>
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleSpecificFood}>
+            Return Specific Food
           </Button>
           <Button className="btn btn-primary w-100 mt-3" onClick={handleAdd}>
             Add Item
