@@ -23,3 +23,10 @@ Created the firebase
 Completed user authentication tickets 
 Created a page with sample buttons for my backend members to test their functions.
 Assisted backend team members with Firebase API and JavaScript.
+
+Week 5:
+Created a logo for our system: Orderistic
+Added security for staff menu, i.e., cannot be accessed by customers.
+Created new API functions for staff and users
+Supervised both front-end and back-end tickets.
+As Scrum Master initiated team meetings on Sunday and Monday.

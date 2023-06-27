@@ -19,4 +19,9 @@ Completed my section for the proposal.
 
 Week 4
 Had a team discussion about our role in coding the project.
-Started on styling the menu for customers
+Started on styling the menu for customers.
+Assisted team on working on the user stories for the frontend.
+
+Week 5
+Had a team meeting on discussing what needs to be done before the demo. Discussed about bugs and what solutions we can use to approach it.
+Made some finishing touches and fixes to the style (nav bar, login, staff) because a change occurred that unintentionally changed the appearance. 
