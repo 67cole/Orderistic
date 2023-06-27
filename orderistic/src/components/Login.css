@@ -1,16 +1,19 @@
-.picture-container {
-  display: flex;
-  height: 35vh;
-  width: 500px;
-  max-width: 100%;
-  background-size: cover;
-  margin-top: -150px;
-}
-
 .logo {
   display: flex;
-  width: 75vw;
   max-width: 600px;
-  margin-top: -250px;
-  margin-bottom: -50px;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
