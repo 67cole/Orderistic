@@ -70,7 +70,7 @@ export default function Login() {
             Continue as guest
           </button>
         </div>
-        <div className="w-100 text-center mb-4 fixed-bottom">
+        <div className="w-100 text-center mt-3">
           <Link to="/staff-login">Staff Login</Link>
         </div>
       </div>
