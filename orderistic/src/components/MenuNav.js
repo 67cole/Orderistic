@@ -16,8 +16,7 @@ function MenuNav() {
   }, []);
 
   return (
-    <div className="sticky-top">
-      <Navbar bg="light" data-bs-theme="dark">
+      <Navbar bg="light" data-bs-theme="dark" className="sticky-top nav-bar">
         <Container>
           <Navbar.Brand as={Link} to="/menu">
             Orderistic
@@ -48,7 +47,6 @@ function MenuNav() {
           </Nav>
         </Container>
       </Navbar>
-    </div>
   );
 }
 export default MenuNav;
