@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Cart from './Cart';
+import { viewCart } from "../api/TableApi";
 
 import MenuNav from "./MenuNav";
 import { useNavigate } from "react-router-dom";
@@ -30,19 +31,34 @@ function Menu() {
 
   // const [searchString, setSearchString] = React.useState("");
   const [menu, setMenu] = React.useState([]);
+  const [menuDict, setMenuDict] = React.useState({});
   const [show, setShow] = React.useState(false);
+  const [cart, setCart] = React.useState([]);
 
+
+  const changeCart = (newCart) => setCart(newCart);
   const closeCart = () => setShow(false);
-  const viewCart = () => setShow(true);
-  function reloadMenu() {
+  const showCart = () => setShow(true);
+  React.useEffect(() => {
     returnFoodData()
       .then((data) => {
-        setMenu(data);
+        setMenuDict(data);
+        let tempMenu = [];
+        let tempDict = {};
+        for (const [key, value] of Object.entries(data)) {
+          tempDict = value;
+          tempDict.id = key;
+          tempMenu.push(tempDict);
+        }
+        setMenu(tempMenu);
       })
-  }
-  React.useEffect(() => {
-    reloadMenu();
+    viewCart(1)
+      .then((data) => {
+        setCart(data); 
+
+      });
   }, [])
+
   // const search = (string) => {
   //   setSearchString(string);
   // };
@@ -82,16 +98,16 @@ function Menu() {
       >
         {menu.map((element, index) => (
           <Col key={index}>
-            <MenuCard element={element} />
+            <MenuCard element={element} cart={cart} changeCart={changeCart}/>
           </Col>
         ))}
       </Row>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button variant="secondary" size="lg" style={cartButtonStyle} onClick={viewCart}>
+        <Button variant="secondary" size="lg" style={cartButtonStyle} onClick={showCart}>
           View cart
         </Button>
       </div>
-      <Cart show={show} closeCart={closeCart}/>
+      <Cart show={show} closeCart={closeCart} cart={cart} changeCart={changeCart} menu={menuDict}/>
     </>
   )
 }

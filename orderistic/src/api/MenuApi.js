@@ -14,13 +14,12 @@ import {
 // Grabbing all food information for front-end purposes
 export async function returnFoodData() {
   const docRef = await getDocs(collection(db, "menu"));
-  const foodMenu = [];
+  const foodMenu = {};
+  
   docRef.forEach((doc) => {
-    
     // object holder so I can alter
     let foodInfo = doc.data();
-    foodInfo["id"] = doc.id;
-    foodMenu.push(foodInfo);
+    foodMenu[doc.id] = foodInfo;
   });
   return foodMenu;
 }
@@ -31,7 +30,7 @@ export async function returnSpecificFood(id) {
   docRef.forEach((doc) => {
 
     // if the specific ID matches the current one, return data
-    if (id == doc.id) {
+    if (id === doc.id) {
       console.log(doc.data());
       return doc.data();
     }
@@ -57,6 +56,7 @@ export async function ViewMenu() {
 export async function AddItem(item) {
   const res = await addDoc(collection(db, 'menu'), item);
   console.log('Added document with ID: ', res.id);
+  return res.id;
 }
 
 //Allows staff to remove items from the menu HIMMY-22

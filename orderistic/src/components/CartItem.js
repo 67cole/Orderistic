@@ -4,8 +4,9 @@ import Button from 'react-bootstrap/Button';
 import React from 'react';
 import { removeFromCart } from '../api/TableApi';
 
-function CartItem({ element }) {
-  const [price, setPrice] = React.useState(element.price);
+function CartItem({ info, index, changeCart, cart, total, changeTotal }) {
+  const [price, setPrice] = React.useState(cart[index].price);
+  const [quantity, setQuantity] = React.useState(cart[index].quantity);
   const imgStyle = {
     width: "200px",
     objectFit: "cover",
@@ -32,53 +33,48 @@ function CartItem({ element }) {
     border: "0",
     boxShadow: "none"
   }
-  // function minusQuantityCheckout() {
-  //   subtractQuantity(index);
-  //   setPrice(element.price * element.quantity);
-  // }
-  // function addQuantityCheckout() {
-  //   addQuantity(index);
-  //   setPrice(element.price * element.quantity);
-  // }
-  function subtractQuantity(index) {
-    // let newCart = cart;
-    // newCart[index].quantity -= 1;
-    // updateCart(newCart);
+  function subtractQuantity() {
+    setPrice(info.price * (quantity - 1));
+    setQuantity(quantity - 1);
+    changeTotal(parseFloat(total) - parseFloat(info.price));
   }
-  function addQuantity(index) {
-    // let newCart = cart;
-    // newCart[index].quantity += 1;
-    // updateCart(newCart);
+  function addQuantity() {
+    setPrice(info.price * (quantity + 1));
+    setQuantity(quantity + 1);
+    changeTotal(parseFloat(total) + parseFloat(info.price));
   }
-  function removeItem(index) {
-    removeFromCart(1, element)
+  function removeItem() {
+    removeFromCart(1, cart[index]);
+    let tempCart = [...cart];
+    tempCart.splice(index, 1);
+    changeCart(tempCart);
   }
   return (
     <>
       <Card style={cardStyle}>  
-        {element.image 
-          ? <Card.Img variant="top" src={element.image} style={imgStyle}/>
+        {info.image 
+          ? <Card.Img variant="top" src={info.image} style={imgStyle}/>
           : <></>
         }
         <Card.Body style={{position: "relative", width: "500px"}}>
           <Card.Title style={{ display: "inline-block", marginRight: "300px" }}>
-            {element.name}
+            {info.name}
           </Card.Title>
           <Card.Title style={{ float: "right" }}>
             ${parseFloat(price).toFixed(2)}
           </Card.Title>
           <Card.Text style={{ fontSize: "14px", }}>
-            {element.description}
+            {info.description}
           </Card.Text>
           <Card.Text style={{ fontSize: "14px", marginBottom: "5px"}}>
             Quantity:
           </Card.Text>
           <ButtonGroup aria-label="Choose quantity of food" style={{ border: "2px solid black", borderRadius: "5px"}}>
-            {element.quantity === 1 
+            {quantity === 1 
               ? <Button variant="light" onClick={subtractQuantity} style={quantityButton} disabled>-</Button>
               : <Button variant="light" onClick={subtractQuantity} style={quantityButton}>-</Button>
             }
-            <div style={quantityStyle}>{element.quantity}</div>
+            <div style={quantityStyle}>{quantity}</div>
             <Button variant="light" onClick={addQuantity} style={quantityButton}>+</Button>
           </ButtonGroup>
           <Button variant="outline-danger" onClick={removeItem} style={{ position: "absolute", bottom: "15px", right: "15px"}}>Remove</Button> 

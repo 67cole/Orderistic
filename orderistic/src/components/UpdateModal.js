@@ -6,7 +6,7 @@ import React from "react";
 import { fileToDataUrl } from "./helper";
 import { UpdateItem } from "../api/MenuApi";
 
-function UpdateModal({show, closeForm, element, reloadMenu}) {
+function UpdateModal({ show, closeForm, element, menu, index, handleMenu, setStates }) {
 
   const [name, setName] = React.useState(element.name);
   const [description, setDescription] = React.useState(element.description);
@@ -20,11 +20,14 @@ function UpdateModal({show, closeForm, element, reloadMenu}) {
       description: description,
       price: price,
       category: category,
-      image: image
+      image: image,
+      id: element.id
     }
     UpdateItem(element.id, item);
     closeForm();
-    reloadMenu();
+    let tempMenu = [...menu];
+    setStates(image, name, description, price);
+    handleMenu(tempMenu);
   }
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])

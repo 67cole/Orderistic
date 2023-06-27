@@ -4,31 +4,18 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import { ListGroup } from "react-bootstrap";
 import CartItem from './CartItem';
 import Card from 'react-bootstrap/Card';
-import { viewCart } from "../api/TableApi";
-import { returnFoodData } from "../api/MenuApi";
 import Button from 'react-bootstrap/Button';
 
-function Cart ({ show, closeCart }) {
-  const [totalPrice, setTotalPrice] = React.useState(0);
-  const [cart, setCart] = React.useState([]);
-  const [menu, setMenu] = React.useState({});
-  // GET CART FROM DATABASE AND CALCULATE TOTAL PRICE
+function Cart ({ show, closeCart, cart, changeCart, menu }) {
+  const [total, setTotal] = React.useState(0);
+  const changeTotal = (newTotal) => setTotal(newTotal)
   React.useEffect(() => {
-    viewCart(1)
-      .then((data) => {
-        setCart(data);
-        let sum = 0;
-        for (let item of data) {
-          sum += item.price;
-        }
-        setTotalPrice(sum)
-        
-      });
-    returnFoodData()
-      .then((data) => {
-        setMenu(data);
-      })
-  }, [])
+    let sum = 0;
+    for (let item of cart) {
+      sum += parseFloat(item.price);
+    }
+    setTotal(sum);
+  }, [cart])
   const checkoutButtonStyle = {
     backgroundColor: "black", 
     paddingLeft: "250px", 
@@ -38,6 +25,7 @@ function Cart ({ show, closeCart }) {
     fontWeight: "600",
     borderRadius: "6px"
   }
+  
   return (
     <>
       <Modal show={show} fullscreen={true} onHide={closeCart}>
@@ -51,14 +39,14 @@ function Cart ({ show, closeCart }) {
             ? "Your cart is empty!"
             : <ListGroup>
                 {cart.map((element, index) => (
-                  <CartItem key={index} element={element}/>
+                  <CartItem key={index} info={menu[element.id]} cart={cart} changeCart={changeCart} index={index} total={total} changeTotal={changeTotal} />
                 ))}
-                <Card style={{ border: "0", paddingTop: "10px"}}>
-                  <Card.Body>
+                <Card style={{ border: "0", paddingTop: "10px", paddingBottom: "100px"}}>
+                  <Card.Body style={{borderBottom: "1px solid #ededed"}}>
                     <Card.Title>
                       Total
                       <Card.Title style={{ float: "right", fontSize: "30px" }}>
-                        ${parseFloat(totalPrice).toFixed(2)}
+                        ${parseFloat(total).toFixed(2)}
                       </Card.Title>
                     </Card.Title>
                   </Card.Body>
