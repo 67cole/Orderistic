@@ -8,7 +8,21 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 import MenuNav from "./MenuNav";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { validStaff } from "../api/AuthApi";
 function Menu() {
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  async function checkStaff() {
+    if ((await validStaff(currentUser)) === true) {
+      navigate("/staff-menu");
+    }
+  }
+
+  checkStaff();
+
   const [searchString, setSearchString] = useState("");
   const [menu, setMenu] = React.useState([]);
   function reloadMenu() {
