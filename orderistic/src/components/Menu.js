@@ -17,9 +17,11 @@ import { validStaff } from "../api/AuthApi";
 function Menu() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-
   async function checkStaff() {
-    if ((await validStaff(currentUser.email)) === true) {
+    if (
+      currentUser !== null &&
+      (await validStaff(currentUser.email)) === true
+    ) {
       navigate("/staff-menu");
     }
   }
@@ -55,36 +57,41 @@ function Menu() {
   }
   return (
     <>
-    <MenuNav />
-      {/* <IconButton
+      <MenuNav />
+      {/*
+      <div className="nav-bar">
+
+      <IconButton
         size="large"
         edge="start"
         color="inherit"
         aria-label="menu"
         sx={{ mr: 2 }}
-      >
+        >
         <MenuIcon />
       </IconButton>
-      <SearchBar onSearch={search} style={{ flex: "display" }} /> */}
-    <Row 
-      xs={1} 
-      md={2} 
-      lg={3} 
-      className="g-4" 
-      style={{ margin: "40px 40px 40px 40px"}}
-    >
-      {menu.map((element, index) => (
-        <Col key={index} >
-          <MenuCard element={element} />
-        </Col>
-      ))}
-    </Row>
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <Button variant="secondary" size="lg" style={cartButtonStyle} onClick={viewCart}>
-        View cart
-      </Button>
-    </div>
-    <Cart show={show} closeCart={closeCart}/>
+      <SearchBar onSearch={search} style={{ flex: "display" }} />
+      </div>
+  */}
+      <Row
+        xs={1}
+        md={2}
+        lg={3}
+        className="g-4"
+        style={{ margin: "40px 40px 40px 40px" }}
+      >
+        {menu.map((element, index) => (
+          <Col key={index}>
+            <MenuCard element={element} />
+          </Col>
+        ))}
+      </Row>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Button variant="secondary" size="lg" style={cartButtonStyle} onClick={viewCart}>
+          View cart
+        </Button>
+      </div>
+      <Cart show={show} closeCart={closeCart}/>
     </>
   )
 }

@@ -22,6 +22,7 @@ function Cart ({ show, closeCart }) {
           sum += item.price;
         }
         setTotalPrice(sum)
+        
       });
     returnFoodData()
       .then((data) => {

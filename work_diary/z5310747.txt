@@ -23,3 +23,8 @@ Week 4:
 - Delegated roles to team members
 - Pair programmed with Colin to complete tickets HIMMY-20,21,22
 - Assisted with connecting backend code to frontend
+
+Week 5:
+- Implemented the cart databse and functions.
+- Implemented the tables database and functions.
+- Discussed bugs with group members

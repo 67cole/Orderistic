@@ -1,6 +1,6 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import React from 'react';
@@ -24,13 +24,15 @@ function StaffNav({ showForm }) {
     }
   }
   return (
-    <div className="sticky-top">
-    {error && <Alert variant="danger">{error}</Alert>}
-    <Navbar style={{ backgroundColor: "white", boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)"}} >
+    <Navbar bg="light" data-bs-theme="dark" className="sticky-top nav-bar">
       <Container>
-        <Navbar.Brand as={Link} to="/staff-menu" style={{ color: "black", fontSize: "24px", fontWeight: "600" }}>Orderistic</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/staff-dashboard">
+          Orderistic
+        </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link as={Link} to="/staff-menu" style={{ color: "black" }}>Home</Nav.Link>
+          <Nav.Link as={Link} to="/staff-dashboard">
+            Home
+          </Nav.Link>
         </Nav>
         <Button className="btn" variant="light" onClick={showForm} style={{ backgroundColor: "white", border: "0", boxShadow: "none" }}>Add Item</Button>
         <Button variant="light" onClick={handleLogout} style={{ backgroundColor: "white", border: "0", boxShadow: "none" }}>
@@ -38,8 +40,7 @@ function StaffNav({ showForm }) {
         </Button>
       </Container>
     </Navbar>
-    </div>
-  )
+  );
 }
 
 export default StaffNav;
