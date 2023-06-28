@@ -52,6 +52,8 @@ export async function removeOrder(id) {
   console.log('Removed document with ID: ', id);
 }
 
+//Retrieves cart and adds it to order
+
 
 
 
