@@ -25,6 +25,7 @@ Week 4:
 - Assisted with connecting backend code to frontend
 
 Week 5:
-- Implemented the cart databse and functions.
+- Implemented the cart database and functions.
 - Implemented the tables database and functions.
 - Discussed bugs with group members
+- Fixed functionality of the cart by taking into account quantity of an item.
