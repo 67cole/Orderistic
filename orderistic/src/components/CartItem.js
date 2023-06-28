@@ -2,10 +2,10 @@ import Card from 'react-bootstrap/Card';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import React from 'react';
-import { removeFromCart } from '../api/TableApi';
+import { addToCart, removeFromCart } from '../api/TableApi';
 
 function CartItem({ info, index, changeCart, cart, total, changeTotal }) {
-  const [price, setPrice] = React.useState(cart[index].price);
+  const [price, setPrice] = React.useState(cart[index].price * cart[index].quantity);
   const [quantity, setQuantity] = React.useState(cart[index].quantity);
   const imgStyle = {
     width: "200px",
@@ -37,11 +37,19 @@ function CartItem({ info, index, changeCart, cart, total, changeTotal }) {
     setPrice(info.price * (quantity - 1));
     setQuantity(quantity - 1);
     changeTotal(parseFloat(total) - parseFloat(info.price));
+    let tempItem = {...cart[index]};
+    tempItem.quantity = 1;
+    console.log(tempItem);
+    removeFromCart(1, tempItem);
   }
   function addQuantity() {
     setPrice(info.price * (quantity + 1));
     setQuantity(quantity + 1);
     changeTotal(parseFloat(total) + parseFloat(info.price));
+    let tempItem = {...cart[index]};
+    tempItem.quantity = 1;
+    console.log(tempItem);
+    addToCart(1, tempItem);
   }
   function removeItem() {
     removeFromCart(1, cart[index]);
