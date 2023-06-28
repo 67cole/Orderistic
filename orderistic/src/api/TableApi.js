@@ -66,11 +66,25 @@ export async function viewCart(num) {
 export async function addToCart(num, item) {
     const collectionRef = collection(db, "tables");
     const docRef = doc(db, "tables", num.toString());
-    const docSnap = await getDoc(docRef)
-    let tempCart = docSnap.data()["cart"];
-    tempCart.push(item);
+    const docSnap = await getDoc(docRef);
+    let cartData = docSnap.data()["cart"];
+    for(var i in cartData){
+        if(cartData[i].id === item.id){
+            console.log("Exists")
+            cartData[i].quantity += item.quantity
+            console.log(cartData[i].quantity)
+            console.log(cartData[i])
+            const newData = {
+                cart: cartData
+            };
+            await updateDoc(doc(db, "tables", num.toString()), newData);
+            console.log("Added Item: ", item)
+            return;
+        }
+    }
+    cartData.push(item);
     const newData = {
-        cart: tempCart
+        cart: cartData
     };
     await updateDoc(doc(db, "tables", num.toString()), newData);
     console.log("Added Item: ", item)
@@ -81,13 +95,30 @@ export async function removeFromCart(num, item) {
     const collectionRef = collection(db, "tables");
     const docRef = doc(db, "tables", num.toString());
     const docSnap = await getDoc(docRef)
-    let tempCart = docSnap.data()["cart"];
-    let index = tempCart.indexOf(item)
-    tempCart.splice(index, 1);
-    const newData = {
-        cart: tempCart
-    };
-    await updateDoc(doc(db, "tables", num.toString()), newData);
-    console.log("Removed Item: ", item)
+    let cartData = docSnap.data()["cart"];
+    for(var i in cartData){
+        if(cartData[i].id === item.id){
+            if (item.quantity >= cartData[i].quantity){
+                let tempCart = cartData;
+                tempCart.splice(i, 1);
+                const newData = {
+                    cart: tempCart
+                };
+                await updateDoc(doc(db, "tables", num.toString()), newData);
+                console.log("Removed Item: ", item)
+                return;
+            }
+            else {
+                cartData[i].quantity -= item.quantity;
+                console.log(cartData[i].quantity)
+                console.log(cartData[i])
+                const newData = {
+                    cart: cartData
+                };
+                await updateDoc(doc(db, "tables", num.toString()), newData);
+                console.log("Removed Item: ", item)
+                return;
+            }
+        }
+    }
 };
-

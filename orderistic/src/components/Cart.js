@@ -12,7 +12,7 @@ function Cart ({ show, closeCart, cart, changeCart, menu }) {
   React.useEffect(() => {
     let sum = 0;
     for (let item of cart) {
-      sum += parseFloat(item.price);
+      sum += parseFloat(item.price * item.quantity);
     }
     setTotal(sum);
   }, [cart])
