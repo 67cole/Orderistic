@@ -47,9 +47,6 @@ function MenuNav() {
                   Previous Orders
                 </Nav.Link>
                 <Nav.Link>Request Assistance</Nav.Link>
-                <Nav.Link as={Link} to="/cart">
-                  Cart
-                </Nav.Link>
               </>
             ) : (
               <>
