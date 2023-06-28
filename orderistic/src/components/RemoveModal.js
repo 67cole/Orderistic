@@ -8,7 +8,12 @@ function RemoveModal({ show, closeForm, id, menu, index, handleMenu }) {
     RemoveItem(id)
     closeForm();
     let tempMenu = [...menu];
-    tempMenu.splice(index, 1);
+    console.log(tempMenu);
+    for (let i = 0; i < tempMenu.length; i++) {
+      if (tempMenu[i].id === id) {
+        tempMenu.splice(i, 1);
+      }
+    }
     handleMenu(tempMenu);
   }
   return (
