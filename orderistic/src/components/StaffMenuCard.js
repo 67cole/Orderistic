@@ -11,7 +11,9 @@ function StaffMenuCard({ element, handleMenu, menu, index }) {
   const [price, setPrice] = React.useState(element.price);
   const [showRemove, setShowRemove] = React.useState(false);
   const [showUpdate, setShowUpdate] = React.useState(false);
-
+  React.useEffect(() => {
+    console.log(name);
+  }, [name])
   function setStates(image, name, desc, price) {
     setImage(image);
     setName(name);

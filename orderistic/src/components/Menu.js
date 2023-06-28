@@ -94,7 +94,7 @@ function Menu() {
         md={2}
         lg={3}
         className="g-4"
-        style={{ margin: "40px 40px 40px 40px" }}
+        style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
       >
         {menu.map((element, index) => (
           <Col key={index}>

@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import React from 'react';
+import React, { createContext } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { addToCart } from '../api/TableApi';
 
@@ -31,7 +31,16 @@ function MenuCard({ element, cart, changeCart }) {
     };
     addToCart(1, cartItem);
     let tempCart = [...cart];
-    tempCart.push(cartItem);
+    let found = false;
+    for (let item of tempCart) {
+      if (item.id === cartItem.id) {
+        found = true;
+        item.quantity += cartItem.quantity;
+      }
+    }
+    if (found === false) {
+      tempCart.push(cartItem);
+    }
     changeCart(tempCart);
   }
   return (  

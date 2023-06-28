@@ -21,9 +21,9 @@ function StaffMenu() {
   checkStaff();
   const [show, setShow] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
+
   function handleMenu(newMenu) {
     setMenu(newMenu);
-    console.log(newMenu);
   }
   React.useEffect(() => {
     returnFoodData().then((data) => {
@@ -37,24 +37,15 @@ function StaffMenu() {
       setMenu(tempMenu);
     });
   }, []);
+  React.useEffect(() => {
+    console.log(menu);
+  }, [menu])
   const closeForm = () => setShow(false);
   const showForm = () => setShow(true);
-  function reloadMenu() {
-    returnFoodData().then((data) => {
-      let tempMenu = [];
-      let tempDict = {};
-      for (const [key, value] of Object.entries(data)) {
-        tempDict = value;
-        tempDict.id = key;
-        tempMenu.push(tempDict);
-      }
-      setMenu(tempMenu);
-    });
-  }
   return (
     <>
       <StaffNav showForm={showForm}/>
-      <AddModal show={show} closeForm={closeForm} reloadMenu={reloadMenu} menu={menu} handleMenu={handleMenu}/>
+      <AddModal show={show} closeForm={closeForm} menu={menu} handleMenu={handleMenu}/>
       <Row
         xs={1}
         md={2}
@@ -63,8 +54,8 @@ function StaffMenu() {
         style={{ margin: "40px 40px 40px 40px" }}
       >
         {menu.map((element, index) => (
-          <Col key={index}>
-            <StaffMenuCard element={element} reloadMenu={reloadMenu} handleMenu={handleMenu} menu={menu} index={index}/>
+          <Col key={element.name}>
+            <StaffMenuCard element={element} handleMenu={handleMenu} menu={menu} index={index}/>
           </Col>
         ))}
       </Row>

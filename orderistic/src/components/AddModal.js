@@ -29,6 +29,11 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
     let tempMenu = [...menu];
     tempMenu.push(item);
     handleMenu(tempMenu);
+    setName("");
+    setDescription("");
+    setPrice(1.00.toFixed(2));
+    setCategory("");
+    setImage("");
   }
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])

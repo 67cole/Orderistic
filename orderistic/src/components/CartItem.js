@@ -39,7 +39,6 @@ function CartItem({ info, index, changeCart, cart, total, changeTotal }) {
     changeTotal(parseFloat(total) - parseFloat(info.price));
     let tempItem = {...cart[index]};
     tempItem.quantity = 1;
-    console.log(tempItem);
     removeFromCart(1, tempItem);
   }
   function addQuantity() {
@@ -48,7 +47,6 @@ function CartItem({ info, index, changeCart, cart, total, changeTotal }) {
     changeTotal(parseFloat(total) + parseFloat(info.price));
     let tempItem = {...cart[index]};
     tempItem.quantity = 1;
-    console.log(tempItem);
     addToCart(1, tempItem);
   }
   function removeItem() {
