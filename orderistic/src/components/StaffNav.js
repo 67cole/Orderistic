@@ -24,13 +24,13 @@ function StaffNav({ showForm }) {
     }
   }
   return (
-    <Navbar bg="light" data-bs-theme="dark" className="sticky-top nav-bar">
+    <Navbar style={{boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)", backgroundColor: "white"}} className="sticky-top nav-bar">
       <Container>
-        <Navbar.Brand as={Link} to="/staff-dashboard">
+        <Navbar.Brand as={Link} to="/staff-menu">
           Orderistic
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link as={Link} to="/staff-dashboard">
+          <Nav.Link as={Link} to="/staff-menu">
             Home
           </Nav.Link>
         </Nav>

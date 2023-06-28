@@ -6,17 +6,33 @@ import Navbar from "react-bootstrap/Navbar";
 import { auth } from "../firebase";
 // import route navigation function
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import Button from 'react-bootstrap/Button';
 
 function MenuNav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = React.useState("");
+  const navigate = useNavigate();
+
+  const { logout } = useAuth();
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setIsLoggedIn(!!user);
     });
   }, []);
 
+  async function handleLogout() {
+    setError("");
+    try {
+      await logout();
+      navigate("/login");
+    } catch (errorName) {
+      setError("Failed to log out");
+      console.log(errorName);
+    }
+  }
   return (
-      <Navbar bg="light" data-bs-theme="dark" className="sticky-top nav-bar">
+      <Navbar style={{boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)", backgroundColor: "white"}} className="sticky-top nav-bar">
         <Container>
           <Navbar.Brand as={Link} to="/menu">
             Orderistic
@@ -39,12 +55,12 @@ function MenuNav() {
               <>
                 {" "}
                 <Nav.Link>Request Assistance</Nav.Link>
-                <Nav.Link as={Link} to="/cart">
-                  Cart
-                </Nav.Link>
               </>
             )}
           </Nav>
+          <Button variant="light" onClick={handleLogout} style={{ backgroundColor: "white", border: "0", boxShadow: "none" }}>
+            Log Out
+          </Button>
         </Container>
       </Navbar>
   );
