@@ -1,11 +1,14 @@
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import React, { createContext } from 'react';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { addToCart } from '../api/TableApi';
+import React from 'react';
+import FoodInfo from './FoodInfo';
 
-function MenuCard({ element, cart, changeCart }) {
-  const [quantity, setQuantity] = React.useState(1);
+function MenuCard({ element }) {
+  // For showing the food information modal
+  const [show, setShow] = React.useState(false);
+
+  const closeFoodInfo = () => setShow(false);
+  const openFoodInfo = () => setShow(true);
+  // Style for the menu cards
   const imgStyle = {
     width: "210px",
     objectFit: "cover",
@@ -16,38 +19,13 @@ function MenuCard({ element, cart, changeCart }) {
     height: "210px",
     width: "100%",
     maxHeight: "500px",
-  }
-  function addQuantity() {
-    setQuantity(quantity + 1);
-  }
-  function subtractQuantity() {
-    setQuantity(quantity - 1);
-  }
-  function addToOrder() {
-    let cartItem = {
-      id: element.id,
-      quantity: quantity,
-      price: element.price
-    };
-    addToCart(1, cartItem);
-    let tempCart = [...cart];
-    let found = false;
-    for (let item of tempCart) {
-      if (item.id === cartItem.id) {
-        found = true;
-        item.quantity += cartItem.quantity;
-      }
-    }
-    if (found === false) {
-      tempCart.push(cartItem);
-    }
-    changeCart(tempCart);
+    cursor: "pointer"
   }
   return (  
     <>
-      <Card style={cardStyle}>  
+      <Card onClick={openFoodInfo} style={cardStyle}>  
         {element.image 
-          ? <Card.Img variant="top" src={element.image} style={imgStyle}/>
+          ? <Card.Img variant="top" src={element.image} style={imgStyle} className="img-fluid" />
           : <></>
         }
         <Card.Body style={{position: "relative"}}>
@@ -57,20 +35,12 @@ function MenuCard({ element, cart, changeCart }) {
           <Card.Text style={{ fontSize: "14px"}}>
             {element.description}
           </Card.Text>
-          <Card.Text style={{ position: "absolute", bottom: "5px" }}>
+          <Card.Text style={{ position: "absolute", bottom: "10px" }}>
             ${parseFloat(element.price).toFixed(2)}
           </Card.Text>
-          <ButtonGroup aria-label="Choose quantity of food" style={{ border: "2px solid black", borderRadius: "5px"}}>
-            {quantity === 1 
-              ? <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white", boxShadow: "none" }} disabled>-</Button>
-              : <Button variant="light" onClick={subtractQuantity} style={{ backgroundColor: "white", boxShadow: "none"}}>-</Button>
-            }
-            <div style={{ margin: "auto", paddingLeft: "10px", paddingRight: "10px", userSelect: "none" }}>{quantity}</div>
-            <Button variant="light" onClick={addQuantity} style={{ backgroundColor: "white", boxShadow: "none"}}>+</Button>
-          </ButtonGroup>
-          <Button variant="dark" style={{ position: "absolute", bottom: "15px", right: "15px", boxShadow: "none"}} onClick={addToOrder}>Add to order</Button> 
         </Card.Body>
       </Card>
+      <FoodInfo show={show} closeForm={closeFoodInfo} element={element}/>
     </>
   )
 }

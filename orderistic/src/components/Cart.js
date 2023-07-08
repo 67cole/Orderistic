@@ -5,8 +5,10 @@ import { ListGroup } from "react-bootstrap";
 import CartItem from './CartItem';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { CartContext } from './Menu.js';
 
-function Cart ({ show, closeCart, cart, changeCart, menu }) {
+function Cart ({ show, closeCart, menu }) {
+  const { cart } = React.useContext(CartContext);
   const [total, setTotal] = React.useState(0);
   const changeTotal = (newTotal) => setTotal(newTotal)
   React.useEffect(() => {
@@ -39,7 +41,7 @@ function Cart ({ show, closeCart, cart, changeCart, menu }) {
             ? "Your cart is empty!"
             : <ListGroup>
                 {cart.map((element, index) => (
-                  <CartItem key={index} info={menu[element.id]} cart={cart} changeCart={changeCart} index={index} total={total} changeTotal={changeTotal} />
+                  <CartItem key={index} info={menu[element.id]} index={index} total={total} changeTotal={changeTotal} />
                 ))}
                 <Card style={{ border: "0", paddingTop: "10px", paddingBottom: "100px"}}>
                   <Card.Body style={{borderBottom: "1px solid #ededed"}}>

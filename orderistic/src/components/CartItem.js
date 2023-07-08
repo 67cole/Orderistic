@@ -3,8 +3,10 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import React from 'react';
 import { addToCart, removeFromCart } from '../api/TableApi';
+import { CartContext } from './Menu.js';
 
-function CartItem({ info, index, changeCart, cart, total, changeTotal }) {
+function CartItem({ info, index, total, changeTotal }) {
+  const { cart, setCart } = React.useContext(CartContext);
   const [price, setPrice] = React.useState(cart[index].price * cart[index].quantity);
   const [quantity, setQuantity] = React.useState(cart[index].quantity);
   const imgStyle = {
@@ -53,7 +55,7 @@ function CartItem({ info, index, changeCart, cart, total, changeTotal }) {
     removeFromCart(1, cart[index]);
     let tempCart = [...cart];
     tempCart.splice(index, 1);
-    changeCart(tempCart);
+    setCart(tempCart);
   }
   return (
     <>

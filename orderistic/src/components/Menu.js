@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 
+export const CartContext = React.createContext();
+
 function Menu() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -35,10 +37,9 @@ function Menu() {
   const [show, setShow] = React.useState(false);
   const [cart, setCart] = React.useState([]);
 
-
-  const changeCart = (newCart) => setCart(newCart);
   const closeCart = () => setShow(false);
   const showCart = () => setShow(true);
+  
   React.useEffect(() => {
     returnFoodData()
       .then((data) => {
@@ -89,25 +90,27 @@ function Menu() {
       <SearchBar onSearch={search} style={{ flex: "display" }} />
       </div>
   */}
-      <Row
-        xs={1}
-        md={2}
-        lg={3}
-        className="g-4"
-        style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
-      >
-        {menu.map((element, index) => (
-          <Col key={index}>
-            <MenuCard element={element} cart={cart} changeCart={changeCart}/>
-          </Col>
-        ))}
-      </Row>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button variant="secondary" size="lg" style={cartButtonStyle} onClick={showCart}>
-          View cart
-        </Button>
-      </div>
-      <Cart show={show} closeCart={closeCart} cart={cart} changeCart={changeCart} menu={menuDict}/>
+      <CartContext.Provider value={{ cart, setCart }}>
+        <Row
+          xs={1}
+          md={2}
+          lg={3}
+          className="g-4"
+          style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
+        >
+          {menu.map((element, index) => (
+            <Col key={index}>
+              <MenuCard element={element}/>
+            </Col>
+          ))}
+        </Row>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button variant="secondary" size="lg" style={cartButtonStyle} onClick={showCart}>
+            View cart
+          </Button>
+        </div>
+        <Cart show={show} closeCart={closeCart} menu={menuDict}/>
+      </CartContext.Provider>
     </>
   )
 }
