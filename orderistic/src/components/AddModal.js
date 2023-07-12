@@ -4,22 +4,31 @@ import Button from "react-bootstrap/Button";
 import React from "react";
 import { fileToDataUrl } from "./helper";
 import { AddItem } from "../api/MenuApi";
+import CustomisationForm from "./CustomisationForm";
+import { MenuContext } from "./StaffMenu";
+import { Row, Col } from "react-bootstrap";
 
-function AddModal({ show, closeForm, menu, handleMenu }) {
 
+function AddModal({ show, closeForm }) {
+  const { menu, setMenu } = React.useContext(MenuContext);
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState(1.00.toFixed(2));
   const [category, setCategory] = React.useState("");
   const [image, setImage] = React.useState("");
+  const [customisations, setCustomisations] = React.useState([]);
 
+  function handleCustomisations(customisations) {
+    setCustomisations(customisations)
+  }
   function submitForm() {
     const item = {
       name: name,
       description: description,
       price: price,
       category: category,
-      image: image
+      image: image,
+      customisations: customisations
     }
     AddItem(item)
       .then((data) => {
@@ -28,12 +37,13 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
     closeForm();
     let tempMenu = [...menu];
     tempMenu.push(item);
-    handleMenu(tempMenu);
+    setMenu(tempMenu);
     setName("");
     setDescription("");
     setPrice(1.00.toFixed(2));
     setCategory("");
     setImage("");
+    setCustomisations([]);
   }
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])
@@ -43,29 +53,35 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
   }
   return (
     <> 
-    <Modal show={show} onHide={closeForm} centered>
+    <Modal show={show} onHide={closeForm} centered size="lg">
       <Modal.Header closeButton>
       <Modal.Title>Add New Item to the Menu</Modal.Title>
       </Modal.Header>
       <Modal.Body>
       <Form>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-              type="text"
-              autoFocus
-              value={name}
-              onChange={e => setName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Category</Form.Label>
-          <Form.Control
-              type="text"
-              value={category}
-              onChange={e => setCategory(e.target.value)}
-          />
-        </Form.Group>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                  type="text"
+                  autoFocus
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3" controlId="category">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                  type="text"
+                  value={category}
+                  onChange={e => setCategory(e.target.value)}
+              />
+            </Form.Group>
+          </Col>        
+        </Row>
         <Form.Group
         className="mb-3"
         controlId="exampleForm.ControlTextarea1"
@@ -73,7 +89,7 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Group className="mb-3" controlId="price">
           <Form.Label>Price</Form.Label>
           <Form.Control
               type="number"
@@ -85,6 +101,7 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
           <Form.Label>Image</Form.Label>
           <Form.Control type="file" onChange={convertImg}/>
         </Form.Group>
+        <CustomisationForm customisations={customisations} handleCustomisations={handleCustomisations}/>
       </Form>
       </Modal.Body>
       <Modal.Footer>

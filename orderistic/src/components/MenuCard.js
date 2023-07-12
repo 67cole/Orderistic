@@ -29,13 +29,13 @@ function MenuCard({ element }) {
           : <></>
         }
         <Card.Body style={{position: "relative"}}>
-          <Card.Title>
+          <Card.Title style={{ }}>
             {element.name}
           </Card.Title>
           <Card.Text style={{ fontSize: "14px"}}>
             {element.description}
           </Card.Text>
-          <Card.Text style={{ position: "absolute", bottom: "10px" }}>
+          <Card.Text style={{ position: "absolute", bottom: "10px", fontWeight: "500", fontSize: "16px" }}>
             ${parseFloat(element.price).toFixed(2)}
           </Card.Text>
         </Card.Body>

@@ -5,8 +5,10 @@ import Image from 'react-bootstrap/Image';
 import React from "react";
 import { fileToDataUrl } from "./helper";
 import { UpdateItem } from "../api/MenuApi";
+import { MenuContext } from "./StaffMenu";
 
-function UpdateModal({ show, closeForm, element, menu, index, handleMenu, setStates }) {
+function UpdateModal({ show, closeForm, element, setStates }) {
+  const { menu, setMenu } = React.useContext(MenuContext);
 
   const [name, setName] = React.useState(element.name);
   const [description, setDescription] = React.useState(element.description);
@@ -27,7 +29,7 @@ function UpdateModal({ show, closeForm, element, menu, index, handleMenu, setSta
     closeForm();
     let tempMenu = [...menu];
     setStates(image, name, description, price);
-    handleMenu(tempMenu);
+    setMenu(tempMenu);
   }
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])
@@ -80,6 +82,7 @@ function UpdateModal({ show, closeForm, element, menu, index, handleMenu, setSta
           <Form.Control type="file" onChange={convertImg}/><br/>
           {image ? <Image src={image} width="260px" fluid/> : <></>}
         </Form.Group>
+        
       </Form>
       </Modal.Body>
       <Modal.Footer>

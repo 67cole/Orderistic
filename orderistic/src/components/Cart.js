@@ -23,7 +23,7 @@ function Cart ({ show, closeCart, menu }) {
     paddingLeft: "250px", 
     paddingRight: "250px", 
     position: "fixed", 
-    bottom: "20px",
+    bottom: "10px",
     fontWeight: "600",
     borderRadius: "6px"
   }
@@ -43,8 +43,8 @@ function Cart ({ show, closeCart, menu }) {
                 {cart.map((element, index) => (
                   <CartItem key={index} info={menu[element.id]} index={index} total={total} changeTotal={changeTotal} />
                 ))}
-                <Card style={{ border: "0", paddingTop: "10px", paddingBottom: "100px"}}>
-                  <Card.Body style={{borderBottom: "1px solid #ededed"}}>
+                <Card style={{ border: "0", paddingTop: "10px", paddingBottom: "70px"}}>
+                  <Card.Body style={{ borderBottom: "1px solid #ededed" }}>
                     <Card.Title>
                       Total
                       <Card.Title style={{ float: "right", fontSize: "30px" }}>

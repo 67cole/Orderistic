@@ -3,17 +3,17 @@ import Card from 'react-bootstrap/Card';
 import RemoveModal from './RemoveModal';
 import UpdateModal from './UpdateModal';
 import React from 'react';
+import { MenuContext } from './StaffMenu';
+import { RemoveItem } from "../api/MenuApi";
 
-function StaffMenuCard({ element, handleMenu, menu, index }) {
+function StaffMenuCard({ element }) {
+  const { menu, setMenu } = React.useContext(MenuContext);
   const [image, setImage] = React.useState(element.image);
   const [name, setName] = React.useState(element.name);
   const [description, setDescription] = React.useState(element.description);
   const [price, setPrice] = React.useState(element.price);
   const [showRemove, setShowRemove] = React.useState(false);
   const [showUpdate, setShowUpdate] = React.useState(false);
-  React.useEffect(() => {
-    console.log(name);
-  }, [name])
   function setStates(image, name, desc, price) {
     setImage(image);
     setName(name);
@@ -24,6 +24,19 @@ function StaffMenuCard({ element, handleMenu, menu, index }) {
   const showRemForm = () => setShowRemove(true);
   const closeUpdateForm = () => setShowUpdate(false);
   const showUpdateForm = () => setShowUpdate(true);
+
+
+  function remove() {
+    RemoveItem(element["id"])
+    let tempMenu = [...menu];
+    console.log(tempMenu);
+    for (let i = 0; i < tempMenu.length; i++) {
+      if (tempMenu[i].id === element["id"]) {
+        tempMenu.splice(i, 1);
+      }
+    }
+    setMenu(tempMenu);
+  }
   const imgStyle = {
     width: "200px",
     objectFit: "cover",
@@ -55,8 +68,8 @@ function StaffMenuCard({ element, handleMenu, menu, index }) {
           <Button variant="light" onClick={showUpdateForm} style={{position: "absolute", top: "10px", right: "10px"}}>✏️</Button>
         </Card.Body>
       </Card>
-      <RemoveModal show={showRemove} closeForm={closeRemForm} id={element["id"]} handleMenu={handleMenu} menu={menu} index={index}/>
-      <UpdateModal show={showUpdate} closeForm={closeUpdateForm} element={element} handleMenu={handleMenu} menu={menu} index={index} setStates={setStates}/>
+      <RemoveModal show={showRemove} closeForm={closeRemForm} remove={remove}/>
+      <UpdateModal show={showUpdate} closeForm={closeUpdateForm} element={element} setStates={setStates}/>
     </>
   )
 }

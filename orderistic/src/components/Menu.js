@@ -68,7 +68,7 @@ function Menu() {
     paddingLeft: "250px", 
     paddingRight: "250px", 
     position: "fixed", 
-    bottom: "20px",
+    bottom: "10px",
     fontWeight: "600",
     borderRadius: "6px"
   }
@@ -104,7 +104,7 @@ function Menu() {
             </Col>
           ))}
         </Row>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center"}}>
           <Button variant="secondary" size="lg" style={cartButtonStyle} onClick={showCart}>
             View cart
           </Button>
