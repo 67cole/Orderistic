@@ -29,3 +29,13 @@ Week 5:
 - Implemented the tables database and functions.
 - Discussed bugs with group members
 - Fixed functionality of the cart by taking into account quantity of an item.
+
+Week 6:
+- Met with group to discuss Sprint 2
+- Decided on which features to implement through user story tickets on Jira
+- Assigned relevant roles in Sprint 2
+- Began brainstorming ideas on how to implement the order system
+
+Week 7:
+- Pair coded with Colin to implement the order system
+- Realised that in the future, our timing algorithm may not be perfect due to amount of data required.
