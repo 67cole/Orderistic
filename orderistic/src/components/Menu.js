@@ -1,8 +1,6 @@
 import React from "react";
 import MenuCard from './MenuCard';
-// import SearchBar from "./SearchBar";
-// import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
+
 import { returnFoodData } from "../api/MenuApi";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -14,6 +12,7 @@ import MenuNav from "./MenuNav";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
+import MenuSearchBar from "./MenuSearchBar";
 
 function Menu() {
   const { currentUser } = useAuth();
@@ -29,7 +28,7 @@ function Menu() {
 
   checkStaff();
 
-  // const [searchString, setSearchString] = React.useState("");
+  
   const [menu, setMenu] = React.useState([]);
   const [menuDict, setMenuDict] = React.useState({});
   const [show, setShow] = React.useState(false);
@@ -59,9 +58,7 @@ function Menu() {
       });
   }, [])
 
-  // const search = (string) => {
-  //   setSearchString(string);
-  // };
+  
   const cartButtonStyle = {
     backgroundColor: "black", 
     paddingLeft: "250px", 
@@ -74,21 +71,7 @@ function Menu() {
   return (
     <>
       <MenuNav />
-      {/*
-      <div className="nav-bar">
-
-      <IconButton
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{ mr: 2 }}
-        >
-        <MenuIcon />
-      </IconButton>
-      <SearchBar onSearch={search} style={{ flex: "display" }} />
-      </div>
-  */}
+      <MenuSearchBar />
       <Row
         xs={1}
         md={2}
