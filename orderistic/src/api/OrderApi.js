@@ -74,6 +74,7 @@ export async function completeItem(orderID, itemID) {
       break;
     }
   }
+
   // now loop through completed array
   let added = 0;
   for (var j in completed) {
@@ -107,14 +108,19 @@ export async function completeItem(orderID, itemID) {
     "food_ordered": ordered
   });
 
-  // NOT DONE YET DO SOON !!
   // check if ordered is empty, then we move the order to order history and delete from current directory
-  /*
   if (ordered.length === 0) {
-    const orderHist = doc(db, "ordersHist", matches.id);
-    setDoc(orderHist, comp)
+    const orderHist = doc(db, "orders", orderID);
+    const docData = await getDoc(orderHist);
+
+    // replace into order history collection
+    await setDoc(doc(db, "ordersHist", orderID), docData.data());
+
+    // now delete from current orders
+    await deleteDoc(orderHist);
+
   }
-  */
+
 
   // jono's version
   /*
@@ -125,7 +131,7 @@ export async function completeItem(orderID, itemID) {
   });
   let newCompleted = docSnap.data()["food_completed"];
   newCompleted.append(itemID)*/
-};
+}
 
 
 
