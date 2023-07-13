@@ -7,7 +7,9 @@ import { AddItem } from "../api/MenuApi";
 import CustomisationForm from "./CustomisationForm";
 import { MenuContext } from "./StaffMenu";
 import { Row, Col } from "react-bootstrap";
-
+import Image from 'react-bootstrap/Image';
+import ListGroup from 'react-bootstrap/ListGroup';
+import CustomisationItem from "./CustomisationItem";
 
 function AddModal({ show, closeForm }) {
   const { menu, setMenu } = React.useContext(MenuContext);
@@ -51,6 +53,7 @@ function AddModal({ show, closeForm }) {
         setImage(data);
       })
   }
+
   return (
     <> 
     <Modal show={show} onHide={closeForm} centered size="lg">
@@ -82,6 +85,26 @@ function AddModal({ show, closeForm }) {
             </Form.Group>
           </Col>        
         </Row>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3" controlId="price">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                  type="number"
+                  value={price}
+                  onChange={e => setPrice(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Image</Form.Label>
+              <Form.Control type="file" onChange={convertImg}/>
+
+            </Form.Group>
+          </Col>
+        </Row>
+        {image ? <Image src={image} width="260px" fluid style={{ marginLeft: "auto", marginRight: "auto" }}/> : <></>}
         <Form.Group
         className="mb-3"
         controlId="exampleForm.ControlTextarea1"
@@ -89,19 +112,13 @@ function AddModal({ show, closeForm }) {
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="price">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-              type="number"
-              value={price}
-              onChange={e => setPrice(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Image</Form.Label>
-          <Form.Control type="file" onChange={convertImg}/>
-        </Form.Group>
+
         <CustomisationForm customisations={customisations} handleCustomisations={handleCustomisations}/>
+        <ListGroup>
+          {customisations.map((element, index) => (
+            <CustomisationItem key={index} customisations={customisations} handleCustomisations={handleCustomisations} element={element} index={index} />
+          ))}
+        </ListGroup>
       </Form>
       </Modal.Body>
       <Modal.Footer>

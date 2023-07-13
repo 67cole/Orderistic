@@ -1,19 +1,13 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import ListGroup from 'react-bootstrap/ListGroup';
 import Collapse from 'react-bootstrap/Collapse';
 import React from 'react';
 import CloseButton from 'react-bootstrap/CloseButton';
-import RemoveModal from "./RemoveModal";
 
 function CustomisationForm({ customisations, handleCustomisations }) {
   const [showForm, setShowForm] = React.useState(false);
   const [custName, setCustName] = React.useState("");
   const [options, setOptions] = React.useState([]);
-  const [showRemove, setShowRemove] = React.useState(false);
-
-  const closeRemForm = () => setShowRemove(false);
-  const showRemForm = () => setShowRemove(true);
 
   function newCustomisation() {
     setShowForm(!showForm);
@@ -50,14 +44,9 @@ function CustomisationForm({ customisations, handleCustomisations }) {
     setCustName("");
     setOptions([]);
   }
-  function removeCustomisation(index) {
-    let newCustom = [...customisations];
-    newCustom.splice(index, 1);
-    handleCustomisations(newCustom);
-  }
   return (
     <>
-      Food Customisations (e.g choice of sauce or drink) <br/>
+      <p>Food Customisations (e.g choice of sauce or drink)</p>
       <Button onClick={newCustomisation}>
         {showForm 
           ? "-"
@@ -98,19 +87,7 @@ function CustomisationForm({ customisations, handleCustomisations }) {
           </Form.Group>
           </div>
         </Collapse>
-      <ListGroup>
-        {customisations.map((element, index) => (
-          <ListGroup.Item key={index}>
-            <Button variant="outline-danger" onClick={showRemForm} style={{ marginLeft: "10px", float: "right" }}>Remove </Button>
-            <Button variant="outline-dark" style={{ float: "right" }} >Edit</Button>
-            <div style={{ fontWeight: "500" }}>{element.name}</div>
-            {element.options.map((option, index) => (
-              <div key={index}>&nbsp;&nbsp;&nbsp;{option}</div>
-            ))}
-            <RemoveModal show={showRemove} closeForm={closeRemForm} remove={() => removeCustomisation(index)}/>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+
     </>
   )
 }
