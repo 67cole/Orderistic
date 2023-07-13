@@ -1,4 +1,5 @@
 import { db } from "../firebase";
+import { addOrder } from "./OrderApi";
 import {
   collection,
   setDoc,
@@ -122,3 +123,24 @@ export async function removeFromCart(num, item) {
         }
     }
 };
+
+//Allows customers to send their order to the staff or chef
+//Makes the order ready for the chef
+export async function sendOrder(tableNumber) {
+    const docRef = doc(db, "tables", tableNumber.toString());
+    const docSnap = await getDoc(docRef);
+    let tempCart = docSnap.data()["cart"];
+    const orderData =  {    
+        food_ordered: tempCart,
+        food_completed: [],
+        table_number: tableNumber,
+        time_ordered: 0,
+        time_finished: 0,
+    };
+    addOrder(orderData);
+    const newCart = {
+        cart: [],
+        number: tableNumber,
+    }
+    setDoc(docRef, newCart)
+  }
