@@ -3,8 +3,8 @@ import { Card, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnFoodData, returnSpecificFood } from "../api/MenuApi";
-import { returnOrderData, viewOrder, addOrder, removeOrder } from "../api/OrderApi";
-import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart } from "../api/TableApi";
+import { returnOrderData, viewOrder, addOrder, removeOrder, completeItem } from "../api/OrderApi";
+import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart, sendOrder } from "../api/TableApi";
 
 export default function TestApi() {
   const [error, setError] = useState("");
@@ -80,6 +80,14 @@ export default function TestApi() {
     viewCart(1);
   }
 
+  async function handleSendOrder() {
+    sendOrder(1);
+  }
+
+  async function handleCompleteItem() {
+    completeItem("4GDAjXsNheOpmrCdQiBv","AqB8ijUpU1bvR7Dl3n5x");
+  }
+
   return (
     <>
       <Card style={{ width: "75vw", maxWidth: "600px" }}>
@@ -131,6 +139,12 @@ export default function TestApi() {
           <Link to="/staff-dashboard" className="btn btn-danger w-100 mt-3">
             Go Back
           </Link>
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleSendOrder}>
+            Send Order
+          </Button>          
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleCompleteItem}>
+            Complete Item
+          </Button>   
         </Card.Body>
       </Card>
     </>
