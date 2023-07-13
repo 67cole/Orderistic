@@ -85,7 +85,8 @@ export default function TestApi() {
   }
 
   async function handleCompleteItem() {
-    completeItem("4GDAjXsNheOpmrCdQiBv","AqB8ijUpU1bvR7Dl3n5x");
+    // parameters are orderID, itemID
+    completeItem("YrVgaHYhlQhTs7VjAJIR","kGrS0kmkWLAkXutNTnMS");
   }
 
   return (
