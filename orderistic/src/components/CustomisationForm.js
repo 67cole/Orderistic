@@ -47,7 +47,7 @@ function CustomisationForm({ customisations, handleCustomisations }) {
   return (
     <>
       <p>Food Customisations (e.g choice of sauce or drink)</p>
-      <Button onClick={newCustomisation}>
+      <Button onClick={newCustomisation} variant="dark">
         {showForm 
           ? "-"
           : "+"
@@ -75,10 +75,10 @@ function CustomisationForm({ customisations, handleCustomisations }) {
                 <CloseButton onClick={() => removeOption(optionIndex)} style={{ marginLeft: "10px" }} />
               </div>
             ))} <br/>
-            <Button onClick={() => addOption()} >
+            <Button onClick={() => addOption()} variant="dark">
               Add option
             </Button> <br/> <br/>
-            <Button onClick={() => addCustomisation()}>
+            <Button onClick={() => addCustomisation()} variant="dark" style={{ marginRight: "5px" }}>
               Add customisation
             </Button> 
             <Button variant="outline-danger" onClick={discardCustomisation}>

@@ -107,7 +107,7 @@ function AddModal({ show, closeForm }) {
         {image ? <Image src={image} width="260px" fluid style={{ marginLeft: "auto", marginRight: "auto" }}/> : <></>}
         <Form.Group
         className="mb-3"
-        controlId="exampleForm.ControlTextarea1"
+        controlId="description"
         >
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
@@ -122,7 +122,7 @@ function AddModal({ show, closeForm }) {
       </Form>
       </Modal.Body>
       <Modal.Footer>
-      <Button variant="primary" onClick={submitForm}>
+      <Button variant="dark" onClick={submitForm}>
           Add
       </Button>
       <Button variant="secondary" onClick={closeForm}>

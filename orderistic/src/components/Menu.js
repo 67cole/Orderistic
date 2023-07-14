@@ -44,6 +44,7 @@ function Menu() {
     returnFoodData()
       .then((data) => {
         setMenuDict(data);
+        console.log(data);
         let tempMenu = [];
         let tempDict = {};
         for (const [key, value] of Object.entries(data)) {
