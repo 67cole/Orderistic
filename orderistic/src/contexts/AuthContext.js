@@ -13,6 +13,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [tableNumber, setTableNumber] = useState(0);
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -46,6 +47,12 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  function chooseTable(newTableNumber) {
+    console.log("entered here with", newTableNumber);
+    setTableNumber(newTableNumber);
+    return tableNumber;
+  }
+
   const value = {
     currentUser,
     signup,
@@ -54,6 +61,8 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
+    chooseTable,
+    tableNumber,
   };
 
   return (
