@@ -19,7 +19,7 @@ import Snackbar from "@mui/material/Snackbar";
 import TableNumberModal from "./TableNumberModal";
 
 function Menu() {
-  const { currentUser, tableNumber } = useAuth();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   async function checkStaff() {
     if (
