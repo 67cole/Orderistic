@@ -32,7 +32,7 @@ function Checkbox({ customisation, maxOptionNum }) {
     <>
       {customisation.options.map((element, index) => (
         <div key={index} style={{borderBottom: "1px solid #dfdfdf"}}>
-          <label htmlFor={index} name={customisation.name} style={{ width:"93%", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "5px" }}>{element}</label>
+          <label htmlFor={index} name={customisation.name} style={{ width:"93%", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "1px", fontSize: "14px" }}>{element}</label>
           <input type="checkbox" id={index} name={customisation.name} onClick={e => handleClick(e.target.checked, index)} disabled={(!checked[index] && chosenNum === maxOptionNum)} style={{ accentColor: "black", verticalAlign: "middle", width: "17px", height: "17px"}}/>
         </div>
       ))}

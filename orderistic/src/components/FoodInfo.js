@@ -84,7 +84,7 @@ function FoodInfo({ show, closeForm, element }) {
           <div style={{ overflowY: "auto", height: "55%" }}>
             {element.customisations.map((customisation, index) => (
               <div key={index} style={{ marginBottom: "10px" }}>
-                <div style={{ fontWeight: "500", fontSize: "18px" }}>
+                <div style={{ fontWeight: "500", fontSize: "17px" }}>
                   {customisation.name} {customisation.required ? "(Required)" : <></>} 
                 </div>
                 <div>
@@ -104,7 +104,7 @@ function FoodInfo({ show, closeForm, element }) {
                             <div>
                               {customisation.options.map((element, index) => (
                                 <div key={index} style={{borderBottom: "1px solid #dfdfdf"}}>
-                                  <label htmlFor={element} name={customisation.name} style={{ width:"93%", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "5px" }}>{element}</label>
+                                  <label htmlFor={element} name={customisation.name} style={{ width:"93%", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "1px", fontSize: "14px" }}>{element}</label>
                                   <input type="radio" id={element} name={customisation.name} style={{ accentColor: "black", verticalAlign: "middle", width: "17px", height: "17px"}}/>
                                 </div>
                               ))}

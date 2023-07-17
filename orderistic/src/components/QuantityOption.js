@@ -51,8 +51,8 @@ function QuantityOption({ customisation, maxOptionNum }) {
   return(
     <>
       {customisation.options.map((element, index) => (
-        <div key={index} style={{borderBottom: "1px solid #dfdfdf", padding: "20px 10px 20px 5px", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-          <span>{element}</span>
+        <div key={index} style={{borderBottom: "1px solid #dfdfdf", padding: "10px 10px 10px 1px", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+          <span style={{ fontSize: "14px"}}>{element}</span>
           <ButtonGroup >
             {quantities[index] > 0
               ? <>
