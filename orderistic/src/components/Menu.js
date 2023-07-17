@@ -1,8 +1,5 @@
 import React from "react";
 import MenuCard from "./MenuCard";
-// import SearchBar from "./SearchBar";
-// import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
 import { returnFoodData } from "../api/MenuApi";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -32,7 +29,7 @@ function Menu() {
 
   checkStaff();
 
-  // const [searchString, setSearchString] = React.useState("");
+  
   const [menu, setMenu] = React.useState([]);
   const [menuDict, setMenuDict] = React.useState({});
   const [show, setShow] = React.useState(false);
@@ -58,9 +55,7 @@ function Menu() {
     });
   }, []);
 
-  // const search = (string) => {
-  //   setSearchString(string);
-  // };
+  
   const cartButtonStyle = {
     backgroundColor: "black",
     paddingLeft: "250px",
@@ -70,35 +65,33 @@ function Menu() {
     fontWeight: "600",
     borderRadius: "6px",
   };
+  const searchStyle = {
+    width: "20%",
+    minWidth: "200px",
+    marginTop: "20px",
+    padding: "20px",
+    fontSize: "20px",
+  }
+  const [search, setSearch] = React.useState('');
   return (
     <>
       <MenuNav />
-      {/*
-      <div className="nav-bar">
-
-      <IconButton
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{ mr: 2 }}
-        >
-        <MenuIcon />
-      </IconButton>
-      <SearchBar onSearch={search} style={{ flex: "display" }} />
-      </div>
-  */}
+      {<input
+      style={searchStyle}
+        type="text"
+        placeholder="Search menu"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />}
       <TableNumberModal />
       <Row
-        xs={1}
-        md={2}
-        lg={3}
+        
         className="g-4"
-        style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
+        style={{ margin: "0px 20px 20px 20px", paddingBottom: "40px" }}
       >
-        {menu.map((element, index) => (
+        {menu.filter(element => element.name.toLowerCase().includes(search.toLowerCase())).map((element, index) => (
           <Col key={index}>
-            <MenuCard element={element} cart={cart} changeCart={changeCart} />
+            <MenuCard element={element} cart={cart} changeCart={changeCart} searchData={search} menu={menu}/>
           </Col>
         ))}
       </Row>
