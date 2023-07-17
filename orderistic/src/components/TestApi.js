@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnFoodData, returnSpecificFood } from "../api/MenuApi";
 import { returnOrderData, viewOrder, addOrder, removeOrder, completeItem } from "../api/OrderApi";
-import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart, sendOrder } from "../api/TableApi";
+import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart, sendOrder, returnOrdersForTable } from "../api/TableApi";
 
 export default function TestApi() {
   const [error, setError] = useState("");
@@ -89,6 +89,10 @@ export default function TestApi() {
     completeItem("YrVgaHYhlQhTs7VjAJIR","kGrS0kmkWLAkXutNTnMS");
   }
 
+  async function checkTableOrders() {
+    returnOrdersForTable(5);
+  }
+
   return (
     <>
       <Card style={{ width: "75vw", maxWidth: "600px" }}>
@@ -145,7 +149,10 @@ export default function TestApi() {
           </Button>          
           <Button className="btn btn-primary w-100 mt-3" onClick={handleCompleteItem}>
             Complete Item
-          </Button>   
+          </Button>
+          <Button className="btn btn-primary w-100 mt-3" onClick={checkTableOrders}>
+            Table Order
+          </Button>     
         </Card.Body>
       </Card>
     </>

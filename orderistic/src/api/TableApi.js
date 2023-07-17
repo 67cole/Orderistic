@@ -20,6 +20,7 @@ import {
 // {
 //    table_number: value (a int of a table number)
 //    cart: [] (an array of unique ID's representing food)
+//    status: string (a string representing table status "active/empty")
 // }
 
 export async function viewTables() {
@@ -28,7 +29,6 @@ export async function viewTables() {
     collectionRef.forEach((doc) => {
       tableList.push(doc.data());
     });
-    console.log(tableList);
     return tableList;
 };
 
@@ -42,7 +42,6 @@ export async function addTable() {
         cart: []
     };
     await setDoc(doc(db, "tables", newTableNumber.toString()), tableData);
-    console.log('Added table with ID: ', newTableNumber);
 };
 
 // Allows staff to remove highest table (HIMMY-22)
@@ -51,7 +50,6 @@ export async function removeTable() {
     const docSnap = await getDocs(collectionRef);
     const tableNumber = docSnap.docs.length
     await deleteDoc(doc(db, "tables", tableNumber.toString()));
-    console.log('Removed table with number: ', tableNumber);
 };
 
 // Get cart
@@ -59,7 +57,6 @@ export async function viewCart(num) {
     const docRef = doc(db, "tables", num.toString());
     const docSnap = await getDoc(docRef)
     const cart = docSnap.data()["cart"];
-    console.log(cart);
     return cart;
 };
 
@@ -71,15 +68,11 @@ export async function addToCart(num, item) {
     let cartData = docSnap.data()["cart"];
     for(var i in cartData){
         if(cartData[i].id === item.id){
-            console.log("Exists")
             cartData[i].quantity += item.quantity
-            console.log(cartData[i].quantity)
-            console.log(cartData[i])
             const newData = {
                 cart: cartData
             };
             await updateDoc(doc(db, "tables", num.toString()), newData);
-            console.log("Added Item: ", item)
             return;
         }
     }
@@ -88,7 +81,6 @@ export async function addToCart(num, item) {
         cart: cartData
     };
     await updateDoc(doc(db, "tables", num.toString()), newData);
-    console.log("Added Item: ", item)
 };
 
 // Removes item from cart
@@ -130,11 +122,15 @@ export async function sendOrder(tableNumber) {
     const docRef = doc(db, "tables", tableNumber.toString());
     const docSnap = await getDoc(docRef);
     let tempCart = docSnap.data()["cart"];
+
+    // grab current time of order in seconds
+    let currTime = Math.floor(Date.now() / 1000);
+
     const orderData =  {    
         food_ordered: tempCart,
         food_completed: [],
         table_number: tableNumber,
-        time_ordered: 0,
+        time_ordered: currTime,
         time_finished: 0,
     };
     addOrder(orderData);
@@ -144,3 +140,52 @@ export async function sendOrder(tableNumber) {
     }
     setDoc(docRef, newCart)
   }
+
+
+// Returns database of all tables
+export async function tableData() {
+    const docRef = await getDocs(collection(db, "tables"));
+    const tableInfo = {};
+
+    // loop through each document
+    // for every key is the table number and the value is the info
+    docRef.forEach((doc) => {
+
+        let table = doc.data();
+        tableInfo[doc.id] = table;
+    });
+
+    return tableInfo;
+}
+
+// Given a table number, return the current orders and previous orders
+export async function returnOrdersForTable(table_no) {
+    const ordersDocRef = await getDocs(collection(db, "orders"));
+    const ordersHistDocRef = await getDocs(collection(db, "ordersHist"));
+
+    // we return a dictionary which has current orders and previous orders as key, and their respective data for values
+    const orders = {};
+    orders["currOrders"] = [];
+    orders["prevOrders"] = [];
+
+    // now loop through all the collection of prev and curr orders
+    // starting off with current orders
+    ordersDocRef.forEach((doc) => {
+
+        // check if we're on the right number
+        if (doc.data()["table_number"] === table_no) {
+            orders["currOrders"].push(doc.data());
+        }
+    });
+
+    // now with previous orders
+    ordersHistDocRef.forEach((doc) => {
+
+        // check if we're on the right number
+        if (doc.data()["table_number"] === table_no) {
+            orders["prevOrders"].push(doc.data());
+        }
+    });
+
+    // console.log(orders);
+}

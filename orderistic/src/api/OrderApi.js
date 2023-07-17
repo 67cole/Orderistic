@@ -28,7 +28,6 @@ export async function returnOrderData() {
   docRef.forEach((doc) => {
     orderMenu.push(doc.data());
   });
-  console.log(orderMenu);
   return orderMenu;
 }
 
@@ -37,25 +36,22 @@ export async function viewOrder() {
   const querySnapshot = await getDocs(collection(db, "orders"));
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
   });
 }
 
 // Allows staff to add order (HIMMY-19)
 export async function addOrder(item) {
   const res = await addDoc(collection(db, "orders"), item);
-  console.log('Added document with ID: ', res.id);
 }
 
 //Allows staff to remove order (HIMMY-22)
 export async function removeOrder(id) {
   const res = await deleteDoc(doc(db, "orders", id));
-  console.log('Removed document with ID: ', id);
 }
 
-//Retrieves cart and adds it to order
 
-//Allows chef to check off items
+
+//Allows chef to check off items and moves order to orderHist if they are complete
 export async function completeItem(orderID, itemID) {
   const docRef = doc(db, "orders", orderID);
   const matches = await getDoc(docRef);
@@ -113,14 +109,18 @@ export async function completeItem(orderID, itemID) {
     const orderHist = doc(db, "orders", orderID);
     const docData = await getDoc(orderHist);
 
+    // since we need to adjust time finished, we create a new variable
+    // create a time in seconds
+    const newOrder = docData.data();
+    newOrder["time_finished"] = Math.floor(Date.now() / 1000);
+
     // replace into order history collection
-    await setDoc(doc(db, "ordersHist", orderID), docData.data());
+    await setDoc(doc(db, "ordersHist", orderID), newOrder);
 
     // now delete from current orders
     await deleteDoc(orderHist);
 
   }
-
 
   // jono's version
   /*

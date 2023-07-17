@@ -36,3 +36,4 @@ Week 6:
 
 Week 7:
 - Worked on user stories 28-30 for staff members to complete orders and send into order history
+- Worked on the staff side to update table functions (grab all tables, show previous and current orders)
