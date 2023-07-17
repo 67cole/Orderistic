@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-import { addStaff } from "../api/AuthApi";
 
 // We want to access the current user anywhere in the app
 
@@ -48,7 +47,6 @@ export function AuthProvider({ children }) {
   }, []);
 
   function chooseTable(newTableNumber) {
-    console.log("entered here with", newTableNumber);
     setTableNumber(newTableNumber);
     return tableNumber;
   }
@@ -61,6 +59,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
+    setTableNumber,
     chooseTable,
     tableNumber,
   };
