@@ -65,11 +65,19 @@ function Menu() {
     fontWeight: "600",
     borderRadius: "6px",
   };
+  const searchStyle = {
+    width: "20%",
+    minWidth: "200px",
+    marginTop: "20px",
+    padding: "20px",
+    fontSize: "20px",
+  }
   const [search, setSearch] = React.useState('');
   return (
     <>
       <MenuNav />
       {<input
+      style={searchStyle}
         type="text"
         placeholder="Search menu"
         value={search}
@@ -81,7 +89,7 @@ function Menu() {
         md={2}
         lg={3}
         className="g-4"
-        style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
+        style={{ margin: "0px 20px 20px 20px", paddingBottom: "40px" }}
       >
         {menu.filter(element => element.name.toLowerCase().includes(search.toLowerCase())).map((element, index) => (
           <Col key={index}>
