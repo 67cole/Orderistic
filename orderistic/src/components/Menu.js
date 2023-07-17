@@ -11,12 +11,11 @@ import MenuNav from "./MenuNav";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
-import Snackbar from "@mui/material/Snackbar";
 
 import TableNumberModal from "./TableNumberModal";
 
 function Menu() {
-  const { currentUser } = useAuth();
+  const { currentUser, tableNumber } = useAuth();
   const navigate = useNavigate();
   async function checkStaff() {
     if (
@@ -29,7 +28,6 @@ function Menu() {
 
   checkStaff();
 
-  
   const [menu, setMenu] = React.useState([]);
   const [menuDict, setMenuDict] = React.useState({});
   const [show, setShow] = React.useState(false);
@@ -50,12 +48,15 @@ function Menu() {
       }
       setMenu(tempMenu);
     });
-    viewCart(1).then((data) => {
-      setCart(data);
-    });
   }, []);
 
-  
+  function loadCart() {
+    viewCart(tableNumber).then((data) => {
+      setCart(data);
+    });
+    showCart();
+  }
+
   const cartButtonStyle = {
     backgroundColor: "black",
     paddingLeft: "250px",
@@ -71,36 +72,47 @@ function Menu() {
     marginTop: "20px",
     padding: "20px",
     fontSize: "20px",
-  }
-  const [search, setSearch] = React.useState('');
+  };
+  const [search, setSearch] = React.useState("");
   return (
     <>
       <MenuNav />
-      {<input
-      style={searchStyle}
-        type="text"
-        placeholder="Search menu"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />}
+      {
+        <input
+          style={searchStyle}
+          type="text"
+          placeholder="Search menu"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      }
       <TableNumberModal />
       <Row
-        
         className="g-4"
         style={{ margin: "0px 20px 20px 20px", paddingBottom: "40px" }}
       >
-        {menu.filter(element => element.name.toLowerCase().includes(search.toLowerCase())).map((element, index) => (
-          <Col key={index}>
-            <MenuCard element={element} cart={cart} changeCart={changeCart} searchData={search} menu={menu}/>
-          </Col>
-        ))}
+        {menu
+          .filter((element) =>
+            element.name.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((element, index) => (
+            <Col key={index}>
+              <MenuCard
+                element={element}
+                cart={cart}
+                changeCart={changeCart}
+                searchData={search}
+                menu={menu}
+              />
+            </Col>
+          ))}
       </Row>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
           variant="secondary"
           size="lg"
           style={cartButtonStyle}
-          onClick={showCart}
+          onClick={loadCart}
         >
           View cart
         </Button>
