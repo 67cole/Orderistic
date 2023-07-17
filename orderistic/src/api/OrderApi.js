@@ -8,6 +8,7 @@ import {
   addDoc,
   deleteDoc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 // Order Collection
@@ -54,7 +55,83 @@ export async function removeOrder(id) {
 
 //Retrieves cart and adds it to order
 
+//Allows chef to check off items
+export async function completeItem(orderID, itemID) {
+  const docRef = doc(db, "orders", orderID);
+  const matches = await getDoc(docRef);
 
+  // grab ordered data and the completed data
+  let ordered = matches.data()["food_ordered"];
+  let completed = matches.data()["food_completed"];
+  
+  // decrement from ordered array
+  for (var i in ordered) {
+    
+    // found matching food in ordered array
+    // decrement quantity
+    if (ordered[i].id === itemID) {
+      ordered[i].quantity -= 1;
+      break;
+    }
+  }
+
+  // now loop through completed array
+  let added = 0;
+  for (var j in completed) {
+
+    // found matching food in completed array
+    // increment quantity
+    if (completed[j].id === itemID) {
+      completed[j].quantity += 1;
+      added = 1;
+      break;
+    }
+  }
+
+  // if there's no item found, then we add onto the completed array
+  if (added === 0) {
+    let foodInfo = {
+      "id": ordered[i].id,
+      "quantity": 1
+    };
+    completed.push(foodInfo);
+  }
+
+  // however, if the quantity is now 0 in the completed array, remove from the ordered array
+  if (ordered[i].quantity === 0) {
+    ordered.splice(i, 1);
+  }
+
+  // now we can update the file
+  await updateDoc(docRef, {
+    "food_completed": completed,
+    "food_ordered": ordered
+  });
+
+  // check if ordered is empty, then we move the order to order history and delete from current directory
+  if (ordered.length === 0) {
+    const orderHist = doc(db, "orders", orderID);
+    const docData = await getDoc(orderHist);
+
+    // replace into order history collection
+    await setDoc(doc(db, "ordersHist", orderID), docData.data());
+
+    // now delete from current orders
+    await deleteDoc(orderHist);
+
+  }
+
+
+  // jono's version
+  /*
+  const docSnap = await getDoc(docRef);
+  console.log(docSnap.data()["food_ordered"])
+  const newOrder = docSnap.data()["food_ordered"].filter(function (item) {
+    return item != itemID
+  });
+  let newCompleted = docSnap.data()["food_completed"];
+  newCompleted.append(itemID)*/
+}
 
 
 
