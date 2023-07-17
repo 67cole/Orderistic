@@ -1,59 +1,92 @@
 import React from "react";
-import Modal from 'react-bootstrap/Modal';
-import CloseButton from 'react-bootstrap/CloseButton';
+import Modal from "react-bootstrap/Modal";
+import CloseButton from "react-bootstrap/CloseButton";
 import { ListGroup } from "react-bootstrap";
-import CartItem from './CartItem';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import CartItem from "./CartItem";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
-function Cart ({ show, closeCart, cart, changeCart, menu }) {
+function Cart({ show, closeCart, cart, changeCart, menu }) {
   const [total, setTotal] = React.useState(0);
-  const changeTotal = (newTotal) => setTotal(newTotal)
+  const changeTotal = (newTotal) => setTotal(newTotal);
   React.useEffect(() => {
-    let sum = 0;
-    for (let item of cart) {
-      sum += parseFloat(item.price * item.quantity);
+    if (cart !== undefined) {
+      let sum = 0;
+      for (let item of cart) {
+        sum += parseFloat(item.price * item.quantity);
+      }
+      setTotal(sum);
     }
-    setTotal(sum);
-  }, [cart])
+  }, [cart]);
   const checkoutButtonStyle = {
-    backgroundColor: "black", 
-    paddingLeft: "250px", 
-    paddingRight: "250px", 
-    position: "fixed", 
+    backgroundColor: "black",
+    paddingLeft: "250px",
+    paddingRight: "250px",
+    position: "fixed",
     bottom: "20px",
     fontWeight: "600",
-    borderRadius: "6px"
-  }
-  
+    borderRadius: "6px",
+  };
+
   return (
     <>
       <Modal show={show} fullscreen={true} onHide={closeCart}>
-        <Modal.Header style={{ display: "flex", justifyContent: "center"}}>
-          <CloseButton style={{float: "left", marginLeft: "0"}} onClick={closeCart}/>
-          <Modal.Title style={{margin: "auto"}}>Cart</Modal.Title>
-          <div style={{ width: "16px", height: "16px", padding: "8px 8px 8px 8px", margin: "8px 8px 8px 0px"}}></div>
+        <Modal.Header style={{ display: "flex", justifyContent: "center" }}>
+          <CloseButton
+            style={{ float: "left", marginLeft: "0" }}
+            onClick={closeCart}
+          />
+          <Modal.Title style={{ margin: "auto" }}>Cart</Modal.Title>
+          <div
+            style={{
+              width: "16px",
+              height: "16px",
+              padding: "8px 8px 8px 8px",
+              margin: "8px 8px 8px 0px",
+            }}
+          ></div>
         </Modal.Header>
-        <Modal.Body style={{ display: "flex", justifyContent: "center", marginTop: "20px"}}>      
-          {cart.length === 0 
-            ? "Your cart is empty!"
-            : <ListGroup>
-                {cart.map((element, index) => (
-                  <CartItem key={index} info={menu[element.id]} cart={cart} changeCart={changeCart} index={index} total={total} changeTotal={changeTotal} />
-                ))}
-                <Card style={{ border: "0", paddingTop: "10px", paddingBottom: "100px"}}>
-                  <Card.Body style={{borderBottom: "1px solid #ededed"}}>
-                    <Card.Title>
-                      Total
-                      <Card.Title style={{ float: "right", fontSize: "30px" }}>
-                        ${parseFloat(total).toFixed(2)}
-                      </Card.Title>
+        <Modal.Body
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          {cart === undefined || cart.length === 0 ? (
+            "Your cart is empty!"
+          ) : (
+            <ListGroup>
+              {cart.map((element, index) => (
+                <CartItem
+                  key={index}
+                  info={menu[element.id]}
+                  cart={cart}
+                  changeCart={changeCart}
+                  index={index}
+                  total={total}
+                  changeTotal={changeTotal}
+                />
+              ))}
+              <Card
+                style={{
+                  border: "0",
+                  paddingTop: "10px",
+                  paddingBottom: "100px",
+                }}
+              >
+                <Card.Body style={{ borderBottom: "1px solid #ededed" }}>
+                  <Card.Title>
+                    Total
+                    <Card.Title style={{ float: "right", fontSize: "30px" }}>
+                      ${parseFloat(total).toFixed(2)}
                     </Card.Title>
-                  </Card.Body>
-                </Card>
-              </ListGroup>
-          } 
-          <Button variant="secondary" size="lg" style={checkoutButtonStyle} >
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </ListGroup>
+          )}
+          <Button variant="secondary" size="lg" style={checkoutButtonStyle}>
             Checkout
           </Button>
         </Modal.Body>

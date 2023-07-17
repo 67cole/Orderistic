@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-import { addStaff } from "../api/AuthApi";
 
 // We want to access the current user anywhere in the app
 
@@ -13,6 +12,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [tableNumber, setTableNumber] = useState(0);
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -46,6 +46,11 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  function chooseTable(newTableNumber) {
+    setTableNumber(newTableNumber);
+    return tableNumber;
+  }
+
   const value = {
     currentUser,
     signup,
@@ -54,6 +59,9 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
+    setTableNumber,
+    chooseTable,
+    tableNumber,
   };
 
   return (

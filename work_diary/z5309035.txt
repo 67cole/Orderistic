@@ -25,3 +25,11 @@ Assisted team on working on the user stories for the frontend.
 Week 5
 Had a team meeting on discussing what needs to be done before the demo. Discussed about bugs and what solutions we can use to approach it.
 Made some finishing touches and fixes to the style (nav bar, login, staff) because a change occurred that unintentionally changed the appearance. 
+
+Week 6
+Had a team meeting to organise and allocate tasks.
+Started working on Sprint 2 functionalities.
+Brainstormed on how to implement search and categories.
+
+Week 7
+Started on implementing Spring 2 functionalities.
