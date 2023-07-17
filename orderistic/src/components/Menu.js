@@ -1,8 +1,5 @@
 import React from "react";
 import MenuCard from "./MenuCard";
-// import SearchBar from "./SearchBar";
-// import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
 import { returnFoodData } from "../api/MenuApi";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -68,24 +65,16 @@ function Menu() {
     fontWeight: "600",
     borderRadius: "6px",
   };
+  const [search, setSearch] = React.useState('');
   return (
     <>
       <MenuNav />
-      {/*
-      <div className="nav-bar">
-
-      <IconButton
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{ mr: 2 }}
-        >
-        <MenuIcon />
-      </IconButton>
-      <SearchBar onSearch={search} style={{ flex: "display" }} />
-      </div>
-  */}
+      {<input
+        type="text"
+        placeholder="Search menu"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />}
       <TableNumberModal />
       <Row
         xs={1}
@@ -94,9 +83,9 @@ function Menu() {
         className="g-4"
         style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
       >
-        {menu.map((element, index) => (
+        {menu.filter(element => element.name.toLowerCase().includes(search.toLowerCase())).map((element, index) => (
           <Col key={index}>
-            <MenuCard element={element} cart={cart} changeCart={changeCart} />
+            <MenuCard element={element} cart={cart} changeCart={changeCart} searchData={search} menu={menu}/>
           </Col>
         ))}
       </Row>
