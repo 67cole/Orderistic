@@ -85,9 +85,7 @@ function Menu() {
       />}
       <TableNumberModal />
       <Row
-        xs={1}
-        md={2}
-        lg={3}
+        
         className="g-4"
         style={{ margin: "0px 20px 20px 20px", paddingBottom: "40px" }}
       >

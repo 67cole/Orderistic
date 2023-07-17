@@ -14,7 +14,7 @@ function MenuCard({ element, cart, changeCart }) {
   const cardStyle = {
     flexDirection: "row",
     height: "210px",
-    width: "100%",
+    width: "460px",
     maxHeight: "500px",
   }
   function addQuantity() {
