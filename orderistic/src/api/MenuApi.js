@@ -71,3 +71,13 @@ export async function UpdateItem(id, item) {
   console.log('Updated document with ID: ', id);
 }
 
+
+// Given a food ID, returns the average time for the dish
+export async function dishTime(itemID) {
+  const docRef = doc(db, "menu", itemID);
+  const docData = await getDoc(docRef);
+
+  // return the average time of all orders
+  const timeArray = docData.data()["time"];
+  return Math.floor(timeArray.reduce((a, b) => a + b, 0) / timeArray.length);
+}
