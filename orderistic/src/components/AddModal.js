@@ -19,7 +19,8 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
       description: description,
       price: price,
       category: category,
-      image: image
+      image: image,
+      time: [],
     }
     AddItem(item)
       .then((data) => {
