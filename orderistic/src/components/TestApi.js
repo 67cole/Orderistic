@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnFoodData, returnSpecificFood } from "../api/MenuApi";
 import { returnOrderData, viewOrder, addOrder, removeOrder, completeItem } from "../api/OrderApi";
-import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart, sendOrder } from "../api/TableApi";
+import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart, sendOrder, returnOrdersForTable } from "../api/TableApi";
 
 export default function TestApi() {
   const [error, setError] = useState("");
@@ -29,7 +29,8 @@ export default function TestApi() {
     category: "Main",
     price: 14,
     description: "Silky beef broth",
-    rating: 5});
+    rating: 5,
+    time: []});
   }
 
   async function handleRemove() {
@@ -44,7 +45,8 @@ export default function TestApi() {
     category: "Main",
     price: 14,
     description: "Silky beef broth with Colin Juice",
-    rating: 5});
+    rating: 5,
+    time: []});
   }
 
   // Order test functions
@@ -69,7 +71,7 @@ export default function TestApi() {
   }
 
   async function handleAddToCart() {
-    addToCart(1, "WTAqMRJBQyK2tDXJoFqf");
+    addToCart(1, "AqB8ijUpU1bvR7Dl3n5x");
   }
 
   async function handleRemoveFromCart() {
@@ -86,7 +88,11 @@ export default function TestApi() {
 
   async function handleCompleteItem() {
     // parameters are orderID, itemID
-    completeItem("YrVgaHYhlQhTs7VjAJIR","kGrS0kmkWLAkXutNTnMS");
+    completeItem("twYk1Wtom47wszEwhYJb","AqB8ijUpU1bvR7Dl3n5x");
+  }
+
+  async function checkTableOrders() {
+    returnOrdersForTable(5);
   }
 
   return (
@@ -145,7 +151,10 @@ export default function TestApi() {
           </Button>          
           <Button className="btn btn-primary w-100 mt-3" onClick={handleCompleteItem}>
             Complete Item
-          </Button>   
+          </Button>
+          <Button className="btn btn-primary w-100 mt-3" onClick={checkTableOrders}>
+            Table Order
+          </Button>     
         </Card.Body>
       </Card>
     </>

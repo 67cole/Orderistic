@@ -31,6 +31,8 @@ function MenuCard({ element, cart, changeCart }) {
       id: element.id,
       quantity: quantity,
       price: element.price,
+      order_time: Math.floor((Date.now() / 1000)),
+      finish_time: 0,
     };
     console.log(tableNumber);
     addToCart(tableNumber, cartItem);
