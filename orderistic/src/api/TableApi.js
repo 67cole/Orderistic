@@ -139,7 +139,7 @@ export async function sendOrder(tableNumber) {
         number: tableNumber,
     }
     setDoc(docRef, newCart)
-  }
+}
 
 
 // Returns database of all tables
