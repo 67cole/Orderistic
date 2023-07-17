@@ -29,7 +29,8 @@ export default function TestApi() {
     category: "Main",
     price: 14,
     description: "Silky beef broth",
-    rating: 5});
+    rating: 5,
+    time: []});
   }
 
   async function handleRemove() {
@@ -44,7 +45,8 @@ export default function TestApi() {
     category: "Main",
     price: 14,
     description: "Silky beef broth with Colin Juice",
-    rating: 5});
+    rating: 5,
+    time: []});
   }
 
   // Order test functions
@@ -69,7 +71,7 @@ export default function TestApi() {
   }
 
   async function handleAddToCart() {
-    addToCart(1, "WTAqMRJBQyK2tDXJoFqf");
+    addToCart(1, "AqB8ijUpU1bvR7Dl3n5x");
   }
 
   async function handleRemoveFromCart() {
@@ -86,7 +88,7 @@ export default function TestApi() {
 
   async function handleCompleteItem() {
     // parameters are orderID, itemID
-    completeItem("YrVgaHYhlQhTs7VjAJIR","kGrS0kmkWLAkXutNTnMS");
+    completeItem("twYk1Wtom47wszEwhYJb","AqB8ijUpU1bvR7Dl3n5x");
   }
 
   async function checkTableOrders() {
