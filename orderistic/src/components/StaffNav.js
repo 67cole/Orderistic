@@ -33,9 +33,9 @@ function StaffNav({ showForm }) {
             Home
           </Nav.Link> */}
         </Nav>
-        <Button className="btn" variant="dark" onClick={showForm} style={{ backgroundColor: "black", border: "0", boxShadow: "none" }}>Add Item</Button>
+        <Button className="btn" variant="dark" onClick={showForm} style={{ backgroundColor: "black", border: "0", boxShadow: "none" }}>Add item</Button>
         <Button variant="dark" onClick={handleLogout} style={{ backgroundColor: "black", border: "0", boxShadow: "none" }}>
-          Log Out
+          Log out
         </Button>
       </Container>
     </Navbar>

@@ -56,7 +56,7 @@ function MenuNav() {
             )}
           </Nav>
           <Button variant="dark" onClick={handleLogout} style={{ backgroundColor: "black", border: "0", boxShadow: "none" }}>
-            Log Out
+            Log out
           </Button>
         </Container>
       </Navbar>

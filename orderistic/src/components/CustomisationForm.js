@@ -3,11 +3,21 @@ import Button from "react-bootstrap/Button";
 import Collapse from 'react-bootstrap/Collapse';
 import React from 'react';
 import CloseButton from 'react-bootstrap/CloseButton';
+import { generateID } from "./helper";
 
 function CustomisationForm({ customisations, handleCustomisations }) {
+  const radioStyle = {
+    accentColor: "black", 
+    verticalAlign: "middle", 
+    width: "14px", 
+    height: "14px"
+  }
   const [showForm, setShowForm] = React.useState(false);
   const [custName, setCustName] = React.useState("");
   const [options, setOptions] = React.useState([]);
+  const [required, setRequired] = React.useState(false);
+  const [optionNum, setOptionNum] = React.useState(1);
+  const [select, setSelect] = React.useState("upTo");
 
   function newCustomisation() {
     setShowForm(!showForm);
@@ -31,8 +41,12 @@ function CustomisationForm({ customisations, handleCustomisations }) {
   }
   function addCustomisation() {
     const customisation = {
+      id: generateID(),
       name: custName,
-      options: options
+      options: options,
+      required: required,
+      select: select,
+      optionNum: optionNum
     }
     const tempCust = [...customisations, customisation];
     handleCustomisations(tempCust);
@@ -43,6 +57,14 @@ function CustomisationForm({ customisations, handleCustomisations }) {
     setShowForm(false);
     setCustName("");
     setOptions([]);
+  }
+  function changeNumber(value) {
+    if (value !== "") {
+      setOptionNum(parseInt(value));
+    }
+    else {
+      setOptionNum("");
+    }
   }
   return (
     <>
@@ -63,7 +85,7 @@ function CustomisationForm({ customisations, handleCustomisations }) {
                 onChange={e => changeName(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="options">
+          <Form.Group className="mb-3">
             <Form.Label>Options</Form.Label>
             {options.map((option, optionIndex) => (
               <div style={{ display: "flex", alignItems: "center" }} key={optionIndex}>
@@ -77,16 +99,43 @@ function CustomisationForm({ customisations, handleCustomisations }) {
             ))} <br/>
             <Button onClick={() => addOption()} variant="dark">
               Add option
-            </Button> <br/> <br/>
-            <Button onClick={() => addCustomisation()} variant="dark" style={{ marginRight: "5px" }}>
-              Add customisation
-            </Button> 
-            <Button variant="outline-danger" onClick={discardCustomisation}>
-              Discard changes
-            </Button> 
+            </Button> <br/>
           </Form.Group>
+          <Form.Group className="mb-3" controlId="limits">
+            <Form.Label>How many options can the customer choose? </Form.Label> <br/>  
+            <Form.Select aria-label="Up to or exactly" onChange={e => setSelect(e.target.value)} id={"select"}>
+              <option value="upTo">up to </option>
+              <option value="exactly">exactly</option>
+            </Form.Select>
+            <Form.Control
+              type="number"
+              value={optionNum}
+              onChange={e => changeNumber(e.target.value)}
+              min="1"/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="required">
+            Are customers required to pick an option? <br/>
+            <div>
+              <input 
+                type="radio" 
+                name="optional" 
+                id="optionalYes" 
+                value="yes" 
+                style={radioStyle}
+                onChange={() => setRequired(true)}/>
+              <label htmlFor="optionalYes" style={{ width: "30px", paddingLeft: "5px", marginRight: "10px" }}>Yes</label>
+              <input type="radio" name="optional" id="optionalNo" value="no" style={radioStyle} onChange={() => setRequired(false)}/>
+              <label htmlFor="optionalNo" style={{ width:"30px", paddingLeft: "5px" }}>No</label>
+            </div>
+          </Form.Group>
+          <Button onClick={() => addCustomisation()} variant="dark" style={{ marginRight: "5px" }}>
+            Add customisation
+          </Button> 
+          <Button variant="outline-danger" onClick={discardCustomisation}>
+            Discard changes
+          </Button> 
           </div>
-        </Collapse>
+        </Collapse><br/>
 
     </>
   )

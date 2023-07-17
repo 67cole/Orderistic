@@ -58,6 +58,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
                   autoFocus
                   value={name}
                   onChange={e => setName(e.target.value)}
+                  autoComplete="off"
               />
             </Form.Group>
           </Col>
@@ -102,8 +103,8 @@ function UpdateModal({ show, closeForm, element, setStates }) {
 
         <CustomisationForm customisations={customisations} handleCustomisations={handleCustomisations}/>
         <ListGroup>
-          {customisations.map((element, index) => (
-            <CustomisationItem key={index} customisations={customisations} handleCustomisations={handleCustomisations} element={element} index={index} />
+          {customisations.map((ctm, index) => (
+            <CustomisationItem key={ctm.id} customisations={customisations} handleCustomisations={handleCustomisations} element={ctm} index={index} />
           ))}
         </ListGroup>
       </Form>

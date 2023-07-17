@@ -35,12 +35,15 @@ function MenuCard({ element }) {
           <Card.Text style={{ fontSize: "14px"}}>
             {element.description}
           </Card.Text>
-          <Card.Text style={{ position: "absolute", bottom: "10px", fontWeight: "500", fontSize: "16px" }}>
+          <Card.Text style={{ position: "absolute", bottom: "10px", fontSize: "16px" }}>
             ${parseFloat(element.price).toFixed(2)}
           </Card.Text>
         </Card.Body>
       </Card>
-      <FoodInfo show={show} closeForm={closeFoodInfo} element={element}/>
+      <div style={{ display: "flex", justifyContent: "center" }}>      
+        <FoodInfo show={show} closeForm={closeFoodInfo} element={element}/>
+      </div>
+
     </>
   )
 }
