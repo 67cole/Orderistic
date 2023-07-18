@@ -23,7 +23,6 @@ function QuantityOption({ customisation, maxOptionNum, list, setList }) {
     let newDict = {...list};
     newDict.quantity = newCustomisations;
     setList(newDict);
-    console.log(newDict);
     setChosenOptionNum(chosenOptionNum + 1);
     let tempQuantities = [...quantities];
     tempQuantities[index] += 1;
