@@ -22,19 +22,19 @@ function StaffNav({ showForm }) {
     }
   }
   return (
-    <Navbar style={{boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)", backgroundColor: "white"}} className="sticky-top nav-bar">
+    <Navbar data-bs-theme="light" style={{boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)", backgroundColor: "black"}} className="sticky-top nav-bar">
       <Container>
-        <Navbar.Brand as={Link} to="/staff-menu">
+        <Navbar.Brand as={Link} to="/staff-menu" style={{ color: "white", fontSize: "24px", fontWeight: "500" }}>
           Orderistic
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link as={Link} to="/staff-menu">
+          {/* <Nav.Link as={Link} to="/staff-menu" style={{ color: "white"}}>
             Home
-          </Nav.Link>
+          </Nav.Link> */}
         </Nav>
-        <Button className="btn" variant="light" onClick={showForm} style={{ backgroundColor: "white", border: "0", boxShadow: "none" }}>Add Item</Button>
-        <Button variant="light" onClick={handleLogout} style={{ backgroundColor: "white", border: "0", boxShadow: "none" }}>
-          Log Out
+        <Button className="btn" variant="dark" onClick={showForm} style={{ backgroundColor: "black", border: "0", boxShadow: "none" }}>Add item</Button>
+        <Button variant="dark" onClick={handleLogout} style={{ backgroundColor: "black", border: "0", boxShadow: "none" }}>
+          Log out
         </Button>
       </Container>
     </Navbar>

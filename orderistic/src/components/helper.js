@@ -16,3 +16,6 @@ export function fileToDataUrl (file) {
   return dataUrlPromise;
 }
   
+export function generateID() {
+  return Math.floor(Date.now() * Math.random()).toString();
+}

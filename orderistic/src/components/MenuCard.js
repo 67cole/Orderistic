@@ -5,6 +5,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { addToCart } from "../api/TableApi";
 import { useAuth } from "../contexts/AuthContext";
 import timeout from "../api/Timeout";
+import FoodInfo from "./FoodInfo";
 
 function MenuCard({ element, cart, changeCart }) {
   const { tableNumber } = useAuth();
@@ -12,6 +13,7 @@ function MenuCard({ element, cart, changeCart }) {
   const [isLoading, setLoading] = useState(false);
 
   const [quantity, setQuantity] = React.useState(1);
+  // Style for the menu cards
   const imgStyle = {
     width: "210px",
     objectFit: "cover",
@@ -20,7 +22,7 @@ function MenuCard({ element, cart, changeCart }) {
   const cardStyle = {
     flexDirection: "row",
     height: "210px",
-    width: "460px",
+    width: "583px",
     maxHeight: "500px",
   };
 
@@ -61,20 +63,34 @@ function MenuCard({ element, cart, changeCart }) {
     setLoading(false);
     changeCart(tempCart);
   }
+
+  // For showing the food information modal
+  const [show, setShow] = React.useState(false);
+
+  const closeFoodInfo = () => setShow(false);
+  const openFoodInfo = () => setShow(true);
+
   return (
     <>
-      <Card style={cardStyle}>
+      <Card onClick={openFoodInfo} style={cardStyle}>
         {element.image ? (
-          <Card.Img variant="top" src={element.image} style={imgStyle} />
+          <Card.Img
+            variant="top"
+            src={element.image}
+            style={imgStyle}
+            className="img-fluid"
+          />
         ) : (
           <></>
         )}
         <Card.Body style={{ position: "relative" }}>
-          <Card.Title>{element.name}</Card.Title>
+          <Card.Title style={{}}>{element.name}</Card.Title>
           <Card.Text style={{ fontSize: "14px" }}>
             {element.description}
           </Card.Text>
-          <Card.Text style={{ position: "absolute", bottom: "5px" }}>
+          <Card.Text
+            style={{ position: "absolute", bottom: "10px", fontSize: "16px" }}
+          >
             ${parseFloat(element.price).toFixed(2)}
           </Card.Text>
           <ButtonGroup
@@ -140,6 +156,9 @@ function MenuCard({ element, cart, changeCart }) {
           )}
         </Card.Body>
       </Card>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <FoodInfo show={show} closeForm={closeFoodInfo} element={element} />
+      </div>
     </>
   );
 }

@@ -4,15 +4,25 @@ import Button from "react-bootstrap/Button";
 import React from "react";
 import { fileToDataUrl } from "./helper";
 import { AddItem } from "../api/MenuApi";
+import CustomisationForm from "./CustomisationForm";
+import { MenuContext } from "./StaffMenu";
+import { Row, Col } from "react-bootstrap";
+import Image from 'react-bootstrap/Image';
+import ListGroup from 'react-bootstrap/ListGroup';
+import CustomisationItem from "./CustomisationItem";
 
-function AddModal({ show, closeForm, menu, handleMenu }) {
-
+function AddModal({ show, closeForm }) {
+  const { menu, setMenu } = React.useContext(MenuContext);
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState(1.00.toFixed(2));
   const [category, setCategory] = React.useState("");
   const [image, setImage] = React.useState("");
+  const [customisations, setCustomisations] = React.useState([]);
 
+  function handleCustomisations(customisations) {
+    setCustomisations(customisations)
+  }
   function submitForm() {
     const item = {
       name: name,
@@ -20,6 +30,7 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
       price: price,
       category: category,
       image: image,
+      customisations: customisations,
       time: [],
     }
     AddItem(item)
@@ -29,12 +40,13 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
     closeForm();
     let tempMenu = [...menu];
     tempMenu.push(item);
-    handleMenu(tempMenu);
+    setMenu(tempMenu);
     setName("");
     setDescription("");
     setPrice(1.00.toFixed(2));
     setCategory("");
     setImage("");
+    setCustomisations([]);
   }
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])
@@ -42,54 +54,76 @@ function AddModal({ show, closeForm, menu, handleMenu }) {
         setImage(data);
       })
   }
+
   return (
     <> 
-    <Modal show={show} onHide={closeForm} centered>
+    <Modal show={show} onHide={closeForm} centered size="lg">
       <Modal.Header closeButton>
       <Modal.Title>Add New Item to the Menu</Modal.Title>
       </Modal.Header>
       <Modal.Body>
       <Form>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-              type="text"
-              autoFocus
-              value={name}
-              onChange={e => setName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Category</Form.Label>
-          <Form.Control
-              type="text"
-              value={category}
-              onChange={e => setCategory(e.target.value)}
-          />
-        </Form.Group>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                  type="text"
+                  autoFocus
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3" controlId="category">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                  type="text"
+                  value={category}
+                  onChange={e => setCategory(e.target.value)}
+              />
+            </Form.Group>
+          </Col>        
+        </Row>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3" controlId="price">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                  type="number"
+                  value={price}
+                  onChange={e => setPrice(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Image</Form.Label>
+              <Form.Control type="file" onChange={convertImg}/>
+
+            </Form.Group>
+          </Col>
+        </Row>
+        {image ? <Image src={image} width="260px" fluid style={{ marginLeft: "auto", marginRight: "auto" }}/> : <></>}
         <Form.Group
         className="mb-3"
-        controlId="exampleForm.ControlTextarea1"
+        controlId="description"
         >
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-              type="number"
-              value={price}
-              onChange={e => setPrice(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Image</Form.Label>
-          <Form.Control type="file" onChange={convertImg}/>
-        </Form.Group>
+
+        <CustomisationForm customisations={customisations} handleCustomisations={handleCustomisations}/>
+        <ListGroup>
+          {customisations.map((element, index) => (
+            <CustomisationItem key={index} customisations={customisations} handleCustomisations={handleCustomisations} element={element} index={index} />
+          ))}
+        </ListGroup>
       </Form>
       </Modal.Body>
       <Modal.Footer>
-      <Button variant="primary" onClick={submitForm}>
+      <Button variant="dark" onClick={submitForm}>
           Add
       </Button>
       <Button variant="secondary" onClick={closeForm}>

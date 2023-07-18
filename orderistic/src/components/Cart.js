@@ -9,8 +9,10 @@ import { useAuth } from "../contexts/AuthContext";
 import { sendOrder } from "../api/TableApi";
 import timeout from "../api/Timeout";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "./Menu.js";
 
-function Cart({ show, closeCart, cart, changeCart, menu }) {
+function Cart({ show, closeCart, menu }) {
+  const { cart } = React.useContext(CartContext);
   const [total, setTotal] = React.useState(0);
   const changeTotal = (newTotal) => setTotal(newTotal);
   const { tableNumber } = useAuth();
@@ -31,7 +33,7 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
     paddingLeft: "250px",
     paddingRight: "250px",
     position: "fixed",
-    bottom: "20px",
+    bottom: "10px",
     fontWeight: "600",
     borderRadius: "6px",
   };
@@ -44,7 +46,6 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
     setLoading(true);
     await timeout(500);
     sendOrder(tableNumber);
-    changeCart();
     setLoading(false);
     navigate("/order-complete");
   }
@@ -74,7 +75,7 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
             marginTop: "20px",
           }}
         >
-          {cart === undefined || cart.length === 0 ? (
+          {cart.length === 0 ? (
             "Your cart is empty!"
           ) : (
             <ListGroup>
@@ -82,8 +83,6 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
                 <CartItem
                   key={index}
                   info={menu[element.id]}
-                  cart={cart}
-                  changeCart={changeCart}
                   index={index}
                   total={total}
                   changeTotal={changeTotal}
@@ -93,7 +92,7 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
                 style={{
                   border: "0",
                   paddingTop: "10px",
-                  paddingBottom: "100px",
+                  paddingBottom: "70px",
                 }}
               >
                 <Card.Body style={{ borderBottom: "1px solid #ededed" }}>
@@ -107,7 +106,6 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
               </Card>
             </ListGroup>
           )}
-
           {!loading ? (
             <Button
               variant="secondary"

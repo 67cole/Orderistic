@@ -48,34 +48,42 @@ function MenuNav() {
       <Navbar
         style={{
           boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)",
-          backgroundColor: "white",
+          backgroundColor: "black",
         }}
         className="sticky-top nav-bar"
       >
         <Container>
-          <Navbar.Brand as={Link} to="/menu">
+          <Navbar.Brand
+            as={Link}
+            to="/menu"
+            style={{ color: "white", fontSize: "24px", fontWeight: "500" }}
+          >
             Orderistic
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/menu">
+            <Nav.Link as={Link} to="/menu" style={{ color: "White" }}>
               Home
             </Nav.Link>
             {isLoggedIn && (
-              <Nav.Link as={Link} to="/previous">
+              <Nav.Link as={Link} to="/previous" style={{ color: "White" }}>
                 Previous Orders
               </Nav.Link>
             )}
-            <Nav.Link onClick={() => setOpen(true)}>
+            <Nav.Link onClick={() => setOpen(true)} style={{ color: "White" }}>
               Request Assistance
             </Nav.Link>
-            <Nav.Link onClick={handleTable} to="/menu">
+            <Nav.Link
+              onClick={handleTable}
+              to="/menu"
+              style={{ color: "White" }}
+            >
               Table Number: {tableNumber}
             </Nav.Link>
           </Nav>
           <Button
-            variant="light"
+            variant="dark"
             onClick={handleLogout}
-            style={{ backgroundColor: "white", border: "0", boxShadow: "none" }}
+            style={{ backgroundColor: "black", border: "0", boxShadow: "none" }}
           >
             Log Out
           </Button>
