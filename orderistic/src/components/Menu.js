@@ -63,7 +63,7 @@ function Menu() {
     paddingLeft: "250px",
     paddingRight: "250px",
     position: "fixed",
-    bottom: "20px",
+    bottom: "15px",
     fontWeight: "600",
     borderRadius: "6px",
   };
@@ -78,7 +78,6 @@ function Menu() {
   return (
     <>
       <MenuNav />
-      
       {
         <input
           style={searchStyle}
@@ -89,45 +88,42 @@ function Menu() {
         />
       }
       <TableNumberModal />
-      <CartContext.Provider value={{ cart, setCart }}>
-      <Container fluid>
-        <Row
-          xs={1}
-          md={2}
-          lg={3}
-          className="g-4"
-          style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
-        >
-          {menu
-            .filter((element) =>
-              element.name.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((element, index) => (
-              <Col key={index}>
-                <MenuCard
-                  element={element}
-                  searchData={search}
-                />
-              </Col>
-            ))}
-        </Row>
-      </Container>
+        <CartContext.Provider value={{ cart, setCart }}>
+        <Container fluid style={{display: "flex", justifyContent: "center"}}>
+          <Row
+            className="g-4"
+            style={{ margin: "0px 20px 40px 20px", paddingBottom: "40px"}}
+          >
+            {menu
+              .filter((element) =>
+                element.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((element, index) => (
+                <Col key={index}>
+                  <MenuCard
+                    element={element}
+                    searchData={search}
+                  />
+                </Col>
+              ))}
+          </Row>
+        </Container>
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          variant="secondary"
-          size="lg"
-          style={cartButtonStyle}
-          onClick={loadCart}
-        >
-          View cart
-        </Button>
-      </div>
-      <Cart
-        show={show}
-        closeCart={closeCart}
-        menu={menuDict}
-      />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="secondary"
+            size="lg"
+            style={cartButtonStyle}
+            onClick={loadCart}
+          >
+            View cart
+          </Button>
+        </div>
+        <Cart
+          show={show}
+          closeCart={closeCart}
+          menu={menuDict}
+        />
       </CartContext.Provider>
     </>
   );

@@ -1,18 +1,13 @@
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import React, { useState } from "react";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { addToCart } from "../api/TableApi";
 import { useAuth } from "../contexts/AuthContext";
 import timeout from "../api/Timeout";
 import FoodInfo from "./FoodInfo";
 
-function MenuCard({ element, cart, changeCart }) {
+function MenuCard({ element }) {
   const { tableNumber } = useAuth();
 
   const [isLoading, setLoading] = useState(false);
-
-  const [quantity, setQuantity] = React.useState(1);
   // Style for the menu cards
   const imgStyle = {
     width: "210px",
@@ -24,6 +19,7 @@ function MenuCard({ element, cart, changeCart }) {
     height: "210px",
     width: "583px",
     maxHeight: "500px",
+    cursor: "pointer"
   };
 
   const loadingStyle = {
@@ -31,38 +27,6 @@ function MenuCard({ element, cart, changeCart }) {
     bottom: "15px",
     right: "15px",
   };
-
-  function addQuantity() {
-    setQuantity(quantity + 1);
-  }
-  function subtractQuantity() {
-    setQuantity(quantity - 1);
-  }
-  async function addToOrder() {
-    setLoading(true);
-    await timeout(500);
-    let cartItem = {
-      id: element.id,
-      quantity: quantity,
-      price: element.price,
-      order_time: Math.floor(Date.now() / 1000),
-      finish_time: 0,
-    };
-    addToCart(tableNumber, cartItem);
-    let tempCart = [...cart];
-    let found = false;
-    for (let item of tempCart) {
-      if (item.id === cartItem.id) {
-        found = true;
-        item.quantity += cartItem.quantity;
-      }
-    }
-    if (found === false) {
-      tempCart.push(cartItem);
-    }
-    setLoading(false);
-    changeCart(tempCart);
-  }
 
   // For showing the food information modal
   const [show, setShow] = React.useState(false);
