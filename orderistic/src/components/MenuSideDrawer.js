@@ -4,12 +4,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 function MenuSideDrawer( menu ) {
 	const [open, setOpen] = useState(false);
 	console.log(menu.value)
-	//const category = menu.value.map((element)=> <p>{element.category}</p>)
-	//const arrayCategory = menu.value.map((element)=> <p>{element.category}</p>)
+	const [filter, setFilter] = useState("");
+	
 	function category() {
 		const arrayCategory = menu.value.map((element)=> element.category);
 		const uniqueCategory = Array.from(new Set(arrayCategory)).filter(element => element);
-		const categoryDisplay = uniqueCategory.map((element)=> <Typography variant='h6' padding="20px">{element}</Typography>)
+		const categoryDisplay = uniqueCategory.map((element)=> <Typography variant='h6' padding="20px" onClick={() => setFilter(element)}>{element}</Typography>)
+		console.log(filter)
 		return categoryDisplay;
 	}
 	
