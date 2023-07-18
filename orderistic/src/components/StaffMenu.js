@@ -1,6 +1,6 @@
 import StaffNav from "./StaffNav";
 import StaffMenuCard from "./StaffMenuCard";
-import React from "react";
+import React, { useState } from "react";
 import AddModal from "./AddModal";
 import { returnFoodData } from "../api/MenuApi";
 import Col from "react-bootstrap/Col";
@@ -8,12 +8,14 @@ import Row from "react-bootstrap/Row";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
+import CardSkeleton from "./CardSkeleton";
 
 export const MenuContext = React.createContext();
 
 function StaffMenu() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   async function checkStaff() {
     if ((await validStaff(currentUser.email)) === false) {
@@ -33,6 +35,7 @@ function StaffMenu() {
         tempDict.id = key;
         tempMenu.push(tempDict);
       }
+      setIsLoading(false);
       setMenu(tempMenu);
     });
   }, []);
@@ -50,6 +53,7 @@ function StaffMenu() {
           className="g-4"
           style={{ margin: "40px 40px 40px 40px" }}
         >
+          {isLoading && <CardSkeleton cards={9} />}
           {menu.map((element) => (
             <Col key={element.name}>
               <StaffMenuCard element={element} />
