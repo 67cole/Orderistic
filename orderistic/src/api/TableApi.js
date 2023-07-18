@@ -98,18 +98,14 @@ export async function removeFromCart(num, item) {
                     cart: tempCart
                 };
                 await updateDoc(doc(db, "tables", num.toString()), newData);
-                console.log("Removed Item: ", item)
                 return;
             }
             else {
                 cartData[i].quantity -= item.quantity;
-                console.log(cartData[i].quantity)
-                console.log(cartData[i])
                 const newData = {
                     cart: cartData
                 };
                 await updateDoc(doc(db, "tables", num.toString()), newData);
-                console.log("Removed Item: ", item)
                 return;
             }
         }
@@ -133,6 +129,8 @@ export async function sendOrder(tableNumber) {
         time_ordered: currTime,
         time_finished: 0,
     };
+
+
     addOrder(orderData);
     const newCart = {
         cart: [],
@@ -187,5 +185,4 @@ export async function returnOrdersForTable(table_no) {
         }
     });
 
-    // console.log(orders);
 }

@@ -149,15 +149,6 @@ export async function completeItem(orderID, itemID) {
 
   }
 
-  // jono's version
-  /*
-  const docSnap = await getDoc(docRef);
-  console.log(docSnap.data()["food_ordered"])
-  const newOrder = docSnap.data()["food_ordered"].filter(function (item) {
-    return item != itemID
-  });
-  let newCompleted = docSnap.data()["food_completed"];
-  newCompleted.append(itemID)*/
 }
 
 

@@ -38,7 +38,6 @@ function StaffMenu() {
     });
   }, []);
   React.useEffect(() => {
-    console.log(menu);
   }, [menu])
   const closeForm = () => setShow(false);
   const showForm = () => setShow(true);
