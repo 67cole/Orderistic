@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import { ListGroup } from "react-bootstrap";
 import CartItem from "./CartItem";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { useAuth } from "../contexts/AuthContext";
+import { sendOrder } from "../api/TableApi";
 
 function Cart({ show, closeCart, cart, changeCart, menu }) {
   const [total, setTotal] = React.useState(0);
   const changeTotal = (newTotal) => setTotal(newTotal);
+  const { tableNumber } = useAuth();
+  const [loading, setLoading] = useState(false);
+
   React.useEffect(() => {
     if (cart !== undefined) {
       let sum = 0;
@@ -27,6 +32,15 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
     fontWeight: "600",
     borderRadius: "6px",
   };
+  const loadingStyle = {
+    position: "fixed",
+    bottom: "20px",
+  };
+
+  function handleCheckout() {
+    setLoading(true);
+    sendOrder(tableNumber).then(setLoading(false));
+  }
 
   return (
     <>
@@ -86,9 +100,21 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
               </Card>
             </ListGroup>
           )}
-          <Button variant="secondary" size="lg" style={checkoutButtonStyle}>
-            Checkout
-          </Button>
+
+          {!loading ? (
+            <Button
+              variant="secondary"
+              size="lg"
+              style={checkoutButtonStyle}
+              onClick={handleCheckout}
+            >
+              Checkout
+            </Button>
+          ) : (
+            <div class="spinner-border" role="status" style={loadingStyle}>
+              <span class="sr-only"></span>
+            </div>
+          )}
         </Modal.Body>
       </Modal>
     </>
