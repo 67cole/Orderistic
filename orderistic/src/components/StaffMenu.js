@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 import CardSkeleton from "./CardSkeleton";
+import { Button } from "react-bootstrap";
 
 export const MenuContext = React.createContext();
 
@@ -44,7 +45,7 @@ function StaffMenu() {
   return (
     <>
       <MenuContext.Provider value={{ menu, setMenu }}>
-        <StaffNav showForm={showForm} />
+        <StaffNav />
         <AddModal show={show} closeForm={closeForm} />
         <Row
           xs={1}
@@ -60,6 +61,13 @@ function StaffMenu() {
             </Col>
           ))}
         </Row>
+        <Button
+          variant="dark"
+          onClick={showForm}
+          style={{ marginTop: "10px", marginBottom: "-30px" }}
+        >
+          Add Item
+        </Button>
       </MenuContext.Provider>
     </>
   );

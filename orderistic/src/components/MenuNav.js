@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Button from "react-bootstrap/Button";
 import { Snackbar } from "@mui/material";
+import { requestHelp } from "../api/TableApi";
 
 function MenuNav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,6 +26,11 @@ function MenuNav() {
 
   function handleTable() {
     chooseTable(0);
+  }
+
+  async function handleHelp() {
+    setOpen(true);
+    await requestHelp(tableNumber);
   }
 
   async function handleLogout() {
@@ -69,7 +75,7 @@ function MenuNav() {
                 Orders
               </Nav.Link>
             )}
-            <Nav.Link onClick={() => setOpen(true)} style={{ color: "White" }}>
+            <Nav.Link onClick={handleHelp} style={{ color: "White" }}>
               Request Assistance
             </Nav.Link>
             <Nav.Link
