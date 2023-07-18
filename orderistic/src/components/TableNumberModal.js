@@ -43,7 +43,7 @@ export default function TableNumberModal() {
       </Modal.Header>
       <Modal.Body>
         {tables.map((table, key) => (
-          <Button className="m-1" onClick={() => handleTable(table)}>
+          <Button className="m-1" onClick={() => handleTable(table)} key={key}>
             {table.number}
           </Button>
         ))}
