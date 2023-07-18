@@ -6,12 +6,13 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Cart from "./Cart";
 import { viewCart } from "../api/TableApi";
-import Container from 'react-bootstrap/Container';
+import Container from "react-bootstrap/Container";
 import MenuNav from "./MenuNav";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 import TableNumberModal from "./TableNumberModal";
+import CardSkeleton from "./CardSkeleton";
 
 export const CartContext = React.createContext();
 
@@ -33,10 +34,16 @@ function Menu() {
   const [menuDict, setMenuDict] = React.useState({});
   const [show, setShow] = React.useState(false);
   const [cart, setCart] = React.useState([]);
+  const [orderComplete, setOrderComplete] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const closeCart = () => setShow(false);
+  function closeCart() {
+    setShow(false);
+    setOrderComplete(false);
+  }
+
   const showCart = () => setShow(true);
-  
+
   React.useEffect(() => {
     returnFoodData().then((data) => {
       setMenuDict(data);
@@ -47,6 +54,7 @@ function Menu() {
         tempDict.id = key;
         tempMenu.push(tempDict);
       }
+      setIsLoading(false);
       setMenu(tempMenu);
     });
   }, []);
@@ -88,12 +96,13 @@ function Menu() {
         />
       }
       <TableNumberModal />
-        <CartContext.Provider value={{ cart, setCart }}>
-        <Container fluid style={{display: "flex", justifyContent: "center"}}>
+      <CartContext.Provider value={{ cart, setCart }}>
+        <Container fluid style={{ display: "flex", justifyContent: "center" }}>
           <Row
             className="g-4"
-            style={{ margin: "0px 20px 40px 20px", paddingBottom: "40px"}}
+            style={{ margin: "0px 20px 40px 20px", paddingBottom: "40px" }}
           >
+            {isLoading && <CardSkeleton cards={9} />}
             {menu
               .filter((element) =>
                 element.name.toLowerCase().includes(search.toLowerCase())
@@ -123,6 +132,8 @@ function Menu() {
           show={show}
           closeCart={closeCart}
           menu={menuDict}
+          orderComplete={orderComplete}
+          setOrderComplete={setOrderComplete}
         />
       </CartContext.Provider>
     </>

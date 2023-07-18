@@ -1,13 +1,8 @@
 import Card from "react-bootstrap/Card";
-import React, { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import timeout from "../api/Timeout";
+import React from "react";
 import FoodInfo from "./FoodInfo";
 
-function MenuCard({ element }) {
-  const { tableNumber } = useAuth();
-
-  const [isLoading, setLoading] = useState(false);
+function MenuCard({ element, showInfo = true }) {
   // Style for the menu cards
   const imgStyle = {
     width: "210px",
@@ -22,17 +17,16 @@ function MenuCard({ element }) {
     cursor: "pointer"
   };
 
-  const loadingStyle = {
-    position: "absolute",
-    bottom: "15px",
-    right: "15px",
-  };
-
   // For showing the food information modal
   const [show, setShow] = React.useState(false);
 
+  function openFoodInfo() {
+    if (showInfo !== false) {
+      setShow(true);
+    }
+  }
+
   const closeFoodInfo = () => setShow(false);
-  const openFoodInfo = () => setShow(true);
 
   return (
     <>
