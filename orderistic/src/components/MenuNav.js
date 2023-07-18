@@ -66,7 +66,7 @@ function MenuNav() {
             </Nav.Link>
             {isLoggedIn && (
               <Nav.Link as={Link} to="/previous" style={{ color: "White" }}>
-                Previous Orders
+                Orders
               </Nav.Link>
             )}
             <Nav.Link onClick={() => setOpen(true)} style={{ color: "White" }}>

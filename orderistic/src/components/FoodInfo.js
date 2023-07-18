@@ -18,7 +18,7 @@ function FoodInfo({ show, closeForm, element }) {
   const [loading, setLoading] = useState(false);
   // Style for the menu cards
   const imgStyle = {
-    width: "500px",
+    width: "50%",
     objectFit: "cover",
     height: "100%",
   };
@@ -83,6 +83,7 @@ function FoodInfo({ show, closeForm, element }) {
     }
     setLoading(false);
     setCart(tempCart);
+    closeForm();
   }
   function setItem(element) {
     setOneItem(element);
@@ -267,8 +268,8 @@ function FoodInfo({ show, closeForm, element }) {
               </Button>
             </ButtonGroup>
             {loading ? (
-              <div class="spinner-border" role="status" style={loadingStyle}>
-                <span class="sr-only"></span>
+              <div className="spinner-border" role="status" style={loadingStyle}>
+                <span className="sr-only"></span>
               </div>
             ) : (
               <Button

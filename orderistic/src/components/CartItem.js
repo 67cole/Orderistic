@@ -1,9 +1,9 @@
-import Card from 'react-bootstrap/Card';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
-import React from 'react';
-import { addToCart, removeFromCart } from '../api/TableApi';
-import { CartContext } from './Menu.js';
+import Card from "react-bootstrap/Card";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Button from "react-bootstrap/Button";
+import React from "react";
+import { addToCart, removeFromCart } from "../api/TableApi";
+import { CartContext } from "./Menu.js";
 import { useAuth } from "../contexts/AuthContext";
 
 function CartItem({ info, index, total, changeTotal }) {
@@ -22,7 +22,7 @@ function CartItem({ info, index, total, changeTotal }) {
     flexDirection: "row",
     height: "210px",
     width: "100%",
-    maxHeight: "500px",
+    // maxHeight: "500px",
     borderTop: "0px",
     borderRight: "0px",
     borderLeft: "0px",
@@ -45,7 +45,7 @@ function CartItem({ info, index, total, changeTotal }) {
     changeTotal(parseFloat(total) - parseFloat(info.price));
     let tempItem = { ...cart[index] };
     tempItem.quantity = 1;
-    removeFromCart(1, tempItem);
+    removeFromCart(tableNumber, tempItem);
   }
   function addQuantity() {
     setPrice(info.price * (quantity + 1));
@@ -56,7 +56,7 @@ function CartItem({ info, index, total, changeTotal }) {
     addToCart(tableNumber, tempItem);
   }
   function removeItem() {
-    removeFromCart(1, cart[index]);
+    removeFromCart(tableNumber, cart[index]);
     let tempCart = [...cart];
     tempCart.splice(index, 1);
     setCart(tempCart);
@@ -76,7 +76,19 @@ function CartItem({ info, index, total, changeTotal }) {
           <Card.Title style={{ float: "right" }}>
             ${parseFloat(price).toFixed(2)}
           </Card.Title>
-          <Card.Text style={{ fontSize: "14px" }}>{info.description}</Card.Text>
+          <Card.Text style={{ fontSize: "14px", marginBottom: "0" }}>
+            {info.description}  
+          </Card.Text>
+          <div style={{ fontSize: "12px", color: "grey", marginBottom: "16px" }}>
+            {cart[index].customisations.map((element, index) => {
+              if (index === 0) {
+                return <span key={index} style={{ fontSize: "12px"}}>{element}</span>
+              }
+              else {
+                return <span key={index} style={{ fontSize: "12px"}}>, {element}</span>
+              }
+            })}
+          </div>
           <Card.Text style={{ fontSize: "14px", marginBottom: "5px" }}>
             Quantity:
           </Card.Text>
