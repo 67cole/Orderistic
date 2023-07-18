@@ -93,67 +93,6 @@ function MenuCard({ element, cart, changeCart }) {
           >
             ${parseFloat(element.price).toFixed(2)}
           </Card.Text>
-          <ButtonGroup
-            aria-label="Choose quantity of food"
-            style={{
-              border: "2px solid black",
-              borderRadius: "5px",
-            }}
-          >
-            {quantity === 1 ? (
-              <Button
-                variant="light"
-                onClick={subtractQuantity}
-                style={{ backgroundColor: "white", boxShadow: "none" }}
-                disabled
-              >
-                -
-              </Button>
-            ) : (
-              <Button
-                variant="light"
-                onClick={subtractQuantity}
-                style={{ backgroundColor: "white", boxShadow: "none" }}
-              >
-                -
-              </Button>
-            )}
-            <div
-              style={{
-                margin: "auto",
-                paddingLeft: "10px",
-                paddingRight: "10px",
-                userSelect: "none",
-              }}
-            >
-              {quantity}
-            </div>
-            <Button
-              variant="light"
-              onClick={addQuantity}
-              style={{ backgroundColor: "white", boxShadow: "none" }}
-            >
-              +
-            </Button>
-          </ButtonGroup>
-          {isLoading ? (
-            <div class="spinner-border" role="status" style={loadingStyle}>
-              <span class="sr-only"></span>
-            </div>
-          ) : (
-            <Button
-              variant="dark"
-              style={{
-                position: "absolute",
-                bottom: "15px",
-                right: "15px",
-                boxShadow: "none",
-              }}
-              onClick={addToOrder}
-            >
-              Add to order
-            </Button>
-          )}
         </Card.Body>
       </Card>
       <div style={{ display: "flex", justifyContent: "center" }}>
