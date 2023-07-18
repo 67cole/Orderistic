@@ -109,10 +109,7 @@ function Menu() {
               )
               .map((element, index) => (
                 <Col key={index}>
-                  <MenuCard
-                    element={element}
-                    searchData={search}
-                  />
+                  <MenuCard element={element} searchData={search} />
                 </Col>
               ))}
           </Row>
