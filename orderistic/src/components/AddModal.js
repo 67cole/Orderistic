@@ -30,7 +30,8 @@ function AddModal({ show, closeForm }) {
       price: price,
       category: category,
       image: image,
-      customisations: customisations
+      customisations: customisations,
+      time: [],
     }
     AddItem(item)
       .then((data) => {

@@ -27,3 +27,13 @@ Week 5:
 - Added finishing touches for the first demo
 - Pair programmed to help with the backend fulfil the databases
 - Pair programmed to assist with frontend work conveying backend duties
+
+
+Week 6:
+- Worked more on Sprint 2, specifically fixing up orders
+- This involved pair programming with group members to properly set up specifications between cart and orders functionalities
+- Fixing up order functions including finalising cart as an order
+
+Week 7:
+- Worked on user stories 28-30 for staff members to complete orders and send into order history
+- Worked on the staff side to update table functions (grab all tables, show previous and current orders)

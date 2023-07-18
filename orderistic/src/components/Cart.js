@@ -1,6 +1,6 @@
 import React from "react";
-import Modal from 'react-bootstrap/Modal';
-import CloseButton from 'react-bootstrap/CloseButton';
+import Modal from "react-bootstrap/Modal";
+import CloseButton from "react-bootstrap/CloseButton";
 import { ListGroup } from "react-bootstrap";
 import CartItem from './CartItem';
 import Card from 'react-bootstrap/Card';
@@ -10,14 +10,16 @@ import { CartContext } from './Menu.js';
 function Cart ({ show, closeCart, menu }) {
   const { cart } = React.useContext(CartContext);
   const [total, setTotal] = React.useState(0);
-  const changeTotal = (newTotal) => setTotal(newTotal)
+  const changeTotal = (newTotal) => setTotal(newTotal);
   React.useEffect(() => {
-    let sum = 0;
-    for (let item of cart) {
-      sum += parseFloat(item.price * item.quantity);
+    if (cart !== undefined) {
+      let sum = 0;
+      for (let item of cart) {
+        sum += parseFloat(item.price * item.quantity);
+      }
+      setTotal(sum);
     }
-    setTotal(sum);
-  }, [cart])
+  }, [cart]);
   const checkoutButtonStyle = {
     backgroundColor: "black", 
     paddingLeft: "250px", 
@@ -25,16 +27,26 @@ function Cart ({ show, closeCart, menu }) {
     position: "fixed", 
     bottom: "10px",
     fontWeight: "600",
-    borderRadius: "6px"
-  }
-  
+    borderRadius: "6px",
+  };
+
   return (
     <>
       <Modal show={show} fullscreen={true} onHide={closeCart}>
-        <Modal.Header style={{ display: "flex", justifyContent: "center"}}>
-          <CloseButton style={{float: "left", marginLeft: "0"}} onClick={closeCart}/>
-          <Modal.Title style={{margin: "auto"}}>Cart</Modal.Title>
-          <div style={{ width: "16px", height: "16px", padding: "8px 8px 8px 8px", margin: "8px 8px 8px 0px"}}></div>
+        <Modal.Header style={{ display: "flex", justifyContent: "center" }}>
+          <CloseButton
+            style={{ float: "left", marginLeft: "0" }}
+            onClick={closeCart}
+          />
+          <Modal.Title style={{ margin: "auto" }}>Cart</Modal.Title>
+          <div
+            style={{
+              width: "16px",
+              height: "16px",
+              padding: "8px 8px 8px 8px",
+              margin: "8px 8px 8px 0px",
+            }}
+          ></div>
         </Modal.Header>
         <Modal.Body style={{ display: "flex", justifyContent: "center", marginTop: "20px"}}>      
           {cart.length === 0 
@@ -54,8 +66,8 @@ function Cart ({ show, closeCart, menu }) {
                   </Card.Body>
                 </Card>
               </ListGroup>
-          } 
-          <Button variant="secondary" size="lg" style={checkoutButtonStyle} >
+          }
+          <Button variant="secondary" size="lg" style={checkoutButtonStyle}>
             Checkout
           </Button>
         </Modal.Body>

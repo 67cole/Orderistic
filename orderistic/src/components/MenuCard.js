@@ -3,25 +3,27 @@ import React from 'react';
 import FoodInfo from './FoodInfo';
 
 function MenuCard({ element }) {
+  // Style for the menu cards
+  const imgStyle = {
+    width: "210px",
+    objectFit: "cover",
+    height: "100%",
+  };
+  const cardStyle = {
+    flexDirection: "row",
+    height: "210px",
+    width: "583px",
+    maxHeight: "500px",
+    cursor: "pointer"
+  }
+
   // For showing the food information modal
   const [show, setShow] = React.useState(false);
 
   const closeFoodInfo = () => setShow(false);
   const openFoodInfo = () => setShow(true);
-  // Style for the menu cards
-  const imgStyle = {
-    width: "210px",
-    objectFit: "cover",
-    height: "100%"
-  }
-  const cardStyle = {
-    flexDirection: "row",
-    height: "210px",
-    width: "100%",
-    maxHeight: "500px",
-    cursor: "pointer"
-  }
-  return (  
+
+  return (
     <>
       <Card onClick={openFoodInfo} style={cardStyle}>  
         {element.image 
@@ -45,7 +47,7 @@ function MenuCard({ element }) {
       </div>
 
     </>
-  )
+  );
 }
 
 export default MenuCard;

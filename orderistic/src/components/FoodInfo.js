@@ -9,8 +9,10 @@ import { CartContext } from './Menu.js';
 import Checkbox from "./Checkbox";
 import QuantityOption from "./QuantityOption";
 import "./Modal.css"
+import { useAuth } from "../contexts/AuthContext";
 
 function FoodInfo({ show, closeForm, element }) {
+  const { tableNumber } = useAuth();
   // Style for the menu cards
   const imgStyle = {
     width: "500px",
@@ -54,9 +56,11 @@ function FoodInfo({ show, closeForm, element }) {
       id: element.id,
       quantity: quantity,
       price: element.price,
-      customisations: finalList
+      customisations: finalList,
+      order_time: Math.floor((Date.now() / 1000)),
+      finish_time: 0,
     };
-    addToCart(1, cartItem);
+    addToCart(tableNumber, cartItem);
     let tempCart = [...cart];
     let found = false;
     for (let item of tempCart) {
