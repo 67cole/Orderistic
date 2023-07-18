@@ -18,6 +18,7 @@ import Cart from "./Cart";
 
 import StaffMenu from "./StaffMenu";
 import StaffSignup from "./StaffSignup";
+import OrderComplete from "./OrderComplete";
 function App() {
   document.body.style.backgroundColor = "#edeff3";
 
@@ -77,6 +78,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/staff-login" element={<StaffLogin />} />
             <Route path="/staff-signup" element={<StaffSignup />} />
+            <Route path="/order-complete" element={<OrderComplete />} />
             <Route path="/previous" element={<PreviousOrder />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>

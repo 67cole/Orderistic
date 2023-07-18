@@ -1,12 +1,15 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import React from "react";
+import React, { useState } from "react";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { addToCart } from "../api/TableApi";
 import { useAuth } from "../contexts/AuthContext";
+import timeout from "../api/Timeout";
 
 function MenuCard({ element, cart, changeCart }) {
   const { tableNumber } = useAuth();
+
+  const [isLoading, setLoading] = useState(false);
 
   const [quantity, setQuantity] = React.useState(1);
   const imgStyle = {
@@ -20,21 +23,30 @@ function MenuCard({ element, cart, changeCart }) {
     width: "460px",
     maxHeight: "500px",
   };
+
+  const loadingStyle = {
+    position: "absolute",
+    bottom: "15px",
+    right: "15px",
+  };
+
   function addQuantity() {
     setQuantity(quantity + 1);
   }
   function subtractQuantity() {
     setQuantity(quantity - 1);
   }
-  function addToOrder() {
+  async function addToOrder() {
+    setLoading(true);
+    await timeout(500);
     let cartItem = {
       id: element.id,
       quantity: quantity,
       price: element.price,
-      order_time: Math.floor((Date.now() / 1000)),
+      order_time: Math.floor(Date.now() / 1000),
       finish_time: 0,
     };
-    console.log(tableNumber);
+    console.log("entered here");
     addToCart(tableNumber, cartItem);
     let tempCart = [...cart];
     let found = false;
@@ -47,6 +59,7 @@ function MenuCard({ element, cart, changeCart }) {
     if (found === false) {
       tempCart.push(cartItem);
     }
+    setLoading(false);
     changeCart(tempCart);
   }
   return (
@@ -67,7 +80,10 @@ function MenuCard({ element, cart, changeCart }) {
           </Card.Text>
           <ButtonGroup
             aria-label="Choose quantity of food"
-            style={{ border: "2px solid black", borderRadius: "5px" }}
+            style={{
+              border: "2px solid black",
+              borderRadius: "5px",
+            }}
           >
             {quantity === 1 ? (
               <Button
@@ -105,18 +121,24 @@ function MenuCard({ element, cart, changeCart }) {
               +
             </Button>
           </ButtonGroup>
-          <Button
-            variant="dark"
-            style={{
-              position: "absolute",
-              bottom: "15px",
-              right: "15px",
-              boxShadow: "none",
-            }}
-            onClick={addToOrder}
-          >
-            Add to order
-          </Button>
+          {isLoading ? (
+            <div class="spinner-border" role="status" style={loadingStyle}>
+              <span class="sr-only"></span>
+            </div>
+          ) : (
+            <Button
+              variant="dark"
+              style={{
+                position: "absolute",
+                bottom: "15px",
+                right: "15px",
+                boxShadow: "none",
+              }}
+              onClick={addToOrder}
+            >
+              Add to order
+            </Button>
+          )}
         </Card.Body>
       </Card>
     </>

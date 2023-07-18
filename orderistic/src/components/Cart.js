@@ -7,12 +7,15 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useAuth } from "../contexts/AuthContext";
 import { sendOrder } from "../api/TableApi";
+import timeout from "../api/Timeout";
+import { useNavigate } from "react-router-dom";
 
 function Cart({ show, closeCart, cart, changeCart, menu }) {
   const [total, setTotal] = React.useState(0);
   const changeTotal = (newTotal) => setTotal(newTotal);
   const { tableNumber } = useAuth();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (cart !== undefined) {
@@ -37,9 +40,13 @@ function Cart({ show, closeCart, cart, changeCart, menu }) {
     bottom: "20px",
   };
 
-  function handleCheckout() {
+  async function handleCheckout() {
     setLoading(true);
-    sendOrder(tableNumber).then(setLoading(false));
+    await timeout(500);
+    sendOrder(tableNumber);
+    changeCart();
+    setLoading(false);
+    navigate("/order-complete");
   }
 
   return (
