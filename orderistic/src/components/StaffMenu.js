@@ -41,8 +41,8 @@ function StaffMenu() {
   return (
     <>
       <MenuContext.Provider value={{ menu, setMenu }}>
-        <StaffNav showForm={showForm}/>
-        <AddModal show={show} closeForm={closeForm}/>
+        <StaffNav showForm={showForm} />
+        <AddModal show={show} closeForm={closeForm} />
         <Row
           xs={1}
           md={2}
@@ -52,12 +52,11 @@ function StaffMenu() {
         >
           {menu.map((element) => (
             <Col key={element.name}>
-              <StaffMenuCard element={element}/>
+              <StaffMenuCard element={element} />
             </Col>
           ))}
         </Row>
       </MenuContext.Provider>
-      
     </>
   );
 }

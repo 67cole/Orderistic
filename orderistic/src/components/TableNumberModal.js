@@ -7,25 +7,23 @@ export default function TableNumberModal() {
   const [show, setShow] = useState(false);
 
   const tables = [
-    { id: 1, number: 1 },
-    { id: 2, number: 2 },
-    { id: 3, number: 3 },
-    { id: 4, number: 4 },
-    { id: 5, number: 5 },
-    { id: 6, number: 6 },
-    { id: 7, number: 7 },
-    { id: 8, number: 8 },
-    { id: 9, number: 9 },
-    { id: 10, number: 10 },
+    { key: 1, number: 1 },
+    { key: 2, number: 2 },
+    { key: 3, number: 3 },
+    { key: 4, number: 4 },
+    { key: 5, number: 5 },
+    { key: 6, number: 6 },
+    { key: 7, number: 7 },
+    { key: 8, number: 8 },
+    { key: 9, number: 9 },
+    { key: 10, number: 10 },
   ];
   const { chooseTable, tableNumber } = useAuth();
 
   function checkTableNumber() {
     if (tableNumber === 0) {
-      console.log(tableNumber);
       setShow(true);
     } else {
-      console.log(tableNumber);
     }
   }
 

@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import { ListGroup } from "react-bootstrap";
-import CartItem from './CartItem';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import { CartContext } from './Menu.js';
+import CartItem from "./CartItem";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { useAuth } from "../contexts/AuthContext";
+import { sendOrder } from "../api/TableApi";
+import timeout from "../api/Timeout";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "./Menu.js";
 
-function Cart ({ show, closeCart, menu }) {
+function Cart({ show, closeCart, menu }) {
   const { cart } = React.useContext(CartContext);
   const [total, setTotal] = React.useState(0);
   const changeTotal = (newTotal) => setTotal(newTotal);
+  const { tableNumber } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     if (cart !== undefined) {
       let sum = 0;
@@ -21,14 +29,26 @@ function Cart ({ show, closeCart, menu }) {
     }
   }, [cart]);
   const checkoutButtonStyle = {
-    backgroundColor: "black", 
-    paddingLeft: "250px", 
-    paddingRight: "250px", 
-    position: "fixed", 
+    backgroundColor: "black",
+    paddingLeft: "250px",
+    paddingRight: "250px",
+    position: "fixed",
     bottom: "10px",
     fontWeight: "600",
     borderRadius: "6px",
   };
+  const loadingStyle = {
+    position: "fixed",
+    bottom: "20px",
+  };
+
+  async function handleCheckout() {
+    setLoading(true);
+    await timeout(500);
+    sendOrder(tableNumber);
+    setLoading(false);
+    navigate("/order-complete");
+  }
 
   return (
     <>
@@ -48,28 +68,58 @@ function Cart ({ show, closeCart, menu }) {
             }}
           ></div>
         </Modal.Header>
-        <Modal.Body style={{ display: "flex", justifyContent: "center", marginTop: "20px"}}>      
-          {cart.length === 0 
-            ? "Your cart is empty!"
-            : <ListGroup>
-                {cart.map((element, index) => (
-                  <CartItem key={index} info={menu[element.id]} index={index} total={total} changeTotal={changeTotal} />
-                ))}
-                <Card style={{ border: "0", paddingTop: "10px", paddingBottom: "70px"}}>
-                  <Card.Body style={{ borderBottom: "1px solid #ededed" }}>
-                    <Card.Title>
-                      Total
-                      <Card.Title style={{ float: "right", fontSize: "30px" }}>
-                        ${parseFloat(total).toFixed(2)}
-                      </Card.Title>
+        <Modal.Body
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          {cart.length === 0 ? (
+            "Your cart is empty!"
+          ) : (
+            <ListGroup>
+              {cart.map((element, index) => (
+                <CartItem
+                  key={index}
+                  info={menu[element.id]}
+                  index={index}
+                  total={total}
+                  changeTotal={changeTotal}
+                />
+              ))}
+              <Card
+                style={{
+                  border: "0",
+                  paddingTop: "10px",
+                  paddingBottom: "70px",
+                }}
+              >
+                <Card.Body style={{ borderBottom: "1px solid #ededed" }}>
+                  <Card.Title>
+                    Total
+                    <Card.Title style={{ float: "right", fontSize: "30px" }}>
+                      ${parseFloat(total).toFixed(2)}
                     </Card.Title>
-                  </Card.Body>
-                </Card>
-              </ListGroup>
-          }
-          <Button variant="secondary" size="lg" style={checkoutButtonStyle}>
-            Checkout
-          </Button>
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </ListGroup>
+          )}
+          {!loading ? (
+            <Button
+              variant="secondary"
+              size="lg"
+              style={checkoutButtonStyle}
+              onClick={handleCheckout}
+            >
+              Checkout
+            </Button>
+          ) : (
+            <div class="spinner-border" role="status" style={loadingStyle}>
+              <span class="sr-only"></span>
+            </div>
+          )}
         </Modal.Body>
       </Modal>
     </>

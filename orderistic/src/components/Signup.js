@@ -27,7 +27,6 @@ export default function Signup() {
       navigate("/");
     } catch (error2) {
       setError("Failed to create an account");
-      console.log(error2);
     }
 
     setLoading(false);

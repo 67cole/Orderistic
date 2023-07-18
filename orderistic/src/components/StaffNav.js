@@ -19,7 +19,6 @@ function StaffNav({ showForm }) {
       navigate("/staff-login");
     } catch (errorName) {
       setError("Failed to log out");
-      console.log(errorName);
     }
   }
   return (

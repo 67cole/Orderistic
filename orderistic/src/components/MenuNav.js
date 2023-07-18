@@ -34,7 +34,6 @@ function MenuNav() {
       navigate("/login");
     } catch (errorName) {
       setError("Failed to log out");
-      console.log(errorName);
     }
   }
   return (
@@ -54,22 +53,30 @@ function MenuNav() {
         className="sticky-top nav-bar"
       >
         <Container>
-          <Navbar.Brand as={Link} to="/menu" style={{ color: "white", fontSize: "24px", fontWeight: "500" }}>
+          <Navbar.Brand
+            as={Link}
+            to="/menu"
+            style={{ color: "white", fontSize: "24px", fontWeight: "500" }}
+          >
             Orderistic
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/menu">
+            <Nav.Link as={Link} to="/menu" style={{ color: "White" }}>
               Home
             </Nav.Link>
             {isLoggedIn && (
-              <Nav.Link as={Link} to="/previous">
+              <Nav.Link as={Link} to="/previous" style={{ color: "White" }}>
                 Previous Orders
               </Nav.Link>
             )}
-            <Nav.Link onClick={() => setOpen(true)}>
+            <Nav.Link onClick={() => setOpen(true)} style={{ color: "White" }}>
               Request Assistance
             </Nav.Link>
-            <Nav.Link onClick={handleTable} to="/menu">
+            <Nav.Link
+              onClick={handleTable}
+              to="/menu"
+              style={{ color: "White" }}
+            >
               Table Number: {tableNumber}
             </Nav.Link>
           </Nav>
