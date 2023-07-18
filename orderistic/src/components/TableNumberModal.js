@@ -22,10 +22,8 @@ export default function TableNumberModal() {
 
   function checkTableNumber() {
     if (tableNumber === 0) {
-      console.log(tableNumber);
       setShow(true);
     } else {
-      console.log(tableNumber);
     }
   }
 
