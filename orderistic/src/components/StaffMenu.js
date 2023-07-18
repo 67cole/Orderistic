@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 
+export const MenuContext = React.createContext();
+
 function StaffMenu() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -22,9 +24,6 @@ function StaffMenu() {
   const [show, setShow] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
 
-  function handleMenu(newMenu) {
-    setMenu(newMenu);
-  }
   React.useEffect(() => {
     returnFoodData().then((data) => {
       let tempMenu = [];
@@ -37,28 +36,28 @@ function StaffMenu() {
       setMenu(tempMenu);
     });
   }, []);
-  React.useEffect(() => {
-    console.log(menu);
-  }, [menu])
   const closeForm = () => setShow(false);
   const showForm = () => setShow(true);
   return (
     <>
-      <StaffNav showForm={showForm}/>
-      <AddModal show={show} closeForm={closeForm} menu={menu} handleMenu={handleMenu}/>
-      <Row
-        xs={1}
-        md={2}
-        lg={3}
-        className="g-4"
-        style={{ margin: "40px 40px 40px 40px" }}
-      >
-        {menu.map((element, index) => (
-          <Col key={element.name}>
-            <StaffMenuCard element={element} handleMenu={handleMenu} menu={menu} index={index}/>
-          </Col>
-        ))}
-      </Row>
+      <MenuContext.Provider value={{ menu, setMenu }}>
+        <StaffNav showForm={showForm}/>
+        <AddModal show={show} closeForm={closeForm}/>
+        <Row
+          xs={1}
+          md={2}
+          lg={3}
+          className="g-4"
+          style={{ margin: "40px 40px 40px 40px" }}
+        >
+          {menu.map((element) => (
+            <Col key={element.name}>
+              <StaffMenuCard element={element}/>
+            </Col>
+          ))}
+        </Row>
+      </MenuContext.Provider>
+      
     </>
   );
 }

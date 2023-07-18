@@ -49,12 +49,12 @@ function MenuNav() {
       <Navbar
         style={{
           boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)",
-          backgroundColor: "white",
+          backgroundColor: "black",
         }}
         className="sticky-top nav-bar"
       >
         <Container>
-          <Navbar.Brand as={Link} to="/menu">
+          <Navbar.Brand as={Link} to="/menu" style={{ color: "white", fontSize: "24px", fontWeight: "500" }}>
             Orderistic
           </Navbar.Brand>
           <Nav className="me-auto">
@@ -74,9 +74,9 @@ function MenuNav() {
             </Nav.Link>
           </Nav>
           <Button
-            variant="light"
+            variant="dark"
             onClick={handleLogout}
-            style={{ backgroundColor: "white", border: "0", boxShadow: "none" }}
+            style={{ backgroundColor: "black", border: "0", boxShadow: "none" }}
           >
             Log Out
           </Button>

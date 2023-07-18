@@ -6,13 +6,14 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Cart from "./Cart";
 import { viewCart } from "../api/TableApi";
-
+import Container from 'react-bootstrap/Container';
 import MenuNav from "./MenuNav";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
-
 import TableNumberModal from "./TableNumberModal";
+
+export const CartContext = React.createContext();
 
 function Menu() {
   const { currentUser, tableNumber } = useAuth();
@@ -33,9 +34,9 @@ function Menu() {
   const [show, setShow] = React.useState(false);
   const [cart, setCart] = React.useState([]);
 
-  const changeCart = (newCart) => setCart(newCart);
   const closeCart = () => setShow(false);
   const showCart = () => setShow(true);
+  
   React.useEffect(() => {
     returnFoodData().then((data) => {
       setMenuDict(data);
@@ -77,6 +78,7 @@ function Menu() {
   return (
     <>
       <MenuNav />
+      
       {
         <input
           style={searchStyle}
@@ -87,26 +89,30 @@ function Menu() {
         />
       }
       <TableNumberModal />
-      <Row
-        className="g-4"
-        style={{ margin: "0px 20px 20px 20px", paddingBottom: "40px" }}
-      >
-        {menu
-          .filter((element) =>
-            element.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((element, index) => (
-            <Col key={index}>
-              <MenuCard
-                element={element}
-                cart={cart}
-                changeCart={changeCart}
-                searchData={search}
-                menu={menu}
-              />
-            </Col>
-          ))}
-      </Row>
+      <CartContext.Provider value={{ cart, setCart }}>
+      <Container fluid>
+        <Row
+          xs={1}
+          md={2}
+          lg={3}
+          className="g-4"
+          style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
+        >
+          {menu
+            .filter((element) =>
+              element.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((element, index) => (
+              <Col key={index}>
+                <MenuCard
+                  element={element}
+                  searchData={search}
+                />
+              </Col>
+            ))}
+        </Row>
+      </Container>
+
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
           variant="secondary"
@@ -120,10 +126,9 @@ function Menu() {
       <Cart
         show={show}
         closeCart={closeCart}
-        cart={cart}
-        changeCart={changeCart}
         menu={menuDict}
       />
+      </CartContext.Provider>
     </>
   );
 }
