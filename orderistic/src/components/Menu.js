@@ -63,7 +63,7 @@ function Menu() {
     paddingLeft: "250px",
     paddingRight: "250px",
     position: "fixed",
-    bottom: "20px",
+    bottom: "10px",
     fontWeight: "600",
     borderRadius: "6px",
   };
@@ -96,7 +96,7 @@ function Menu() {
           md={2}
           lg={3}
           className="g-4"
-          style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
+          style={{ margin: "0px 40px 40px 40px", paddingBottom: "40px" }}
         >
           {menu
             .filter((element) =>

@@ -23,7 +23,7 @@ function StaffNav({ showForm }) {
     }
   }
   return (
-    <Navbar data-bs-theme="light" style={{boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)", backgroundColor: "black"}} className="sticky-top nav-bar">
+    <Navbar variant="dark" style={{boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)", backgroundColor: "black"}} className="sticky-top nav-bar">
       <Container>
         <Navbar.Brand as={Link} to="/staff-menu" style={{ color: "white", fontSize: "24px", fontWeight: "500" }}>
           Orderistic
