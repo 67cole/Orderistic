@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 import TableNumberModal from "./TableNumberModal";
+import MenuSideDrawer from "./MenuSideDrawer";
 
 export const CartContext = React.createContext();
 
@@ -74,20 +75,28 @@ function Menu() {
     padding: "20px",
     fontSize: "20px",
   };
+  const sideDrawerStyle = {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  }
   const [search, setSearch] = React.useState("");
+  console.log(menu)
   return (
     <>
       <MenuNav />
-      
       {
         <input
-          style={searchStyle}
-          type="text"
-          placeholder="Search menu"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+        style={searchStyle}
+        type="text"
+        placeholder="Search menu"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         />
       }
+      <div style={sideDrawerStyle}>
+        <MenuSideDrawer value={menu}/>
+      </div>
       <TableNumberModal />
       <CartContext.Provider value={{ cart, setCart }}>
       <Container fluid>
