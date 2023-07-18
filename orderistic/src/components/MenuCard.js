@@ -34,7 +34,6 @@ function MenuCard({ element, cart, changeCart }) {
       order_time: Math.floor((Date.now() / 1000)),
       finish_time: 0,
     };
-    console.log(tableNumber);
     addToCart(tableNumber, cartItem);
     let tempCart = [...cart];
     let found = false;

@@ -16,7 +16,6 @@ export default function StaffDashboard() {
       navigate("/login");
     } catch (errorName) {
       setError("Failed to log out");
-      console.log(errorName);
     }
   }
 
