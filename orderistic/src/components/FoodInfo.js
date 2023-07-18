@@ -30,8 +30,15 @@ function FoodInfo({ show, closeForm, element }) {
   const { cart, setCart } = React.useContext(CartContext);
   const [quantity, setQuantity] = React.useState(1);
   const [price, setPrice] = React.useState(element.price);
+  const [customisationList, setCustomisationList] = React.useState({
+    checkbox: [],
+    quantity: [],
+  });
+  const [oneItem, setOneItem] = React.useState("");
 
-
+  function handleCustomisationList(newList) {
+    setCustomisationList(newList);
+  }
   function addQuantity() {
     setPrice(parseFloat(price) + parseFloat(element.price));
     setQuantity(quantity + 1);
@@ -42,10 +49,12 @@ function FoodInfo({ show, closeForm, element }) {
   }
   // Adding the food to the cart
   function addToOrder() {
+    let finalList = [...customisationList.checkbox,...customisationList.quantity, oneItem];
     let cartItem = {
       id: element.id,
       quantity: quantity,
-      price: element.price
+      price: element.price,
+      customisations: finalList
     };
     addToCart(1, cartItem);
     let tempCart = [...cart];
@@ -61,7 +70,9 @@ function FoodInfo({ show, closeForm, element }) {
     }
     setCart(tempCart);
   }
-
+  function setItem(element) {
+    setOneItem(element);
+  }
   return (
     <> 
     <Modal show={show} onHide={closeForm} dialogClassName="modal-size" centered style={{ flexDirection: "row" }} >
@@ -93,7 +104,7 @@ function FoodInfo({ show, closeForm, element }) {
                         <div style={subheadingStyle}>
                           Choose up to {customisation.optionNum} {customisation.optionNum === 1 ? <>item</> : <>items</>}
                         </div>
-                        <Checkbox key={index} customisation={customisation} maxOptionNum={customisation.optionNum}/>
+                        <Checkbox key={index} customisation={customisation} maxOptionNum={customisation.optionNum} list={customisationList} setList={handleCustomisationList}/>
                       </>
 
                     : (customisation.optionNum === 1)
@@ -105,7 +116,7 @@ function FoodInfo({ show, closeForm, element }) {
                               {customisation.options.map((element, index) => (
                                 <div key={index} style={{borderBottom: "1px solid #dfdfdf"}}>
                                   <label htmlFor={element} name={customisation.name} style={{ width:"93%", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "1px", fontSize: "14px" }}>{element}</label>
-                                  <input type="radio" id={element} name={customisation.name} style={{ accentColor: "black", verticalAlign: "middle", width: "17px", height: "17px"}}/>
+                                  <input type="radio" id={element} name={customisation.name} onChange={() => setItem(element)} style={{ accentColor: "black", verticalAlign: "middle", width: "17px", height: "17px"}}/>
                                 </div>
                               ))}
                             </div>
@@ -114,7 +125,7 @@ function FoodInfo({ show, closeForm, element }) {
                             <div style={subheadingStyle}>
                               Choose {customisation.optionNum} items
                             </div>
-                            <QuantityOption customisation={customisation} maxOptionNum={customisation.optionNum}/>
+                            <QuantityOption customisation={customisation} maxOptionNum={customisation.optionNum} list={customisationList} setList={handleCustomisationList}/>
                           </>
                   }
                 </div>

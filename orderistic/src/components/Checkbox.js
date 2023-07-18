@@ -1,6 +1,6 @@
 import React from "react";
 
-function Checkbox({ customisation, maxOptionNum }) {
+function Checkbox({ customisation, maxOptionNum, list, setList }) {
   const [chosenNum, setChosenNum] = React.useState(0);
   const [checked, setChecked] = React.useState([]);
   const [options, setOptions] = React.useState([]);
@@ -17,16 +17,30 @@ function Checkbox({ customisation, maxOptionNum }) {
   }, [customisation])
   function handleClick(checkBool, index) {
     let tempChecked = [...checked];
-    console.log(tempChecked);
     if (checkBool === true) {
       setChosenNum(chosenNum + 1);
       tempChecked[index] = true; 
+      let newCustomisations = [...list.checkbox, options[index]];
+      let newDict = {...list}
+      newDict.checkbox = newCustomisations;
+      setList(newDict);
     }
     else {
       setChosenNum(chosenNum - 1);
-      tempChecked[index] = false; 
+      tempChecked[index] = false;
+      // Assuming all options have a different name
+      let newCustomisations = [...list.checkbox];
+      for (let i = 0; i < newCustomisations.length; i++) {
+        if (newCustomisations[i] === options[index]) {
+          newCustomisations.splice(i, 1);
+        }
+      }
+      let newDict = {...list}
+      newDict.checkbox = newCustomisations;
+      setList(newDict);
     }
     setChecked(tempChecked);
+
   }
   return(
     <>

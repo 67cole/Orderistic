@@ -2,41 +2,46 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-function QuantityOption({ customisation, maxOptionNum }) {
-  const [chosenOptions, setChosenOptions] = React.useState({});
+function QuantityOption({ customisation, maxOptionNum, list, setList }) {
+  const [chosenOptions, setChosenOptions] = React.useState([]);
   const [quantities, setQuantities] = React.useState([]);
   const [chosenOptionNum, setChosenOptionNum] = React.useState(0);
 
   React.useEffect(() => {
-    let chosenOptionDict = {};
+    let chosenOptionList = [];
     let tempQuantities = [];
     for (let i = 0; i < customisation.options.length; i++) {
-      let tempDict = {};
-      tempDict.quantity = 0;
-      tempDict.option = customisation.options[i];
-      chosenOptionDict[i] = tempDict;
+      chosenOptionList.push(customisation.options[i]);
       tempQuantities.push(0);
     }
     setQuantities(tempQuantities);
-    setChosenOptions(chosenOptionDict);
+    setChosenOptions(chosenOptionList);
   }, [customisation])
 
   function addQuantity(index) {
-    let tempOptions = {...chosenOptions};
-    tempOptions[index].quantity += 1;
+    let newCustomisations = [...list.quantity, chosenOptions[index]]
+    let newDict = {...list};
+    newDict.quantity = newCustomisations;
+    setList(newDict);
+    console.log(newDict);
     setChosenOptionNum(chosenOptionNum + 1);
-    setChosenOptions(tempOptions);
-    
     let tempQuantities = [...quantities];
     tempQuantities[index] += 1;
     setQuantities(tempQuantities);
+
   }
   function subtractQuantity(index) {
-    let tempOptions = {...chosenOptions};
-    tempOptions[index].quantity -= 1;
-    setChosenOptionNum(chosenOptionNum - 1);
-    setChosenOptions(tempOptions);
+    let newCustomisations = [...list.quantity]
+    for (let i = 0; i < newCustomisations.length; i++) {
+      if (newCustomisations[i] === chosenOptions[index]) {
+        newCustomisations.splice(i, 1);
+      }
+    }
+    let newDict = {...list};
+    newDict.quantity = newCustomisations;
+    setList(newDict);
 
+    setChosenOptionNum(chosenOptionNum - 1);
     let tempQuantities = [...quantities];
     tempQuantities[index] -= 1;
     setQuantities(tempQuantities);
