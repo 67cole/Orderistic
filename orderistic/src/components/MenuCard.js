@@ -14,6 +14,7 @@ function MenuCard({ element, showInfo = true }) {
     height: "210px",
     width: "583px",
     maxHeight: "500px",
+    cursor: "pointer"
   };
 
   // For showing the food information modal

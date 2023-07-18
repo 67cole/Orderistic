@@ -71,7 +71,7 @@ function Menu() {
     paddingLeft: "250px",
     paddingRight: "250px",
     position: "fixed",
-    bottom: "20px",
+    bottom: "15px",
     fontWeight: "600",
     borderRadius: "6px",
   };
@@ -97,13 +97,10 @@ function Menu() {
       }
       <TableNumberModal />
       <CartContext.Provider value={{ cart, setCart }}>
-        <Container fluid>
+        <Container fluid style={{ display: "flex", justifyContent: "center" }}>
           <Row
-            xs={1}
-            md={2}
-            lg={3}
             className="g-4"
-            style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
+            style={{ margin: "0px 20px 40px 20px", paddingBottom: "40px" }}
           >
             {isLoading && <CardSkeleton cards={9} />}
             {menu
@@ -112,7 +109,10 @@ function Menu() {
               )
               .map((element, index) => (
                 <Col key={index}>
-                  <MenuCard element={element} searchData={search} />
+                  <MenuCard
+                    element={element}
+                    searchData={search}
+                  />
                 </Col>
               ))}
           </Row>
