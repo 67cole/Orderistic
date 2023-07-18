@@ -1,9 +1,9 @@
-import Card from 'react-bootstrap/Card';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
-import React from 'react';
-import { addToCart, removeFromCart } from '../api/TableApi';
-import { CartContext } from './Menu.js';
+import Card from "react-bootstrap/Card";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Button from "react-bootstrap/Button";
+import React from "react";
+import { addToCart, removeFromCart } from "../api/TableApi";
+import { CartContext } from "./Menu.js";
 import { useAuth } from "../contexts/AuthContext";
 
 function CartItem({ info, index, total, changeTotal }) {
@@ -45,7 +45,7 @@ function CartItem({ info, index, total, changeTotal }) {
     changeTotal(parseFloat(total) - parseFloat(info.price));
     let tempItem = { ...cart[index] };
     tempItem.quantity = 1;
-    removeFromCart(1, tempItem);
+    removeFromCart(tableNumber, tempItem);
   }
   function addQuantity() {
     setPrice(info.price * (quantity + 1));
@@ -56,7 +56,7 @@ function CartItem({ info, index, total, changeTotal }) {
     addToCart(tableNumber, tempItem);
   }
   function removeItem() {
-    removeFromCart(1, cart[index]);
+    removeFromCart(tableNumber, cart[index]);
     let tempCart = [...cart];
     tempCart.splice(index, 1);
     setCart(tempCart);

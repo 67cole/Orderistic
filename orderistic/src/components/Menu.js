@@ -6,12 +6,13 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Cart from "./Cart";
 import { viewCart } from "../api/TableApi";
-import Container from 'react-bootstrap/Container';
+import Container from "react-bootstrap/Container";
 import MenuNav from "./MenuNav";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 import TableNumberModal from "./TableNumberModal";
+import CardSkeleton from "./CardSkeleton";
 
 export const CartContext = React.createContext();
 
@@ -33,10 +34,16 @@ function Menu() {
   const [menuDict, setMenuDict] = React.useState({});
   const [show, setShow] = React.useState(false);
   const [cart, setCart] = React.useState([]);
+  const [orderComplete, setOrderComplete] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const closeCart = () => setShow(false);
+  function closeCart() {
+    setShow(false);
+    setOrderComplete(false);
+  }
+
   const showCart = () => setShow(true);
-  
+
   React.useEffect(() => {
     returnFoodData().then((data) => {
       setMenuDict(data);
@@ -47,6 +54,7 @@ function Menu() {
         tempDict.id = key;
         tempMenu.push(tempDict);
       }
+      setIsLoading(false);
       setMenu(tempMenu);
     });
   }, []);
@@ -78,7 +86,6 @@ function Menu() {
   return (
     <>
       <MenuNav />
-      
       {
         <input
           style={searchStyle}
@@ -90,44 +97,44 @@ function Menu() {
       }
       <TableNumberModal />
       <CartContext.Provider value={{ cart, setCart }}>
-      <Container fluid>
-        <Row
-          xs={1}
-          md={2}
-          lg={3}
-          className="g-4"
-          style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
-        >
-          {menu
-            .filter((element) =>
-              element.name.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((element, index) => (
-              <Col key={index}>
-                <MenuCard
-                  element={element}
-                  searchData={search}
-                />
-              </Col>
-            ))}
-        </Row>
-      </Container>
+        <Container fluid>
+          <Row
+            xs={1}
+            md={2}
+            lg={3}
+            className="g-4"
+            style={{ margin: "40px 40px 40px 40px", paddingBottom: "40px" }}
+          >
+            {isLoading && <CardSkeleton cards={9} />}
+            {menu
+              .filter((element) =>
+                element.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((element, index) => (
+                <Col key={index}>
+                  <MenuCard element={element} searchData={search} />
+                </Col>
+              ))}
+          </Row>
+        </Container>
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          variant="secondary"
-          size="lg"
-          style={cartButtonStyle}
-          onClick={loadCart}
-        >
-          View cart
-        </Button>
-      </div>
-      <Cart
-        show={show}
-        closeCart={closeCart}
-        menu={menuDict}
-      />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="secondary"
+            size="lg"
+            style={cartButtonStyle}
+            onClick={loadCart}
+          >
+            View cart
+          </Button>
+        </div>
+        <Cart
+          show={show}
+          closeCart={closeCart}
+          menu={menuDict}
+          orderComplete={orderComplete}
+          setOrderComplete={setOrderComplete}
+        />
       </CartContext.Provider>
     </>
   );
