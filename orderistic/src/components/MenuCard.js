@@ -1,10 +1,8 @@
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import React, { useState } from "react";
-import timeout from "../api/Timeout";
+import React from "react";
 import FoodInfo from "./FoodInfo";
 
-function MenuCard({ element }) {
+function MenuCard({ element, showInfo = true }) {
   // Style for the menu cards
   const imgStyle = {
     width: "210px",
@@ -21,8 +19,13 @@ function MenuCard({ element }) {
   // For showing the food information modal
   const [show, setShow] = React.useState(false);
 
+  function openFoodInfo() {
+    if (showInfo !== false) {
+      setShow(true);
+    }
+  }
+
   const closeFoodInfo = () => setShow(false);
-  const openFoodInfo = () => setShow(true);
 
   return (
     <>

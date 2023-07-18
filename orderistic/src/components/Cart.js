@@ -8,7 +8,6 @@ import Button from "react-bootstrap/Button";
 import { useAuth } from "../contexts/AuthContext";
 import { sendOrder } from "../api/TableApi";
 import timeout from "../api/Timeout";
-import { useNavigate } from "react-router-dom";
 import { CartContext } from "./Menu.js";
 import Col from "react-bootstrap/Col";
 import MenuCard from "./MenuCard";
@@ -96,7 +95,7 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
             <p>Total: ${total}</p>
             {cart.map((element, index) => (
               <Col key={index}>
-                <MenuCard element={menu[element.id]} />
+                <MenuCard element={menu[element.id]} showInfo={false} />
               </Col>
             ))}
           </Modal.Body>
