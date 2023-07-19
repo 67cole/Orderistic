@@ -97,7 +97,7 @@ function Menu() {
 	function category() {
 		const arrayCategory = menu.map((element)=> element.category);
 		const uniqueCategory = Array.from(new Set(arrayCategory)).filter(element => element);
-		const categoryDisplay = uniqueCategory.map((element)=> <Typography variant='h6' padding="20px" onClick={() => setFilter(element)}>{element}</Typography>)
+		const categoryDisplay = uniqueCategory.map((element)=> <Typography variant='h6' padding="20px" onClick={() => {setFilter(element); setOpen(false)}}><button type="button" class="btn btn-outline-dark">{element}</button></Typography>)
 		
 		return categoryDisplay;
 	}
@@ -121,7 +121,7 @@ function Menu() {
           <Box p={2} width='250px' textAlign='center' role='presentation'>
             <Typography variant='h5' component='div'>
               Menu Categories
-              <Typography variant='h6' padding="20px" onClick={() => setFilter(null)}>Full Menu</Typography>
+              <Typography variant='h6' padding="20px" onClick={() => {setFilter(null); setOpen(false)}}><button type="button" class="btn btn-outline-dark">Full Menu</button></Typography>
               {category()}
             </Typography>
           </Box>
