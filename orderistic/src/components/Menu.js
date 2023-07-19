@@ -150,7 +150,7 @@ function Menu() {
                 }
                 })
               .map((element, index) => (
-                <Col key={index}>
+                <Col key={index} style={{display: "flex", justifyContent: "center"}}>
                   <MenuCard element={element} searchData={search} />
                 </Col>
               ))}
