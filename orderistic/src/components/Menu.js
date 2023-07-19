@@ -92,7 +92,6 @@ function Menu() {
   const [search, setSearch] = React.useState("");
   console.log(menu)
   const [open, setOpen] = React.useState(false);
-	console.log(menu.value)
 	const [filter, setFilter] = React.useState("");
 	
 	function category() {
@@ -139,10 +138,12 @@ function Menu() {
             {menu
               .filter((element) => 
                 {if (search) {
+                  if (filter) {
+                    return element.category.includes(filter) && element.name.toLowerCase().includes(search.toLowerCase());
+                  }
                   return element.name.toLowerCase().includes(search.toLowerCase());
                 }
                 if (filter) {
-                  console.log(filter)
                   return element.category.includes(filter);
                 } else {
                   return menu;
@@ -151,7 +152,6 @@ function Menu() {
               .map((element, index) => (
                 <Col key={index}>
                   <MenuCard element={element} searchData={search} />
-                  {console.log(element.category)}
                 </Col>
               ))}
           </Row>
