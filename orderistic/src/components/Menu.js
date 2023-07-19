@@ -14,7 +14,8 @@ import { validStaff } from "../api/AuthApi";
 import TableNumberModal from "./TableNumberModal";
 import CardSkeleton from "./CardSkeleton";
 import MenuSideDrawer from "./MenuSideDrawer";
-
+import {Drawer, Box, Typography, IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 export const CartContext = React.createContext();
 
 function Menu() {
@@ -90,6 +91,17 @@ function Menu() {
   }
   const [search, setSearch] = React.useState("");
   console.log(menu)
+  const [open, setOpen] = React.useState(false);
+	console.log(menu.value)
+	const [filter, setFilter] = React.useState("");
+	
+	function category() {
+		const arrayCategory = menu.map((element)=> element.category);
+		const uniqueCategory = Array.from(new Set(arrayCategory)).filter(element => element);
+		const categoryDisplay = uniqueCategory.map((element)=> <Typography variant='h6' padding="20px" onClick={() => setFilter(element)}>{element}</Typography>)
+		
+		return categoryDisplay;
+	}
   return (
     <>
       <MenuNav />
@@ -103,7 +115,18 @@ function Menu() {
         />
       }
       <div style={sideDrawerStyle}>
-        <MenuSideDrawer value={menu}/>
+        <IconButton size='large' edge='start' color='inherit' aria-label='logo' onClick={() => setOpen(true)}>
+        <MenuIcon />
+        </IconButton>
+        <Drawer anchor='left' open={open} onClose={() => setOpen(false)}>
+          <Box p={2} width='250px' textAlign='center' role='presentation'>
+            <Typography variant='h5' component='div'>
+              Menu Categories
+              <Typography variant='h6' padding="20px" onClick={() => setFilter(null)}>Full Menu</Typography>
+              {category()}
+            </Typography>
+          </Box>
+        </Drawer>
       </div>
       <TableNumberModal />
       <CartContext.Provider value={{ cart, setCart }}>
@@ -114,12 +137,21 @@ function Menu() {
           >
             {isLoading && <CardSkeleton cards={9} />}
             {menu
-              .filter((element) =>
-                element.name.toLowerCase().includes(search.toLowerCase())
-              )
+              .filter((element) => 
+                {if (search) {
+                  return element.name.toLowerCase().includes(search.toLowerCase());
+                }
+                if (filter) {
+                  console.log(filter)
+                  return element.category.includes(filter);
+                } else {
+                  return menu;
+                }
+                })
               .map((element, index) => (
                 <Col key={index}>
                   <MenuCard element={element} searchData={search} />
+                  {console.log(element.category)}
                 </Col>
               ))}
           </Row>
