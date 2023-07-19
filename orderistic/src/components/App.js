@@ -19,6 +19,8 @@ import Cart from "./Cart";
 import StaffMenu from "./StaffMenu";
 import StaffSignup from "./StaffSignup";
 import OrderComplete from "./OrderComplete";
+import StaffTables from "./StaffTables";
+import StaffOrders from "./StaffOrders";
 function App() {
   document.body.style.backgroundColor = "#edeff3";
 
@@ -69,6 +71,24 @@ function App() {
               element={
                 <PrivateRoute>
                   <StaffMenu />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/staff-tables"
+              exact
+              element={
+                <PrivateRoute>
+                  <StaffTables />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/staff-orders"
+              exact
+              element={
+                <PrivateRoute>
+                  <StaffOrders />
                 </PrivateRoute>
               }
             ></Route>
