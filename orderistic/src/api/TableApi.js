@@ -83,6 +83,21 @@ export async function addToCart(num, item) {
   await updateDoc(doc(db, "tables", num.toString()), newData);
 }
 
+// Sets help to true
+export async function requestHelp(num) {
+  const newData = {
+    help: true,
+  };
+  await updateDoc(doc(db, "tables", num.toString()), newData);
+}
+
+export async function removeHelp(num) {
+  const newData = {
+    help: false,
+  };
+  await updateDoc(doc(db, "tables", num.toString()), newData);
+}
+
 // Removes item from cart
 export async function removeFromCart(num, item) {
   const collectionRef = collection(db, "tables");

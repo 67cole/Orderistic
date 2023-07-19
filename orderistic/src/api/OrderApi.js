@@ -5,9 +5,12 @@ import {
   doc,
   getDocs,
   onSnapshot,
+  orderBy,
+  limit,
   addDoc,
   deleteDoc,
   getDoc,
+  query,
   updateDoc,
 } from "firebase/firestore";
 
@@ -23,9 +26,12 @@ import {
 
 // Grabbing all information orders information for front-end purposes
 export async function returnOrderData() {
-  const docRef = await getDocs(collection(db, "orders"));
+  const docRef = collection(db, "orders");
+  const q = query(docRef, orderBy("time_ordered", "desc"), limit(10));
+  const querySnapshot = await getDocs(q);
+
   const orderMenu = [];
-  docRef.forEach((doc) => {
+  querySnapshot.forEach((doc) => {
     orderMenu.push(doc.data());
   });
   return orderMenu;
@@ -49,8 +55,6 @@ export async function removeOrder(id) {
   const res = await deleteDoc(doc(db, "orders", id));
 }
 
-
-
 //Allows chef to check off items and moves order to orderHist if they are complete
 export async function completeItem(orderID, itemID) {
   const docRef = doc(db, "orders", orderID);
@@ -59,10 +63,9 @@ export async function completeItem(orderID, itemID) {
   // grab ordered data and the completed data
   let ordered = matches.data()["food_ordered"];
   let completed = matches.data()["food_completed"];
-  
+
   // decrement from ordered array
   for (var i in ordered) {
-    
     // found matching food in ordered array
     // decrement quantity
     if (ordered[i].id === itemID) {
@@ -74,7 +77,6 @@ export async function completeItem(orderID, itemID) {
   // now loop through completed array
   let added = 0;
   for (var j in completed) {
-
     // found matching food in completed array
     // increment quantity
     if (completed[j].id === itemID) {
@@ -87,9 +89,9 @@ export async function completeItem(orderID, itemID) {
   // if there's no item found, then we add onto the completed array
   if (added === 0) {
     let foodInfo = {
-      "id": ordered[i].id,
-      "quantity": 1,
-      "order_time": ordered[i].order_time,
+      id: ordered[i].id,
+      quantity: 1,
+      order_time: ordered[i].order_time,
     };
     completed.push(foodInfo);
   }
@@ -100,11 +102,10 @@ export async function completeItem(orderID, itemID) {
 
     // we also have to update the time completed of the specific dish itself
     for (var k in completed) {
-
       // keep the time in seconds for consistency
       if (completed[k].id === itemID) {
-        completed[k].finish_time = (Date.now() / 1000)
-      
+        completed[k].finish_time = Date.now() / 1000;
+
         // this also requires us to record the food time in the menu array
         const foodItem = doc(db, "menu", itemID);
         const foodData = await getDoc(foodItem);
@@ -113,13 +114,17 @@ export async function completeItem(orderID, itemID) {
 
         // we add the time it took for the dish to be completed into the food info
         // (finish_time - ordered_time) / quantity
-        time_recorded.push(Math.floor((completed[k].finish_time - completed[k].order_time) / completed[k].quantity));
+        time_recorded.push(
+          Math.floor(
+            (completed[k].finish_time - completed[k].order_time) /
+              completed[k].quantity
+          )
+        );
 
         // update doc now
         await updateDoc(foodItem, {
-          "time": time_recorded,
+          time: time_recorded,
         });
-        
       }
       break;
     }
@@ -127,8 +132,8 @@ export async function completeItem(orderID, itemID) {
 
   // now we can update the file
   await updateDoc(docRef, {
-    "food_completed": completed,
-    "food_ordered": ordered
+    food_completed: completed,
+    food_ordered: ordered,
   });
 
   // check if ordered is empty, then we move the order to order history and delete from current directory
@@ -146,11 +151,5 @@ export async function completeItem(orderID, itemID) {
 
     // now delete from current orders
     await deleteDoc(orderHist);
-
   }
-
 }
-
-
-
-
