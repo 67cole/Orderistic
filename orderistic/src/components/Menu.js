@@ -13,7 +13,9 @@ import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 import TableNumberModal from "./TableNumberModal";
 import CardSkeleton from "./CardSkeleton";
-
+import MenuSideDrawer from "./MenuSideDrawer";
+import {Drawer, Box, Typography, IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 export const CartContext = React.createContext();
 
 function Menu() {
@@ -82,19 +84,49 @@ function Menu() {
     padding: "20px",
     fontSize: "20px",
   };
+  const sideDrawerStyle = {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  }
   const [search, setSearch] = React.useState("");
+  console.log(menu)
+  const [open, setOpen] = React.useState(false);
+	const [filter, setFilter] = React.useState("");
+	
+	function category() {
+		const arrayCategory = menu.map((element)=> element.category);
+		const uniqueCategory = Array.from(new Set(arrayCategory)).filter(element => element);
+		const categoryDisplay = uniqueCategory.map((element)=> <Typography variant='h6' padding="20px" onClick={() => {setFilter(element); setOpen(false)}}><button type="button" class="btn btn-outline-dark">{element}</button></Typography>)
+		
+		return categoryDisplay;
+	}
   return (
     <>
       <MenuNav />
       {
         <input
-          style={searchStyle}
-          type="text"
-          placeholder="Search menu"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+        style={searchStyle}
+        type="text"
+        placeholder="Search menu"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         />
       }
+      <div style={sideDrawerStyle}>
+        <IconButton size='large' edge='start' color='inherit' aria-label='logo' onClick={() => setOpen(true)}>
+        <MenuIcon />
+        </IconButton>
+        <Drawer anchor='left' open={open} onClose={() => setOpen(false)}>
+          <Box p={2} width='250px' textAlign='center' role='presentation'>
+            <Typography variant='h5' component='div'>
+              Menu Categories
+              <Typography variant='h6' padding="20px" onClick={() => {setFilter(null); setOpen(false)}}><button type="button" class="btn btn-outline-dark">Full Menu</button></Typography>
+              {category()}
+            </Typography>
+          </Box>
+        </Drawer>
+      </div>
       <TableNumberModal />
       <CartContext.Provider value={{ cart, setCart }}>
         <Container fluid style={{ display: "flex", justifyContent: "center" }}>
@@ -104,9 +136,19 @@ function Menu() {
           >
             {isLoading && <CardSkeleton cards={9} />}
             {menu
-              .filter((element) =>
-                element.name.toLowerCase().includes(search.toLowerCase())
-              )
+              .filter((element) => 
+                {if (search) {
+                  if (filter) {
+                    return element.category.includes(filter) && element.name.toLowerCase().includes(search.toLowerCase());
+                  }
+                  return element.name.toLowerCase().includes(search.toLowerCase());
+                }
+                if (filter) {
+                  return element.category.includes(filter);
+                } else {
+                  return menu;
+                }
+                })
               .map((element, index) => (
                 <Col key={index}>
                   <MenuCard element={element} searchData={search} />
