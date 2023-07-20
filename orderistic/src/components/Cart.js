@@ -10,7 +10,7 @@ import { sendOrder } from "../api/TableApi";
 import timeout from "../api/Timeout";
 import { CartContext } from "./Menu.js";
 import Col from "react-bootstrap/Col";
-import MenuCard from "./MenuCard";
+import PreviewMenuCard from "./PreviewMenuCard";
 
 function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
   const { cart } = React.useContext(CartContext);
@@ -95,7 +95,7 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
             <p>Total: ${total}</p>
             {cart.map((element, index) => (
               <Col key={index}>
-                <MenuCard element={menu[element.id]} showInfo={false} />
+                <PreviewMenuCard element={menu[element.id]} showModal={false}/>
               </Col>
             ))}
           </Modal.Body>
@@ -148,8 +148,8 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
                 Checkout
               </Button>
             ) : (
-              <div class="spinner-border" role="status" style={loadingStyle}>
-                <span class="sr-only"></span>
+              <div className="spinner-border" role="status" style={loadingStyle}>
+                <span className="sr-only"></span>
               </div>
             )}
           </Modal.Body>

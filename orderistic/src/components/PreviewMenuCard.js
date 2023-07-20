@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import React from "react";
 
-function PreviewMenuCard({ element }) {
+function PreviewMenuCard({ element, showModal, openFoodInfo }) {
     // Style for the menu cards
     const imgStyle = {
       width: "210px",
@@ -16,7 +16,7 @@ function PreviewMenuCard({ element }) {
     };
   return(
     <>
-      <Card style={cardStyle}>
+      <Card onClick={openFoodInfo} style={{...cardStyle, cursor: showModal ? "pointer": "default"}}>
         {element.image ? (
           <Card.Img
             variant="top"
