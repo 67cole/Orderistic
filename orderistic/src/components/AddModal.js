@@ -7,9 +7,9 @@ import { AddItem } from "../api/MenuApi";
 import CustomisationForm from "./CustomisationForm";
 import { MenuContext } from "./StaffMenu";
 import { Row, Col } from "react-bootstrap";
-import Image from 'react-bootstrap/Image';
 import ListGroup from 'react-bootstrap/ListGroup';
 import CustomisationItem from "./CustomisationItem";
+import PreviewMenuCard from "./PreviewMenuCard";
 
 function AddModal({ show, closeForm }) {
   const { menu, setMenu } = React.useContext(MenuContext);
@@ -101,11 +101,23 @@ function AddModal({ show, closeForm }) {
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Image</Form.Label>
               <Form.Control type="file" onChange={convertImg}/>
-
             </Form.Group>
           </Col>
         </Row>
-        {image ? <Image src={image} width="260px" fluid style={{ marginLeft: "auto", marginRight: "auto" }}/> : <></>}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <p>Preview</p>
+        </div>
+        <div style={{display: "flex", justifyContent: "center", marginBottom: "30px"}}>
+
+          <PreviewMenuCard 
+            element ={{
+              image: image,
+              name: name,
+              description: description,
+              price: price,
+            }}
+          />
+        </div>
         <Form.Group
         className="mb-3"
         controlId="description"
