@@ -18,9 +18,10 @@ function FoodInfo({ show, closeForm, element }) {
   const [loading, setLoading] = useState(false);
   // Style for the menu cards
   const imgStyle = {
-    width: "50%",
+    maxWidth: "50%",
     objectFit: "cover",
-    height: "100%",
+    height: "auto",
+    width: "auto"
   };
   const cardStyle = {
     flexDirection: "row",
@@ -110,16 +111,16 @@ function FoodInfo({ show, closeForm, element }) {
               variant="top"
               src={element.image}
               style={imgStyle}
-              className="img-fluid"
             />
           ) : (
             <></>
           )}
-          <Card.Body style={{ position: "relative" }}>
+          <Card.Body style={{ position: "relative", padding: "0" }}>
             <CloseButton
-              style={{ float: "right", margin: "10px" }}
+              style={{ float: "right", margin: "40px 40px" }}
               onClick={closeForm}
             />
+            <div style={{ padding: "30px 30px 10px 30px"}}>
             <Card.Title style={{ fontSize: "26px", marginBottom: "0px" }}>
               {element.name}
             </Card.Title>
@@ -135,7 +136,8 @@ function FoodInfo({ show, closeForm, element }) {
             >
               {element.description}
             </Card.Text>
-            <div style={{ overflowY: "auto", height: "55%" }}>
+            </div>
+            <div style={{ overflowY: "auto", height: "55%", paddingLeft: "30px", paddingRight: "15px" }}>
               {element.customisations.map((customisation, index) => (
                 <div key={index} style={{ marginBottom: "10px" }}>
                   <div style={{ fontWeight: "500", fontSize: "17px" }}>
@@ -218,7 +220,7 @@ function FoodInfo({ show, closeForm, element }) {
             </div>
 
             <Card.Text
-              style={{ position: "absolute", bottom: "7px", right: "150px" }}
+              style={{ position: "absolute", bottom: "7px", right: "160px" }}
             >
               Total: ${parseFloat(price).toFixed(2)}
             </Card.Text>
@@ -229,6 +231,7 @@ function FoodInfo({ show, closeForm, element }) {
                 borderRadius: "5px",
                 position: "absolute",
                 bottom: "15px",
+                left: "30px"
               }}
             >
               {quantity === 1 ? (
@@ -277,7 +280,7 @@ function FoodInfo({ show, closeForm, element }) {
                 style={{
                   position: "absolute",
                   bottom: "15px",
-                  right: "15px",
+                  right: "20px",
                   boxShadow: "none",
                   paddingTop: "8px",
                   paddingBottom: "8px",
