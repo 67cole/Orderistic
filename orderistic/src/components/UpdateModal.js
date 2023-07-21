@@ -1,7 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Image from 'react-bootstrap/Image';
 import React from "react";
 import { fileToDataUrl } from "./helper";
 import { UpdateItem } from "../api/MenuApi";
@@ -9,6 +8,7 @@ import { Row, Col } from "react-bootstrap";
 import ListGroup from 'react-bootstrap/ListGroup';
 import CustomisationItem from "./CustomisationItem";
 import CustomisationForm from "./CustomisationForm";
+import PreviewMenuCard from "./PreviewMenuCard";
 
 function UpdateModal({ show, closeForm, element, setStates }) {
 
@@ -75,7 +75,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
         </Row>
         <Row>
           <Col>
-            <Form.Group className="mb-3" controlId="price">
+            <Form.Group controlId="price">
               <Form.Label>Price</Form.Label>
               <Form.Control
                   type="number"
@@ -85,14 +85,26 @@ function UpdateModal({ show, closeForm, element, setStates }) {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group controlId="formFile" className="mb-3">
+            <Form.Group controlId="formFile">
               <Form.Label>Image</Form.Label><br/>
               <Form.Control type="file" onChange={convertImg}/><br/>
-              {image ? <Image src={image} width="260px" fluid/> : <></>}
             </Form.Group>
           </Col>
         </Row>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <p>Preview</p>
+        </div>
+        <div style={{display: "flex", justifyContent: "center", marginBottom: "30px"}}>
 
+          <PreviewMenuCard 
+            element ={{
+              image: image,
+              name: name,
+              description: description,
+              price: price,
+            }}
+          />
+        </div>
         <Form.Group
         className="mb-3"
         controlId="exampleForm.ControlTextarea1"
