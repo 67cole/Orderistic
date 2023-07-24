@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { db } from "../firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { removeHelp } from "../api/TableApi";
+import { removeHelp, viewTables } from "../api/TableApi";
 import "./TableCard.css";
 
 export default function TableCard({ cards }) {
@@ -16,7 +16,7 @@ export default function TableCard({ cards }) {
       tables.push(doc.data().number);
     });
     setHelp(tables);
-    console.log("Current tables that need help", tables.join(" "));
+    // console.log("Current tables that need help", tables.join(" "));
   });
 
   //   LEAVE UNSUBSCRIBE ON TO SAVE FIREBASE USAGE
