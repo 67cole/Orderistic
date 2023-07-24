@@ -40,6 +40,7 @@ export async function addTable() {
   const tableData = {
     number: newTableNumber,
     cart: [],
+    help: false,
   };
   await setDoc(doc(db, "tables", newTableNumber.toString()), tableData);
 }
