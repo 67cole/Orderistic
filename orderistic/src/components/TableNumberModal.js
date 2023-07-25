@@ -2,22 +2,19 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useAuth } from "../contexts/AuthContext";
+import { viewTables } from "../api/TableApi";
 
 export default function TableNumberModal() {
   const [show, setShow] = useState(false);
 
-  const tables = [
-    { key: 1, number: 1 },
-    { key: 2, number: 2 },
-    { key: 3, number: 3 },
-    { key: 4, number: 4 },
-    { key: 5, number: 5 },
-    { key: 6, number: 6 },
-    { key: 7, number: 7 },
-    { key: 8, number: 8 },
-    { key: 9, number: 9 },
-    { key: 10, number: 10 },
-  ];
+  const [tableAmount, setTableAmount] = useState(0);
+
+  useEffect(() => {
+    viewTables().then((data) => {
+      setTableAmount(data.length);
+    });
+  });
+
   const { chooseTable, tableNumber } = useAuth();
 
   function checkTableNumber() {
@@ -31,8 +28,8 @@ export default function TableNumberModal() {
     checkTableNumber();
   });
 
-  function handleTable(table) {
-    chooseTable(table.number);
+  function handleTable(number) {
+    chooseTable(number);
     setShow(false);
   }
 
@@ -42,11 +39,17 @@ export default function TableNumberModal() {
         <Modal.Title>Select your table number</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {tables.map((table, key) => (
-          <Button className="m-1" onClick={() => handleTable(table)} key={key}>
-            {table.number}
-          </Button>
-        ))}
+        {Array(tableAmount)
+          .fill()
+          .map((table, key) => (
+            <Button
+              className="m-1"
+              onClick={() => handleTable(key + 1)}
+              key={key}
+            >
+              {key + 1}
+            </Button>
+          ))}
       </Modal.Body>
     </Modal>
   );

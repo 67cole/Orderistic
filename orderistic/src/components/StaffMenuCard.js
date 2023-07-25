@@ -29,7 +29,6 @@ function StaffMenuCard({ element }) {
   function remove() {
     RemoveItem(element["id"]);
     let tempMenu = [...menu];
-    console.log(tempMenu);
     for (let i = 0; i < tempMenu.length; i++) {
       if (tempMenu[i].id === element["id"]) {
         tempMenu.splice(i, 1);
