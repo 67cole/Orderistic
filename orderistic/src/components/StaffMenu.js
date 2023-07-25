@@ -52,7 +52,7 @@ function StaffMenu() {
           md={2}
           lg={3}
           className="g-4"
-          style={{ margin: "40px 40px 40px 40px" }}
+          style={{ margin: "0px 40px 40px 40px" }}
         >
           {isLoading && <CardSkeleton cards={9} />}
           {menu.map((element) => (
@@ -64,7 +64,6 @@ function StaffMenu() {
         <Button
           variant="dark"
           onClick={showForm}
-          style={{ marginTop: "10px", marginBottom: "-30px" }}
         >
           Add Item
         </Button>

@@ -10,6 +10,7 @@ import { Row, Col } from "react-bootstrap";
 import ListGroup from 'react-bootstrap/ListGroup';
 import CustomisationItem from "./CustomisationItem";
 import PreviewMenuCard from "./PreviewMenuCard";
+import Alert from 'react-bootstrap/Alert';
 
 function AddModal({ show, closeForm }) {
   const { menu, setMenu } = React.useContext(MenuContext);
@@ -19,34 +20,47 @@ function AddModal({ show, closeForm }) {
   const [category, setCategory] = React.useState("");
   const [image, setImage] = React.useState("");
   const [customisations, setCustomisations] = React.useState([]);
-
+  const [showAlert, setShowAlert] = React.useState(false);
+  const [dietInfo, setDietInfo] = React.useState("");
+  
   function handleCustomisations(customisations) {
     setCustomisations(customisations)
   }
-  function submitForm() {
-    const item = {
-      name: name,
-      description: description,
-      price: price,
-      category: category,
-      image: image,
-      customisations: customisations,
-      time: [],
+  function checkForm() {
+    if (!name || !description || !category || !price) {
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 5000);
+      return false;
     }
-    AddItem(item)
-      .then((data) => {
-        item.id = data;
-    });
-    closeForm();
-    let tempMenu = [...menu];
-    tempMenu.push(item);
-    setMenu(tempMenu);
-    setName("");
-    setDescription("");
-    setPrice(1.00.toFixed(2));
-    setCategory("");
-    setImage("");
-    setCustomisations([]);
+    return true;
+  }
+  function submitForm() {
+    if (checkForm()) {
+      const item = {
+        name: name,
+        description: description,
+        price: price,
+        category: category,
+        image: image,
+        customisations: customisations,
+        time: [],
+        dietInfo: dietInfo
+      }
+      AddItem(item)
+        .then((data) => {
+          item.id = data;
+      });
+      closeForm();
+      let tempMenu = [...menu];
+      tempMenu.push(item);
+      setMenu(tempMenu);
+      setName("");
+      setDescription("");
+      setPrice(1.00.toFixed(2));
+      setCategory("");
+      setImage("");
+      setCustomisations([]);
+    }
   }
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])
@@ -57,11 +71,21 @@ function AddModal({ show, closeForm }) {
 
   return (
     <> 
+
     <Modal show={show} onHide={closeForm} centered size="lg">
+      {showAlert
+        ? 
+          <div style={{position: "fixed", top: "80px", zIndex: "1", left: "50%", transform: "translate(-50%, -50%)"}}>
+            <Alert variant="dark" onClose={() => setShowAlert(false)} dismissible>
+              Please fill in all the fields.
+            </Alert>
+          </div>
+        : <></>
+      }
       <Modal.Header closeButton>
       <Modal.Title>Add New Item to the Menu</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{ padding: "20px 40px 10px 40px" }}>
       <Form>
         <Row>
           <Col>
@@ -116,6 +140,7 @@ function AddModal({ show, closeForm }) {
               description: description,
               price: price,
             }}
+            showModal={false}
           />
         </div>
         <Form.Group
@@ -125,7 +150,18 @@ function AddModal({ show, closeForm }) {
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
         </Form.Group>
-
+        <Form.Group
+        className="mb-3"
+        controlId="diet-info"
+        >
+          <Form.Label>Dietary Information</Form.Label>
+          <Form.Control 
+            as="textarea" 
+            rows={3}
+            value={dietInfo} 
+            onChange={e => setDietInfo(e.target.value)} 
+          />
+        </Form.Group>
         <CustomisationForm customisations={customisations} handleCustomisations={handleCustomisations}/>
         <ListGroup>
           {customisations.map((element, index) => (

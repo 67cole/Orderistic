@@ -129,12 +129,18 @@ function FoodInfo({ show, closeForm, element }) {
             </Card.Text>
             <Card.Text
               style={{
-                fontSize: "14px",
+                fontSize: "16px",
                 borderBottom: "2px solid #dfdfdf",
                 paddingBottom: "15px",
               }}
             >
               {element.description}
+              <div style={{ fontSize: "13px", marginTop: "3px"}}>
+              {element.dietInfo 
+                ? <>{element.dietInfo}</>
+                : <></>
+              }
+              </div>
             </Card.Text>
             </div>
             <div style={{ overflowY: "auto", height: "55%", paddingLeft: "30px", paddingRight: "15px" }}>
