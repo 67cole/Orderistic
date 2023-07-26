@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import EstimatedTime from "./EstimatedTime";
+import OrderCard from "./OrderCard";
 
 
 function PreviousOrder() {
@@ -52,22 +53,9 @@ function PreviousOrder() {
           <div style={center}>
           <div style={{display: "inline-block", width: "30%"}}>
             <div style={center}><p>In Progress</p></div>
-            <CardGroup style={{ marginBottom: "16px", justifyContent: "space-evenly"}}>
+            <CardGroup style={{ marginBottom: "16px", justifyContent: "center"}}>
               {element.food_ordered.map((food, index) => (
-                <div key={index}>
-                  <Card style={{ width: '10rem', height: "15rem"}}>
-                    <Card.Img variant="top" src={menu[food.id].image} style={imgStyle} />
-                    <Card.Body>
-                      <Card.Title style={{ fontSize: "16px"}}>{menu[food.id].name}</Card.Title>
-                      <div style={{position: "absolute", bottom: "10px", display: "inline-block"}}>
-                        ${food.price}
-                      </div>
-                      <div style={{position: "absolute", bottom: "10px", right: "16px", display: "inline-block"}}>
-                        Qty: {food.quantity}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </div>
+                <OrderCard key={index} menu={menu} food={food}/>
                 ))
               }
             </CardGroup>
@@ -75,22 +63,9 @@ function PreviousOrder() {
           <EstimatedTime element={element} />
           <div style={{...center, display: "inline-block", width: "30%"}}>
             <div style={center}><p>To be delivered</p> </div>
-            <CardGroup style={{ marginBottom: "16px"}}>
+            <CardGroup style={{ marginBottom: "16px", justifyContent: "space-evenly"}}>
               {element.food_completed.map((food, index) => (
-                  <div key={index}>
-                    <Card style={{ width: '10rem', height: "15rem", margin: "0px 5px 0px 5px"}}>
-                      <Card.Img variant="top" src={menu[food.id].image} style={imgStyle} />
-                      <Card.Body>
-                        <Card.Title style={{ fontSize: "16px"}}>{menu[food.id].name}</Card.Title>
-                        <div style={{position: "absolute", bottom: "10px", display: "inline-block"}}>
-                          ${food.price}
-                        </div>
-                        <div style={{position: "absolute", bottom: "10px", right: "16px", display: "inline-block"}}>
-                          Qty: {food.quantity}
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  </div>
+                  <OrderCard key={index} menu={menu} food={food}/>
                 ))
               }
             </CardGroup>
@@ -111,20 +86,7 @@ function PreviousOrder() {
           <div style={center}>
             <CardGroup style={{ marginBottom: "16px"}}>
               {element.food_completed.map((food, index) => (
-                <div key={index}>
-                  <Card style={{ width: '10rem', height: "15rem", margin: "0px 10px 0px 0px", }}>
-                    <Card.Img variant="top" src={menu[food.id].image} style={imgStyle} />
-                    <Card.Body>
-                      <Card.Title style={{ fontSize: "16px"}}>{menu[food.id].name}</Card.Title>
-                      <div style={{position: "absolute", bottom: "10px", display: "inline-block"}}>
-                        ${parseFloat(menu[food.id].price).toFixed(2)}
-                      </div>
-                      <div style={{position: "absolute", bottom: "10px", right: "16px", display: "inline-block"}}>
-                        Qty: {food.quantity}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </div>
+                <OrderCard key={index} menu={menu} food={food} price={parseFloat(menu[food.id].price).toFixed(2)} />
                 ))
               }
             </CardGroup>
