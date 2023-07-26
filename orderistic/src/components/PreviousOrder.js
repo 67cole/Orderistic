@@ -5,7 +5,9 @@ import { returnOrdersForTable } from "../api/TableApi";
 import { returnFoodData } from "../api/MenuApi";
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
-import ProgressBar from 'react-bootstrap/ProgressBar'
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import EstimatedTime from "./EstimatedTime";
+
 
 function PreviousOrder() {
   const imgStyle = {
@@ -22,6 +24,7 @@ function PreviousOrder() {
   const [currOrders, setCurrOrders] = React.useState([]);
   const [prevOrders, setPrevOrders] = React.useState([]);
   const [menu, setMenu] = React.useState({});
+
   React.useEffect(() => {
     returnOrdersForTable(tableNumber).then((data) => {
       setCurrOrders(data.currOrders);
@@ -32,8 +35,8 @@ function PreviousOrder() {
       }
       setPrevOrders(tempPrev);
     });
-    returnFoodData().then((data) => {
-      setMenu(data);
+    returnFoodData().then((menuData) => {
+      setMenu(menuData);
     })
   }, [tableNumber])
 
@@ -69,14 +72,7 @@ function PreviousOrder() {
               }
             </CardGroup>
           </div>
-          <div style={{...center, width: "30%", flexDirection: "column"}}>
-            <div style={{...center}}>
-              Estimated Time:
-            </div>
-            <div style={{...center, fontSize: "70px"}}>
-              15 minutes
-            </div>
-          </div>
+          <EstimatedTime element={element} />
           <div style={{...center, display: "inline-block", width: "30%"}}>
             <div style={center}><p>To be delivered</p> </div>
             <CardGroup style={{ marginBottom: "16px"}}>
