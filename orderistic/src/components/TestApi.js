@@ -3,7 +3,7 @@ import { Card, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnFoodData, returnSpecificFood } from "../api/MenuApi";
-import { returnOrderData, viewOrder, addOrder, removeOrder, completeItem } from "../api/OrderApi";
+import { returnOrderData, viewOrder, addOrder, removeOrder, completeItem, returnOrderTime } from "../api/OrderApi";
 import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart, sendOrder, returnOrdersForTable } from "../api/TableApi";
 
 export default function TestApi() {
@@ -95,6 +95,10 @@ export default function TestApi() {
     returnOrdersForTable(5);
   }
 
+  async function checkOrderTime() {
+    returnOrderTime("ZyRCAauYy21E9Sefc8Op");
+  }
+
   return (
     <>
       <Card style={{ width: "75vw", maxWidth: "600px" }}>
@@ -154,7 +158,10 @@ export default function TestApi() {
           </Button>
           <Button className="btn btn-primary w-100 mt-3" onClick={checkTableOrders}>
             Table Order
-          </Button>     
+          </Button>
+          <Button className="btn btn-primary w-100 mt-3" onClick={checkOrderTime}>
+            Order Time Check
+          </Button>      
         </Card.Body>
       </Card>
     </>

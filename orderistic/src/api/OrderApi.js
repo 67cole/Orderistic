@@ -13,6 +13,7 @@ import {
   query,
   updateDoc,
 } from "firebase/firestore";
+import { dishTime } from "./MenuApi";
 
 // Order Collection
 // Each order has unique ID's of documents, each representing a order's cart
@@ -152,4 +153,37 @@ export async function completeItem(orderID, itemID) {
     // now delete from current orders
     await deleteDoc(orderHist);
   }
+
+}
+
+// Returns the total time for an order
+export async function returnOrderTime(orderID) {
+  const docRef = doc(db, "orders", orderID);
+  const order = await getDoc(docRef);
+
+  // keep time counter in SECONDS
+  let timeTaken = 0;
+  
+  // find all timing for food starting with completed
+  const completed = order.data()["food_completed"];
+  for (var i in completed) {
+
+    // quantity x food average time for time
+    let time = completed[i].quantity * dishTime(completed[i].id);
+    timeTaken += time;
+  }
+
+  // moving to still processing
+  const ordered = order.data()["food_ordered"];
+  for (var j in ordered) {
+
+    let time = ordered[j].quantity * await dishTime(ordered[j].id);
+    timeTaken += time;
+  }
+
+
+  console.log(timeTaken);
+  return timeTaken;
+
+  
 }
