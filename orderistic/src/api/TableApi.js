@@ -183,7 +183,9 @@ export async function returnOrdersForTable(table_no) {
   ordersDocRef.forEach((doc) => {
     // check if we're on the right number
     if (doc.data()["table_number"] === table_no) {
-      orders["currOrders"].push(doc.data());
+      const orderInfo = doc.data();
+      orderInfo["id"] = doc.id;
+      orders["currOrders"].push(orderInfo);
     }
   });
 
@@ -191,9 +193,13 @@ export async function returnOrdersForTable(table_no) {
   ordersHistDocRef.forEach((doc) => {
     // check if we're on the right number
     if (doc.data()["table_number"] === table_no) {
-      orders["prevOrders"].push(doc.data());
+      const orderInfo2 = doc.data();
+      orderInfo2["id"] = doc.id;
+      orders["prevOrders"].push(orderInfo2);
     }
   });
 
   return orders;
 }
+
+

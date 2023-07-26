@@ -127,7 +127,7 @@ function FoodInfo({ show, closeForm, element }) {
             <Card.Text style={{ marginBottom: "4px", fontWeight: "500" }}>
               ${parseFloat(element.price).toFixed(2)}
             </Card.Text>
-            <Card.Text
+            <div
               style={{
                 fontSize: "16px",
                 borderBottom: "2px solid #dfdfdf",
@@ -141,7 +141,7 @@ function FoodInfo({ show, closeForm, element }) {
                 : <></>
               }
               </div>
-            </Card.Text>
+            </div>
             </div>
             <div style={{ overflowY: "auto", height: "55%", paddingLeft: "30px", paddingRight: "15px" }}>
               {element.customisations.map((customisation, index) => (
