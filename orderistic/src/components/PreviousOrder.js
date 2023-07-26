@@ -3,20 +3,13 @@ import { useAuth } from "../contexts/AuthContext";
 import MenuNav from "./MenuNav";
 import { returnOrdersForTable } from "../api/TableApi";
 import { returnFoodData } from "../api/MenuApi";
-import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import EstimatedTime from "./EstimatedTime";
 import OrderCard from "./OrderCard";
-
+import CurrentOrder from "./CurrentOrder";
 
 function PreviousOrder() {
-  const imgStyle = {
-    width: "100%",
-    objectFit: "cover",
-    minHeight: "142px",
-    height: "142px"
-  };
   const center = {
     display: "flex", 
     justifyContent: "center"
@@ -46,35 +39,7 @@ function PreviousOrder() {
       <MenuNav />
       <p style={{ fontSize: "26px", fontWeight: "500", marginTop: "20px" }}>Current Orders</p>
       {currOrders.map((element, index) => (
-        <div key={index} style={{width: "100%", paddingBottom: "30px", backgroundColor: "white", marginBottom: "30px"}}>
-          <div style={center}>
-            <p style={{ fontSize: "20px", fontWeight: "500" }}>Order {index + 1}</p>
-          </div>
-          <div style={center}>
-          <div style={{display: "inline-block", width: "30%"}}>
-            <div style={center}><p>In Progress</p></div>
-            <CardGroup style={{ marginBottom: "16px", justifyContent: "center"}}>
-              {element.food_ordered.map((food, index) => (
-                <OrderCard key={index} menu={menu} food={food}/>
-                ))
-              }
-            </CardGroup>
-          </div>
-          <EstimatedTime element={element} />
-          <div style={{...center, display: "inline-block", width: "30%"}}>
-            <div style={center}><p>To be delivered</p> </div>
-            <CardGroup style={{ marginBottom: "16px", justifyContent: "space-evenly"}}>
-              {element.food_completed.map((food, index) => (
-                  <OrderCard key={index} menu={menu} food={food}/>
-                ))
-              }
-            </CardGroup>
-          </div>
-          </div>
-          <div style={{...center, paddingTop: "20px"}}>
-            <ProgressBar animated now={45} style={{ width: "90%", backgroundColor: "#edeff3"}} />
-          </div>
-        </div>
+        <CurrentOrder key={index} element={element} menu={menu} index={index}/>
         ))
       }
       <p style={{ fontSize: "26px", fontWeight: "500", marginTop: "20px" }}>Past Orders</p>
