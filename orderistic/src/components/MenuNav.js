@@ -71,7 +71,7 @@ function MenuNav() {
               Home
             </Nav.Link>
             {isLoggedIn && (
-              <Nav.Link as={Link} to="/previous" style={{ color: "White" }}>
+              <Nav.Link as={Link} to="/orders" style={{ color: "White" }}>
                 Orders
               </Nav.Link>
             )}

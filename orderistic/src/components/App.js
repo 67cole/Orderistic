@@ -13,7 +13,7 @@ import StaffLogin from "./StaffLogin";
 import StaffDashboard from "./StaffDashboard";
 import TestApi from "./TestApi";
 import Nav from "./MenuNav";
-import PreviousOrder from "./PreviousOrder";
+import Orders from "./Orders";
 import Cart from "./Cart";
 
 import StaffMenu from "./StaffMenu";
@@ -99,7 +99,7 @@ function App() {
             <Route path="/staff-login" element={<StaffLogin />} />
             <Route path="/staff-signup" element={<StaffSignup />} />
             <Route path="/order-complete" element={<OrderComplete />} />
-            <Route path="/previous" element={<PreviousOrder />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>
         </AuthProvider>

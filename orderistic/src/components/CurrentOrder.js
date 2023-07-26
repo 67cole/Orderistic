@@ -14,8 +14,8 @@ function CurrentOrder({ index, element, menu }) {
 
   React.useEffect(() => {
     returnOrderTime(element.id).then((data) => {
-      let tempTime = element.time_ordered + data - Date.now();
-      if (tempTime < data || isNaN(data)) {
+      let tempTime = Math.ceil((element.time_ordered + data * 60 - Date.now() / 1000) / 60);
+      if (tempTime < 0 || isNaN(data)) {
         tempTime = 0;
       }
       setOrderTime(tempTime);
@@ -64,7 +64,7 @@ function CurrentOrder({ index, element, menu }) {
           </div>
         </div>
         <div style={{...center, paddingTop: "20px"}}>
-          <ProgressBar animated now={estimateTime === 0 ? 0 : (estimateTime - orderTime) / estimateTime * 100} style={{ width: "90%", backgroundColor: "#edeff3"}} />
+          <ProgressBar animated={orderTime !== 0} now={estimateTime === 0 ? 0 : (estimateTime - orderTime) / estimateTime * 100} style={{ width: "90%", backgroundColor: "#edeff3"}} />
         </div>
       </div>
     </>
