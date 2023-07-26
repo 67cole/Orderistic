@@ -32,7 +32,7 @@ function CurrentOrder({ index, element, menu }) {
   return(
     <>
       <div style={{width: "100%", paddingBottom: "30px", backgroundColor: "white", marginBottom: "30px"}}>
-        <div style={center}>
+        <div style={{...center, marginTop: "20px"}}>
           <p style={{ fontSize: "20px", fontWeight: "500" }}>Order {index + 1}</p>
         </div>
         <div style={center}>
