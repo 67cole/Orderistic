@@ -139,7 +139,8 @@ export async function sendOrder(tableNumber) {
 
   const orderData = {
     food_ordered: tempCart,
-    food_completed: [],
+    food_delivered: [],
+    food_prepared: [],
     table_number: tableNumber,
     time_ordered: currTime,
     time_finished: 0,
@@ -201,5 +202,3 @@ export async function returnOrdersForTable(table_no) {
 
   return orders;
 }
-
-

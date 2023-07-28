@@ -18,7 +18,7 @@ import {
 import { db } from "../firebase";
 import { returnFoodData } from "../api/MenuApi";
 
-export default function StaffOrders() {
+export default function KitchenOrders() {
   const [isLoading, setIsLoading] = useState(true);
   const [tableAmount, setTableAmount] = useState(0);
   const [orders, setOrders] = useState([]);
@@ -65,35 +65,11 @@ export default function StaffOrders() {
       <Container fluid style={{ display: "flex", justifyContent: "center" }}>
         <div className="big-container">
           <div className="orders-container">
-            <h3>Waitery Console</h3>
+            <h3>Kitchen Console</h3>
             {menu &&
               orders.map((order, index) => (
-                <KitchenOrderCard order={order} menu={menu} waiter={true} />
+                <KitchenOrderCard order={order} menu={menu} />
               ))}
-          </div>
-          <div
-            style={{
-              alignItems: "center",
-              flexDirection: "column",
-              display: "flex",
-            }}
-            className="table-container"
-          >
-            <Row
-              className="g-4"
-              style={{ margin: "0px 20px 40px 20px", paddingBottom: "40px" }}
-            >
-              {isLoading && <TableSkeleton cards={tableAmount} />}
-              <TableCard cards={tableAmount} />
-            </Row>
-            <div className="buttons-container">
-              <Button variant="dark" onClick={handleAddTable}>
-                Add Table
-              </Button>
-              <Button variant="dark" onClick={handleRemoveTable}>
-                Remove Table
-              </Button>
-            </div>
           </div>
         </div>
       </Container>

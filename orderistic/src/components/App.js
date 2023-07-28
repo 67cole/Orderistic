@@ -21,6 +21,7 @@ import StaffSignup from "./StaffSignup";
 import OrderComplete from "./OrderComplete";
 import StaffTables from "./StaffTables";
 import StaffOrders from "./StaffOrders";
+import KitchenOrders from "./KitchenOrders";
 function App() {
   document.body.style.backgroundColor = "#edeff3";
 
@@ -89,6 +90,15 @@ function App() {
               element={
                 <PrivateRoute>
                   <StaffOrders />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/kitchen-orders"
+              exact
+              element={
+                <PrivateRoute>
+                  <KitchenOrders />
                 </PrivateRoute>
               }
             ></Route>

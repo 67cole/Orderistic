@@ -13,7 +13,7 @@ export default function TableNumberModal() {
     viewTables().then((data) => {
       setTableAmount(data.length);
     });
-  });
+  }, []);
 
   const { chooseTable, tableNumber } = useAuth();
 

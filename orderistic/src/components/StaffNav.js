@@ -40,7 +40,10 @@ function StaffNav() {
         </Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/staff-orders" style={{ color: "White" }}>
-            Orders
+            Waitery
+          </Nav.Link>
+          <Nav.Link as={Link} to="/kitchen-orders" style={{ color: "White" }}>
+            Kitchen
           </Nav.Link>
         </Nav>
         <Button
