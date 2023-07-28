@@ -9,6 +9,8 @@
   margin-left: 10px;
   padding: 3px;
   cursor: pointer;
+  background-color: rgb(189, 183, 183);
+  border-radius: 5px;
 }
 
 .console-container {
@@ -17,4 +19,5 @@
   margin-left: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+  padding: 10px;
 }
