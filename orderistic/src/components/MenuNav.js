@@ -10,6 +10,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Button from "react-bootstrap/Button";
 import { Snackbar } from "@mui/material";
 import { requestHelp } from "../api/TableApi";
+import TableNumberModal from "./TableNumberModal";
 
 function MenuNav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,6 +52,7 @@ function MenuNav() {
         onClose={() => setOpen(false)}
         autoHideDuration={2000}
       />
+      <TableNumberModal />
       <Navbar
         style={{
           boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)",

@@ -159,7 +159,6 @@ function Menu() {
           </Box>
         </Drawer>
       </div>
-      <TableNumberModal />
       <CartContext.Provider value={{ cart, setCart }}>
         <Container fluid style={{ display: "flex", justifyContent: "center" }}>
           <Row
