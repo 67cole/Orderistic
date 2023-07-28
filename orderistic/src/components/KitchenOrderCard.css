@@ -10,3 +10,11 @@
   padding: 3px;
   cursor: pointer;
 }
+
+.console-container {
+  background-color: #d3d3d3;
+  width: 500px;
+  margin-left: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}

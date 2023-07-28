@@ -13,12 +13,22 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
     await completeItem(order[1], itemId);
   }
   let date = new Date(order[0].time_ordered * 1000);
+  console.log(order);
 
   return (
-    <div>
-      <b>
-        Order for Table {order[0].table_number} at {date.toLocaleString()}
-      </b>
+    <div className="console-container">
+      {waiter && order[0].food_prepared.length !== 0 && (
+        <b>
+          Order for Table {order[0].table_number} at {date.toLocaleString()}
+        </b>
+      )}
+
+      {!waiter && (
+        <b>
+          Order for Table {order[0].table_number} at {date.toLocaleString()}
+        </b>
+      )}
+
       {!waiter &&
         order[0].food_ordered.map((item) => (
           <div className="button-container">

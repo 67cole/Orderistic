@@ -37,7 +37,7 @@ export default function StaffOrders() {
 
   //   LEAVE UNSUBSCRIBE ON TO SAVE FIREBASE USAGE
   // COMMENT IT OUT WHEN DEMONSTRATING!!!!
-  unsubscribe();
+  //unsubscribe();
 
   useEffect(() => {
     viewTables().then((data) => {

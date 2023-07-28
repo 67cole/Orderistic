@@ -98,6 +98,20 @@ export async function removeHelp(num) {
   };
   await updateDoc(doc(db, "tables", num.toString()), newData);
 }
+export async function requestBill(num) {
+  console.log("Bill requested");
+  const newData = {
+    bill: true,
+  };
+  await updateDoc(doc(db, "tables", num.toString()), newData);
+}
+
+export async function removeBill(num) {
+  const newData = {
+    bill: false,
+  };
+  await updateDoc(doc(db, "tables", num.toString()), newData);
+}
 
 // Removes item from cart
 export async function removeFromCart(num, item) {

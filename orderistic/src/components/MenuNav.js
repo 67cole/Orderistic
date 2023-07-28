@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Button from "react-bootstrap/Button";
 import { Snackbar } from "@mui/material";
-import { requestHelp } from "../api/TableApi";
+import { requestBill, requestHelp } from "../api/TableApi";
 import TableNumberModal from "./TableNumberModal";
 
 function MenuNav() {
@@ -17,6 +17,7 @@ function MenuNav() {
   const [error, setError] = React.useState("");
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const [billOpen, setBillOpen] = React.useState(false);
 
   const { logout, tableNumber, chooseTable } = useAuth();
   useEffect(() => {
@@ -32,6 +33,10 @@ function MenuNav() {
   async function handleHelp() {
     setOpen(true);
     await requestHelp(tableNumber);
+  }
+  async function handleBill() {
+    setOpen(true);
+    await requestBill(tableNumber);
   }
 
   async function handleLogout() {
@@ -52,6 +57,13 @@ function MenuNav() {
         onClose={() => setOpen(false)}
         autoHideDuration={2000}
       />
+      <Snackbar
+        open={open}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        message={`Bill requested for table ${tableNumber}`}
+        onClose={() => setBillOpen(false)}
+        autoHideDuration={2000}
+      />
       <TableNumberModal />
       <Navbar
         style={{
@@ -70,7 +82,7 @@ function MenuNav() {
           </Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/menu" style={{ color: "White" }}>
-              Home
+              Menu
             </Nav.Link>
             {isLoggedIn && (
               <Nav.Link as={Link} to="/orders" style={{ color: "White" }}>
@@ -79,6 +91,9 @@ function MenuNav() {
             )}
             <Nav.Link onClick={handleHelp} style={{ color: "White" }}>
               Request Assistance
+            </Nav.Link>
+            <Nav.Link onClick={handleBill} style={{ color: "White" }}>
+              Request Bill
             </Nav.Link>
             <Nav.Link
               onClick={handleTable}
