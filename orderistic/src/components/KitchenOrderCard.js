@@ -18,13 +18,13 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
   return (
     <div className="console-container">
       {waiter && order[0].food_prepared.length !== 0 && (
-        <b>
+        <b className="title-text">
           Order for Table {order[0].table_number} at {date.toLocaleString()}
         </b>
       )}
 
       {!waiter && (
-        <b>
+        <b className="title-text">
           Order for Table {order[0].table_number} at {date.toLocaleString()}
         </b>
       )}
