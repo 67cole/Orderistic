@@ -14,8 +14,6 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
   }
   let date = new Date(order[0].time_ordered * 1000);
 
-  console.log(order);
-
   return (
     <div className="console-container">
       {waiter && order[0].food_prepared.length !== 0 && (
