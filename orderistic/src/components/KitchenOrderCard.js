@@ -13,6 +13,7 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
     await completeItem(order[1], itemId);
   }
   let date = new Date(order[0].time_ordered * 1000);
+
   console.log(order);
 
   return (
@@ -32,9 +33,11 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
       {!waiter &&
         order[0].food_ordered.map((item) => (
           <div className="button-container">
-            <p>
-              {menu[item.id].name} | Quantity: {item.quantity}
-            </p>
+            <p>{menu[item.id].name}</p>
+            {item.customisations.map((customisation) => (
+              <p>&nbsp;{customisation}</p>
+            ))}
+            <p>&nbsp;| Quantity: {item.quantity}</p>
             <p
               className="prepared-button"
               onClick={() => handlePrepared(item.id)}

@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { returnFoodData } from "../api/MenuApi";
+import AssistanceBoard from "./AssistanceBoard";
 
 export default function StaffOrders() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +38,7 @@ export default function StaffOrders() {
 
   //   LEAVE UNSUBSCRIBE ON TO SAVE FIREBASE USAGE
   // COMMENT IT OUT WHEN DEMONSTRATING!!!!
-  //unsubscribe();
+  // unsubscribe();
 
   useEffect(() => {
     viewTables().then((data) => {
@@ -59,6 +60,8 @@ export default function StaffOrders() {
     setTableAmount(tableAmount - 1);
   }
 
+  const date = new Date();
+
   return (
     <>
       <StaffNav />
@@ -79,13 +82,19 @@ export default function StaffOrders() {
             }}
             className="table-container"
           >
-            <Row
+            {/* <Row
               className="g-4"
               style={{ margin: "0px 20px 40px 20px", paddingBottom: "40px" }}
             >
               {isLoading && <TableSkeleton cards={tableAmount} />}
               <TableCard cards={tableAmount} />
-            </Row>
+            </Row> */}
+            <h3>Admin Console</h3>
+            <div className="stats-container">
+              <b>{date.toJSON().slice(0, 10)}</b>
+              <p> Total Sales: $69</p>
+              <p>Number of Tables: {tableAmount}</p>
+            </div>
             <div className="buttons-container">
               <Button variant="dark" onClick={handleAddTable}>
                 Add Table
@@ -93,6 +102,10 @@ export default function StaffOrders() {
               <Button variant="dark" onClick={handleRemoveTable}>
                 Remove Table
               </Button>
+            </div>
+            <div className="orders-container">
+              <h3>Assistance Tracker</h3>
+              <AssistanceBoard />
             </div>
           </div>
         </div>

@@ -49,16 +49,6 @@ export default function KitchenOrders() {
     });
   }, []);
 
-  async function handleAddTable() {
-    await addTable();
-    setTableAmount(tableAmount + 1);
-  }
-
-  async function handleRemoveTable() {
-    await removeTable();
-    setTableAmount(tableAmount - 1);
-  }
-
   return (
     <>
       <StaffNav />
