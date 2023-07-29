@@ -100,7 +100,6 @@ function CustomisationItem({ customisations, index, element, handleCustomisation
                 <Form.Control type="text" value={option.option} onChange={e => changeOptions(e.target.value, index)}/>
                 <CloseButton onClick={() => removeOption(index)} style={{ marginLeft: "10px" }} />
               </div>
-
             ))} <br/>
             <Button onClick={() => addOption()} variant="dark">
               Add option
