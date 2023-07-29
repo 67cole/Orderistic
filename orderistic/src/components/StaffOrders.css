@@ -8,8 +8,9 @@
 
 .orders-container {
   width: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background-color: gray;
 }
 
 .buttons-container {
@@ -21,4 +22,10 @@
 
 .table-container {
   width: 100vw;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -98,6 +98,20 @@ export async function removeHelp(num) {
   };
   await updateDoc(doc(db, "tables", num.toString()), newData);
 }
+export async function requestBill(num) {
+  console.log("Bill requested");
+  const newData = {
+    bill: true,
+  };
+  await updateDoc(doc(db, "tables", num.toString()), newData);
+}
+
+export async function removeBill(num) {
+  const newData = {
+    bill: false,
+  };
+  await updateDoc(doc(db, "tables", num.toString()), newData);
+}
 
 // Removes item from cart
 export async function removeFromCart(num, item) {
@@ -139,7 +153,8 @@ export async function sendOrder(tableNumber) {
 
   const orderData = {
     food_ordered: tempCart,
-    food_completed: [],
+    food_delivered: [],
+    food_prepared: [],
     table_number: tableNumber,
     time_ordered: currTime,
     time_finished: 0,
@@ -201,5 +216,3 @@ export async function returnOrdersForTable(table_no) {
 
   return orders;
 }
-
-
