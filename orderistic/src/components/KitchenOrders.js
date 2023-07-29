@@ -54,8 +54,8 @@ export default function KitchenOrders() {
       <StaffNav />
       <Container fluid style={{ display: "flex", justifyContent: "center" }}>
         <div className="big-container">
-          <div className="orders-container">
-            <h3>Kitchen Console</h3>
+          <div className="orders-container" style={{ marginTop: "30px" }}>
+            <h3 style={{ marginBottom: "30px" }}>Kitchen Console</h3>
             {menu &&
               orders.map((order, index) => (
                 <KitchenOrderCard order={order} menu={menu} />

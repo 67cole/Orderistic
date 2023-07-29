@@ -14,6 +14,8 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
   }
   let date = new Date(order[0].time_ordered * 1000);
 
+  console.log(order);
+
   return (
     <div className="console-container">
       {waiter && order[0].food_prepared.length !== 0 && (
@@ -22,7 +24,7 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
         </b>
       )}
 
-      {!waiter && (
+      {!waiter && order[0].food_ordered.length !== 0 && (
         <b className="title-text">
           Order for Table {order[0].table_number} at {date.toLocaleString()}
         </b>
