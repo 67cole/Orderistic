@@ -82,10 +82,10 @@ function CartItem({ info, index, total, changeTotal }) {
           <div style={{ fontSize: "12px", color: "grey", marginBottom: "16px" }}>
             {cart[index].customisations.map((element, index) => {
               if (index === 0) {
-                return <span key={index} style={{ fontSize: "12px"}}>{element}</span>
+                return <span key={index} style={{ fontSize: "12px"}}>{element.option}</span>
               }
               else {
-                return <span key={index} style={{ fontSize: "12px"}}>, {element}</span>
+                return <span key={index} style={{ fontSize: "12px"}}>, {element.option}</span>
               }
             })}
           </div>
