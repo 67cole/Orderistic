@@ -75,27 +75,33 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
             style={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
               alignItems: "center",
-              marginTop: "20px",
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="200"
-              height="90"
-              fill="green"
-              class="bi bi-check"
-              viewBox="0 0 16 16"
+            <h2
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
-            </svg>
-            <h2>Thank you for your order!</h2>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="200"
+                height="90"
+                fill="green"
+                class="bi bi-check"
+                viewBox="0 0 16 16"
+              >
+                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
+              Thank you for your order!
+            </h2>
             <p>Your order has been received and is now being prepared.</p>
             <p>Total: ${total}</p>
             {cart.map((element, index) => (
               <Col key={index}>
-                <PreviewMenuCard element={menu[element.id]} showModal={false}/>
+                <PreviewMenuCard element={menu[element.id]} showModal={false} />
               </Col>
             ))}
           </Modal.Body>
@@ -148,7 +154,11 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
                 Checkout
               </Button>
             ) : (
-              <div className="spinner-border" role="status" style={loadingStyle}>
+              <div
+                className="spinner-border"
+                role="status"
+                style={loadingStyle}
+              >
                 <span className="sr-only"></span>
               </div>
             )}
