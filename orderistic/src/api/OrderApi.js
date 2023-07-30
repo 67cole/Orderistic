@@ -68,168 +68,89 @@ export async function removeOrder(id) {
   const res = await deleteDoc(doc(db, "orders", id));
 }
 
-//Allows chef to check off items and moves order to orderHist if they are complete
+//Allows chef to check off items in prepared and moves order to orderHist if they are complete
 export async function completeItem(orderID, itemID) {
   const docRef = doc(db, "orders", orderID);
   const matches = await getDoc(docRef);
 
   // grab ordered data and the completed data
-  let ordered = matches.data()["food_prepared"];
+  let ordered = matches.data()["food_ordered"];
+  let prepared = matches.data()["food_prepared"];
   let completed = matches.data()["food_delivered"];
 
-  // decrement from ordered array
-  for (var i in ordered) {
-    // found matching food in ordered array
-    // decrement quantity
-    if (ordered[i].id === itemID) {
-      break;
-    }
-  }
+  for (var i in prepared) {
 
-  // now loop through completed array
-  for (var j in completed) {
-    // found matching food in completed array
-    // increment quantity
-    if (completed[j].id === itemID) {
-      break;
-    }
-  }
+    if (prepared[i].id === itemID) {
 
-  // if there's no item found, then we add onto the completed array
-  let foodInfo = {
-    id: ordered[i].id,
-    quantity: ordered[i].quantity,
-    order_time: ordered[i].order_time,
-  };
-  completed.push(foodInfo);
+      // as food is completed, change finish time first and also add to the dish times
+      prepared[i].finish_time = Date.now();
 
-  // however, if the quantity is now 0 in the completed array, remove from the ordered array
-  ordered.splice(i, 1);
-
-  // we also have to update the time completed of the specific dish itself
-  for (var k in completed) {
-    // keep the time in seconds for consistency
-    if (completed[k].id === itemID) {
-      completed[k].finish_time = Date.now() / 1000;
-
-      // this also requires us to record the food time in the menu array
       const foodItem = doc(db, "menu", itemID);
       const foodData = await getDoc(foodItem);
 
-      const time_recorded = foodData.data()["time"];
-
       // we add the time it took for the dish to be completed into the food info
       // (finish_time - ordered_time) / quantity
-      time_recorded.push(
-        Math.floor(
-          (completed[k].finish_time - completed[k].order_time) /
-            completed[k].quantity
-        )
-      );
+      let time_recorded = foodData.data()["time"];
+      time_recorded.push(Math.floor(((prepared[i].finish_time - prepared[i].order_time) / prepared[i].quantity) / 1000));
 
-      // update doc now
       await updateDoc(foodItem, {
         time: time_recorded,
       });
+
+      completed.push(prepared[i]);
+      prepared.splice(i, 1);
     }
-    break;
   }
 
-  // now we can update the file
+  // update doc
   await updateDoc(docRef, {
+    food_prepared: prepared,
     food_delivered: completed,
-    food_prepared: ordered,
   });
 
-  // check if ordered is empty, then we move the order to order history and delete from current directory
-  if (completed.length === 0) {
-    const orderHist = doc(db, "orders", orderID);
-    const docData = await getDoc(orderHist);
+  // move order to history if completed
+  if (ordered.length === 0 && prepared.length === 0) {
 
-    // since we need to adjust time finished, we create a new variable
-    // create a time in seconds
-    const newOrder = docData.data();
-    newOrder["time_finished"] = Math.floor(Date.now() / 1000);
+    // set the finishing time of order first before adding
+    const newDoc = await getDoc(docRef);
+    let newOrder = newDoc.data();
+    newOrder["time_finished"] = Math.floor(Date.now());
+    await addDoc(collection(db, "ordersHist"), newOrder);
 
-    // replace into order history collection
-    await setDoc(doc(db, "ordersHist", orderID), newOrder);
-
-    // now delete from current orders
-    await deleteDoc(orderHist);
+    // removing current document as it's no longer a valid order
+    await deleteDoc(docRef);
   }
+  
 }
+
+// Allows chef to move items from ordered to prepared
 export async function prepareItem(orderID, itemID) {
   const docRef = doc(db, "orders", orderID);
-  const matches = await getDoc(docRef);
+  const order = await getDoc(docRef);
 
-  // grab ordered data and the completed data
-  let ordered = matches.data()["food_ordered"];
-  let completed = matches.data()["food_prepared"];
+  let waiting = order.data()["food_ordered"];
+  let preparing = order.data()["food_prepared"];
 
-  // decrement from ordered array
-  for (var i in ordered) {
-    // found matching food in ordered array
-    // decrement quantity
-    if (ordered[i].id === itemID) {
+  for (var i in waiting) {
+
+    if (waiting[i].id === itemID) {
+
+      // move food from array to prepared and remove from ordered array
+      preparing.push(waiting[i]);
+      waiting.splice(i, 1);
       break;
     }
   }
 
-  // now loop through completed array
-  for (var j in completed) {
-    // found matching food in completed array
-    // increment quantity
-    if (completed[j].id === itemID) {
-      break;
-    }
-  }
-
-  // if there's no item found, then we add onto the completed array
-  let foodInfo = {
-    id: ordered[i].id,
-    quantity: ordered[i].quantity,
-    order_time: ordered[i].order_time,
-  };
-  completed.push(foodInfo);
-
-  // however, if the quantity is now 0 in the completed array, remove from the ordered array
-  ordered.splice(i, 1);
-
-  // we also have to update the time completed of the specific dish itself
-  for (var k in completed) {
-    // keep the time in seconds for consistency
-    if (completed[k].id === itemID) {
-      completed[k].finish_time = Date.now() / 1000;
-
-      // this also requires us to record the food time in the menu array
-      const foodItem = doc(db, "menu", itemID);
-      const foodData = await getDoc(foodItem);
-
-      const time_recorded = foodData.data()["time"];
-
-      // we add the time it took for the dish to be completed into the food info
-      // (finish_time - ordered_time) / quantity
-      time_recorded.push(
-        Math.floor(
-          (completed[k].finish_time - completed[k].order_time) /
-            completed[k].quantity
-        )
-      );
-
-      // update doc now
-      await updateDoc(foodItem, {
-        time: time_recorded,
-      });
-    }
-    break;
-  }
-
-  // now we can update the file
+  // update on our new doc
   await updateDoc(docRef, {
-    food_prepared: completed,
-    food_ordered: ordered,
+    food_ordered: waiting,
+    food_prepared: preparing,
   });
+
 }
+
+
 
 // Returns the total time for an order
 export async function returnOrderTime(orderID) {
