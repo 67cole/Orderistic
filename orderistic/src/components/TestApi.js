@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnFoodData, returnSpecificFood } from "../api/MenuApi";
 import { returnOrderData, viewOrder, addOrder, removeOrder, completeItem, returnOrderTime } from "../api/OrderApi";
 import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart, sendOrder, returnOrdersForTable } from "../api/TableApi";
+import { addReview, removeReview, returnDishReview, returnUserReview, updateReview } from "../api/ReviewApi";
 
 export default function TestApi() {
   const [error, setError] = useState("");
@@ -99,6 +100,39 @@ export default function TestApi() {
     returnOrderTime("ZyRCAauYy21E9Sefc8Op");
   }
 
+  async function handleAddReview() {
+    addReview({food_id: "D75SzzFfA8Jso9t29DBV",
+    rating: 3,
+    review: "Delicious",
+    user_id: "kNvMvc7OZXWJzdp6ox2jkCve5Nf1",
+    date: Date.now()
+    });
+  }
+
+  async function handleGetReview() {
+    const reviewList = await returnDishReview("D75SzzFfA8Jso9t29DBV");
+    console.log(reviewList)
+  }
+
+  async function handleUserReview() {
+    const reviewList = await returnUserReview("kNvMvc7OZXWJzdp6ox2jkCve5Nf1");
+    console.log(reviewList)
+  }
+
+  async function handleRemoveReview() {
+    removeReview("B8nRKqyVurwXep5uLdXi");
+  }
+
+  async function handleEditReview() {
+    const newData = {food_id: "D75SzzFfA8Jso9t29DBV",
+    rating: 1,
+    review: "terrible",
+    user_id: "kNvMvc7OZXWJzdp6ox2jkCve5Nf1",
+    date: Date.now()
+    };
+    updateReview("nAGdwyTfRk2dtX9kaOVX", newData)
+  }
+
   return (
     <>
       <Card style={{ width: "75vw", maxWidth: "600px" }}>
@@ -162,6 +196,21 @@ export default function TestApi() {
           <Button className="btn btn-primary w-100 mt-3" onClick={checkOrderTime}>
             Order Time Check
           </Button>      
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleAddReview}>
+            Add Review
+          </Button>   
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleGetReview}>
+            Get Review
+          </Button>
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleUserReview}>
+            Get User Review
+          </Button> 
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleRemoveReview}>
+            Remove Review
+          </Button> 
+          <Button className="btn btn-primary w-100 mt-3" onClick={handleEditReview}>
+            Edit Review
+          </Button> 
         </Card.Body>
       </Card>
     </>
