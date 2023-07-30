@@ -99,9 +99,11 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
               Thank you for your order!
             </h2>
             <p>Your order has been received and is now being prepared.</p>
-            <p>Total: ${finalTotal}</p>
+            <p>Total: ${finalTotal.toFixed(2)}</p>
             {completeCart.map((element, index) => (
-              <PreviewMenuCard key={index} element={menu[element.id]} showModal={false} quantity={element.quantity}/>
+              <div key={index}>
+                <PreviewMenuCard  element={menu[element.id]} showModal={false} quantity={element.quantity}/>
+              </div>
             ))}
           </Modal.Body>
         ) : (
