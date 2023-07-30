@@ -16,7 +16,7 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
   const { cart } = React.useContext(CartContext);
   const [total, setTotal] = React.useState(0);
   const changeTotal = (newTotal) => setTotal(newTotal);
-  const { tableNumber } = useAuth();
+  const { tableNumber, currentUser } = useAuth();
   const [loading, setLoading] = useState(false);
 
   React.useEffect(() => {
@@ -46,7 +46,7 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
     if (cart.length !== 0) {
       setLoading(true);
       await timeout(500);
-      sendOrder(tableNumber);
+      sendOrder(tableNumber, currentUser.uid);
       setLoading(false);
       setOrderComplete(true);
     }

@@ -149,7 +149,7 @@ export async function sendOrder(tableNumber, user_id) {
   let tempCart = docSnap.data()["cart"];
 
   // grab current time of order in seconds
-  let currTime = Math.floor(Date.now() / 1000);
+  let currTime = Math.floor(Date.now());
 
   const orderData = {
     food_ordered: tempCart,
