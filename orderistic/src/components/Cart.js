@@ -9,7 +9,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { sendOrder } from "../api/TableApi";
 import timeout from "../api/Timeout";
 import { CartContext } from "./Menu.js";
-import Col from "react-bootstrap/Col";
 import PreviewMenuCard from "./PreviewMenuCard";
 
 function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
@@ -18,6 +17,8 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
   const changeTotal = (newTotal) => setTotal(newTotal);
   const { tableNumber, currentUser } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [completeCart, setCompleteCart] = React.useState([]);
+  const [finalTotal, setFinalTotal] = React.useState(0);
 
   React.useEffect(() => {
     let sum = 0;
@@ -26,6 +27,7 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
     }
     setTotal(sum);
   }, [cart]);
+
   const checkoutButtonStyle = {
     backgroundColor: "black",
     paddingLeft: "250px",
@@ -46,6 +48,8 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
     sendOrder(tableNumber, currentUser ? currentUser.uid : "");
     setLoading(false);
     setOrderComplete(true);
+    setCompleteCart(cart);
+    setFinalTotal(total);
     setCart([]);
   }
 
@@ -95,11 +99,9 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
               Thank you for your order!
             </h2>
             <p>Your order has been received and is now being prepared.</p>
-            <p>Total: ${total}</p>
-            {cart.map((element, index) => (
-              <Col key={index}>
-                <PreviewMenuCard element={menu[element.id]} showModal={false} />
-              </Col>
+            <p>Total: ${finalTotal}</p>
+            {completeCart.map((element, index) => (
+              <PreviewMenuCard key={index} element={menu[element.id]} showModal={false} quantity={element.quantity}/>
             ))}
           </Modal.Body>
         ) : (
