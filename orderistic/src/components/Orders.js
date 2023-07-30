@@ -1,36 +1,36 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import MenuNav from "./MenuNav";
-import { returnOrdersForTable } from "../api/TableApi";
 import { returnFoodData } from "../api/MenuApi";
 import CardGroup from "react-bootstrap/CardGroup";
 import OrderCard from "./OrderCard";
 import CurrentOrder from "./CurrentOrder";
+import { userOrders } from "../api/OrderApi";
 
 function Orders() {
   const center = {
     display: "flex",
     justifyContent: "center",
   };
-  const { tableNumber } = useAuth();
+  const { currentUser } = useAuth();
   const [currOrders, setCurrOrders] = React.useState([]);
   const [prevOrders, setPrevOrders] = React.useState([]);
   const [menu, setMenu] = React.useState({});
 
   React.useEffect(() => {
-    returnOrdersForTable(tableNumber).then((data) => {
-      setCurrOrders(data.currOrders);
-      let tempPrev = [...data.prevOrders];
+    userOrders(currentUser.uid).then((data) => {
+      setCurrOrders(data.ordered);
+      let tempPrev = [...data.completed];
       for (let order of tempPrev) {
         let date = new Date(order.time_finished);
         order.time_finished = date.toLocaleDateString();
       }
       setPrevOrders(tempPrev);
-    });
+    })
     returnFoodData().then((menuData) => {
       setMenu(menuData);
     });
-  }, [tableNumber]);
+  }, [currentUser]);
 
   return (
     <>

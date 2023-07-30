@@ -143,13 +143,13 @@ export async function removeFromCart(num, item) {
 
 //Allows customers to send their order to the staff or chef
 //Makes the order ready for the chef
-export async function sendOrder(tableNumber) {
+export async function sendOrder(tableNumber, user_id) {
   const docRef = doc(db, "tables", tableNumber.toString());
   const docSnap = await getDoc(docRef);
   let tempCart = docSnap.data()["cart"];
 
   // grab current time of order in seconds
-  let currTime = Math.floor(Date.now() / 1000);
+  let currTime = Math.floor(Date.now());
 
   const orderData = {
     food_ordered: tempCart,
@@ -158,6 +158,7 @@ export async function sendOrder(tableNumber) {
     table_number: tableNumber,
     time_ordered: currTime,
     time_finished: 0,
+    uid: user_id,
   };
 
   addOrder(orderData);

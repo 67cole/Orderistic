@@ -25,16 +25,20 @@ export default function StaffOrders() {
   const [orders, setOrders] = useState([]);
   const [menu, setMenu] = React.useState();
 
-  const docRef = collection(db, "orders");
-  const q = query(docRef, orderBy("time_ordered", "desc"), limit(10));
 
-  const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    const qOrders = [];
-    querySnapshot.forEach((doc) => {
-      qOrders.push([doc.data(), doc.id]);
+  React.useEffect(() => {
+    const docRef = collection(db, "orders");
+    const q = query(docRef, orderBy("time_ordered", "desc"), limit(10));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const qOrders = [];
+      querySnapshot.forEach((doc) => {
+        qOrders.push([doc.data(), doc.id]);
+      });
+      setOrders(qOrders);
     });
-    setOrders(qOrders);
-  });
+    return () => {unsubscribe()}
+  }, [])
+
 
   //   LEAVE UNSUBSCRIBE ON TO SAVE FIREBASE USAGE
   // COMMENT IT OUT WHEN DEMONSTRATING!!!!

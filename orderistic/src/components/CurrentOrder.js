@@ -15,7 +15,7 @@ function CurrentOrder({ index, element, menu }) {
   React.useEffect(() => {
     returnOrderTime(element.id).then((data) => {
       let tempTime = Math.ceil(
-        (element.time_ordered + data * 60 - Date.now() / 1000) / 60
+        (element.time_ordered/60000 + data - Date.now()/60000)
       );
       if (tempTime < 0 || isNaN(data)) {
         tempTime = 0;

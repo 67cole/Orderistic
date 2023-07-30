@@ -37,3 +37,11 @@ Week 6:
 Week 7:
 - Worked on user stories 28-30 for staff members to complete orders and send into order history
 - Worked on the staff side to update table functions (grab all tables, show previous and current orders)
+
+Week 8:
+- Finalised demo by debugging and testing with other members
+- Fixed up small errors which caused the entire server to crash or raise issues in console
+- Delegated tasks for the next and final sprint to work towards
+
+Week 9:
+- Worked with other members to refine definitions of what is in the database
