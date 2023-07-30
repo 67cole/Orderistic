@@ -20,8 +20,20 @@ Week 4
 - One obstacle was that it was hard to find times when people were available.
 - Next week, we will finish sprint 1 and complete our retrospective. Later in the week, we will begin planning what to do for sprint 2.
 Week 5
-- Talked about what needed to be fixed in the next sprint
-- Need to fix style of authentication pages and add more features 
-- Completed all items in sprint 1
+- Talked about what needed to be fixed in the next sprint.
+- Need to fix style of authentication pages and add more features.
+- Completed all items in sprint 1.
 - Completed menu functionality for adding items, updating items and removing items.
 - Styled cart page.
+Week 6
+- Discussed and allocated user stories to Sprint 2.
+- Assigned roles to each team member.
+- I was assigned to creating the frontend of the food information page.
+Week 7
+- Worked a little bit on the food information page.
+- Added sections in the form to add menu items to account for the food information page.
+- Styled the food information page.
+Week 8
+- Finished off the food information page by adding the ability to add options to dishes.
+- Created and styled the orders page which shows current and previous orders.
+- Next week, I will be working on reviews and improving on the orders page.

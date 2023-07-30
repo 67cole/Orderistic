@@ -26,7 +26,6 @@ export default function StaffLogin() {
       navigate("/staff-menu");
     } catch (error2) {
       setError("Failed to log in");
-      console.log(error2);
     }
     setLoading(false);
   }

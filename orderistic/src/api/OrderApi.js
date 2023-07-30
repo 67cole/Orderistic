@@ -5,11 +5,15 @@ import {
   doc,
   getDocs,
   onSnapshot,
+  orderBy,
+  limit,
   addDoc,
   deleteDoc,
   getDoc,
+  query,
   updateDoc,
 } from "firebase/firestore";
+import { dishTime } from "./MenuApi";
 
 // Order Collection
 // Each order has unique ID's of documents, each representing a order's cart
@@ -23,9 +27,12 @@ import {
 
 // Grabbing all information orders information for front-end purposes
 export async function returnOrderData() {
-  const docRef = await getDocs(collection(db, "orders"));
+  const docRef = collection(db, "orders");
+  const q = query(docRef, orderBy("time_ordered", "desc"), limit(10));
+  const querySnapshot = await getDocs(q);
+
   const orderMenu = [];
-  docRef.forEach((doc) => {
+  querySnapshot.forEach((doc) => {
     orderMenu.push(doc.data());
   });
   return orderMenu;
@@ -44,122 +51,162 @@ export async function addOrder(item) {
   const res = await addDoc(collection(db, "orders"), item);
 }
 
+export async function orderedFoodByTime() {
+  const docRef = collection(db, "orders");
+  const q = query(docRef, orderBy("time_ordered", "desc"), limit(10));
+  const querySnapshot = await getDocs(q);
+
+  const orderMenu = [];
+  querySnapshot.forEach((doc) => {
+    orderMenu.push([doc.data(), doc.id]);
+  });
+  return orderMenu;
+}
+
 //Allows staff to remove order (HIMMY-22)
 export async function removeOrder(id) {
   const res = await deleteDoc(doc(db, "orders", id));
 }
 
-
-
-//Allows chef to check off items and moves order to orderHist if they are complete
+//Allows chef to check off items in prepared and moves order to orderHist if they are complete
 export async function completeItem(orderID, itemID) {
   const docRef = doc(db, "orders", orderID);
   const matches = await getDoc(docRef);
 
   // grab ordered data and the completed data
   let ordered = matches.data()["food_ordered"];
-  let completed = matches.data()["food_completed"];
-  
-  // decrement from ordered array
-  for (var i in ordered) {
-    
-    // found matching food in ordered array
-    // decrement quantity
-    if (ordered[i].id === itemID) {
-      ordered[i].quantity -= 1;
-      break;
+  let prepared = matches.data()["food_prepared"];
+  let completed = matches.data()["food_delivered"];
+
+  for (var i in prepared) {
+
+    if (prepared[i].id === itemID) {
+
+      // as food is completed, change finish time first and also add to the dish times
+      prepared[i].finish_time = Date.now();
+
+      const foodItem = doc(db, "menu", itemID);
+      const foodData = await getDoc(foodItem);
+
+      // we add the time it took for the dish to be completed into the food info
+      // (finish_time - ordered_time) / quantity
+      let time_recorded = foodData.data()["time"];
+      time_recorded.push(Math.floor(((prepared[i].finish_time - prepared[i].order_time) / prepared[i].quantity) / 1000));
+
+      await updateDoc(foodItem, {
+        time: time_recorded,
+      });
+
+      completed.push(prepared[i]);
+      prepared.splice(i, 1);
     }
   }
 
-  // now loop through completed array
-  let added = 0;
-  for (var j in completed) {
-
-    // found matching food in completed array
-    // increment quantity
-    if (completed[j].id === itemID) {
-      completed[j].quantity += 1;
-      added = 1;
-      break;
-    }
-  }
-
-  // if there's no item found, then we add onto the completed array
-  if (added === 0) {
-    let foodInfo = {
-      "id": ordered[i].id,
-      "quantity": 1,
-      "order_time": ordered[i].order_time,
-    };
-    completed.push(foodInfo);
-  }
-
-  // however, if the quantity is now 0 in the completed array, remove from the ordered array
-  if (ordered[i].quantity === 0) {
-    ordered.splice(i, 1);
-
-    // we also have to update the time completed of the specific dish itself
-    for (var k in completed) {
-
-      // keep the time in seconds for consistency
-      if (completed[k].id === itemID) {
-        completed[k].finish_time = (Date.now() / 1000)
-      
-        // this also requires us to record the food time in the menu array
-        const foodItem = doc(db, "menu", itemID);
-        const foodData = await getDoc(foodItem);
-
-        const time_recorded = foodData.data()["time"];
-
-        // we add the time it took for the dish to be completed into the food info
-        // (finish_time - ordered_time) / quantity
-        time_recorded.push(Math.floor((completed[k].finish_time - completed[k].order_time) / completed[k].quantity));
-
-        // update doc now
-        await updateDoc(foodItem, {
-          "time": time_recorded,
-        });
-        
-      }
-      break;
-    }
-  }
-
-  // now we can update the file
+  // update doc
   await updateDoc(docRef, {
-    "food_completed": completed,
-    "food_ordered": ordered
+    food_prepared: prepared,
+    food_delivered: completed,
   });
 
-  // check if ordered is empty, then we move the order to order history and delete from current directory
-  if (ordered.length === 0) {
-    const orderHist = doc(db, "orders", orderID);
-    const docData = await getDoc(orderHist);
+  // move order to history if completed
+  if (ordered.length === 0 && prepared.length === 0) {
 
-    // since we need to adjust time finished, we create a new variable
-    // create a time in seconds
-    const newOrder = docData.data();
-    newOrder["time_finished"] = Math.floor(Date.now() / 1000);
+    // set the finishing time of order first before adding
+    const newDoc = await getDoc(docRef);
+    let newOrder = newDoc.data();
+    newOrder["time_finished"] = Math.floor(Date.now());
+    await addDoc(collection(db, "ordersHist"), newOrder);
 
-    // replace into order history collection
-    await setDoc(doc(db, "ordersHist", orderID), newOrder);
+    // removing current document as it's no longer a valid order
+    await deleteDoc(docRef);
+  }
+  
+}
 
-    // now delete from current orders
-    await deleteDoc(orderHist);
+// Allows chef to move items from ordered to prepared
+export async function prepareItem(orderID, itemID) {
+  const docRef = doc(db, "orders", orderID);
+  const order = await getDoc(docRef);
 
+  let waiting = order.data()["food_ordered"];
+  let preparing = order.data()["food_prepared"];
+
+  for (var i in waiting) {
+
+    if (waiting[i].id === itemID) {
+
+      // move food from array to prepared and remove from ordered array
+      preparing.push(waiting[i]);
+      waiting.splice(i, 1);
+      break;
+    }
   }
 
-  // jono's version
-  /*
-  const docSnap = await getDoc(docRef);
-  console.log(docSnap.data()["food_ordered"])
-  const newOrder = docSnap.data()["food_ordered"].filter(function (item) {
-    return item != itemID
+  // update on our new doc
+  await updateDoc(docRef, {
+    food_ordered: waiting,
+    food_prepared: preparing,
   });
-  let newCompleted = docSnap.data()["food_completed"];
-  newCompleted.append(itemID)*/
+
 }
 
 
 
+// Returns the total time for an order
+export async function returnOrderTime(orderID) {
+  const docRef = doc(db, "orders", orderID);
+  const order = await getDoc(docRef);
 
+  // keep time counter in SECONDS
+  let timeTaken = 0;
+
+  // find all timing for food starting with completed
+  const completed = order.data()["food_delivered"];
+  for (var i in completed) {
+    // quantity x food average time for time
+    let time = completed[i].quantity * dishTime(completed[i].id);
+    timeTaken += time;
+  }
+
+  // moving to still processing
+  const ordered = order.data()["food_ordered"];
+  for (var j in ordered) {
+    let time = ordered[j].quantity * (await dishTime(ordered[j].id));
+    timeTaken += time;
+  }
+
+  return timeTaken;
+}
+
+
+// Given a user, return all their current and previous orders
+export async function userOrders(user_id) {
+  const currdocRef = await getDocs(collection(db, "orders"));
+  const prevdocRef = await getDocs(collection(db, "ordersHist"));
+  const orders = {};
+
+  // array of dictionaries to represent ordered/completed
+  orders["ordered"] = [];
+  orders["completed"] = [];
+
+  // loop thru current orders first
+  currdocRef.forEach((doc) => {
+
+    if (doc.data()["uid"] === user_id) {
+      const orderInfo = doc.data();
+      orderInfo["id"] = doc.id;
+      orders["ordered"].push(orderInfo);
+    }
+  });
+
+  prevdocRef.forEach((doc) => {
+
+    if (doc.data()["uid"] === user_id) {
+      const orderInfo2 = doc.data();
+      orderInfo2["id"] = doc.id;
+      orders["completed"].push(orderInfo2);
+    }
+  });
+
+  return orders;
+}

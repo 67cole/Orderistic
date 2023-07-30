@@ -5,6 +5,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Collapse from 'react-bootstrap/Collapse';
 import CloseButton from 'react-bootstrap/CloseButton';
+import { generateID } from './helper';
 
 function CustomisationItem({ customisations, index, element, handleCustomisations }) {
   const textStyle = {
@@ -36,7 +37,7 @@ function CustomisationItem({ customisations, index, element, handleCustomisation
   }
   function changeOptions(value, index) {
     let tempOptions = [...newOptions];
-    tempOptions[index] = value;
+    tempOptions[index].option = value;
     setNewOptions(tempOptions);
   }
   function discardChanges() {
@@ -66,7 +67,11 @@ function CustomisationItem({ customisations, index, element, handleCustomisation
     }
   }
   function addOption() {
-    let tempOptions = [...newOptions, ""];
+    const newOption = {
+      id: generateID(),
+      option: ""
+    }
+    let tempOptions = [...newOptions, newOption];
     setNewOptions(tempOptions);
   }
   function removeOption(optionIndex) {
@@ -82,7 +87,7 @@ function CustomisationItem({ customisations, index, element, handleCustomisation
         <div style={{ fontWeight: "500" }}>{element.name}</div>
         <div style={{ marginBottom: "10px" }}>
           {element.options.map((option, index) => (
-            <div key={index}>&nbsp;&nbsp;&nbsp;{option}</div>
+            <div key={index}>&nbsp;&nbsp;&nbsp;{option.option}</div>
           ))}
         </div>
         <Collapse in={editing}>
@@ -92,10 +97,9 @@ function CustomisationItem({ customisations, index, element, handleCustomisation
             <div style={textStyle}>Options:</div>
             {newOptions.map((option, index) => (
               <div style={{ display: "flex", alignItems: "center" }} key={index}>
-                <Form.Control type="text" value={option} onChange={e => changeOptions(e.target.value, index)}/>
+                <Form.Control type="text" value={option.option} onChange={e => changeOptions(e.target.value, index)}/>
                 <CloseButton onClick={() => removeOption(index)} style={{ marginLeft: "10px" }} />
               </div>
-
             ))} <br/>
             <Button onClick={() => addOption()} variant="dark">
               Add option

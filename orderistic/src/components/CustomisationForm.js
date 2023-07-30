@@ -4,6 +4,7 @@ import Collapse from 'react-bootstrap/Collapse';
 import React from 'react';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { generateID } from "./helper";
+import Alert from 'react-bootstrap/Alert';
 
 function CustomisationForm({ customisations, handleCustomisations }) {
   const radioStyle = {
@@ -15,9 +16,10 @@ function CustomisationForm({ customisations, handleCustomisations }) {
   const [showForm, setShowForm] = React.useState(false);
   const [custName, setCustName] = React.useState("");
   const [options, setOptions] = React.useState([]);
-  const [required, setRequired] = React.useState(false);
+  const [required, setRequired] = React.useState("");
   const [optionNum, setOptionNum] = React.useState(1);
   const [select, setSelect] = React.useState("upTo");
+  const [showAlert, setShowAlert] = React.useState(false);
 
   function newCustomisation() {
     setShowForm(!showForm);
@@ -27,11 +29,15 @@ function CustomisationForm({ customisations, handleCustomisations }) {
   }
   function changeOptions(value, optionIndex) {
     let newOptions = [...options];
-    newOptions[optionIndex] = value;
+    newOptions[optionIndex].option = value;
     setOptions(newOptions);
   }
   function addOption() {
-    let newOptions = [...options, ""];
+    const newOption = {
+      id: generateID(),
+      option: ""
+    }
+    let newOptions = [...options, newOption];
     setOptions(newOptions);
   }
   function removeOption(optionIndex) {
@@ -39,19 +45,29 @@ function CustomisationForm({ customisations, handleCustomisations }) {
     newOptions.splice(optionIndex, 1);
     setOptions(newOptions);
   }
-  function addCustomisation() {
-    const customisation = {
-      id: generateID(),
-      name: custName,
-      options: options,
-      required: required,
-      select: select,
-      optionNum: optionNum
+  function checkCustomisation() {
+    if (!custName || !optionNum) {
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 5000);
+      return false;
     }
-    const tempCust = [...customisations, customisation];
-    handleCustomisations(tempCust);
-    setCustName("");
-    setOptions([]);
+    return true;
+  }
+  function addCustomisation() {
+    if (checkCustomisation()) {
+      const customisation = {
+        id: generateID(),
+        name: custName,
+        options: options,
+        required: required,
+        select: select,
+        optionNum: optionNum
+      }
+      const tempCust = [...customisations, customisation];
+      handleCustomisations(tempCust);
+      setCustName("");
+      setOptions([]);
+    }
   }
   function discardCustomisation() {
     setShowForm(false);
@@ -68,6 +84,15 @@ function CustomisationForm({ customisations, handleCustomisations }) {
   }
   return (
     <>
+      {showAlert
+        ? 
+          <div style={{position: "fixed", top: "80px", zIndex: "1", left: "50%", transform: "translate(-50%, -50%)"}}>
+            <Alert variant="dark" onClose={() => setShowAlert(false)} dismissible>
+              Please fill in all fields in the customisation form.
+            </Alert>
+          </div>
+        : <></>
+      }
       <p>Food Customisations (e.g choice of sauce or drink)</p>
       <Button onClick={newCustomisation} variant="dark">
         {showForm 
@@ -91,7 +116,7 @@ function CustomisationForm({ customisations, handleCustomisations }) {
               <div style={{ display: "flex", alignItems: "center" }} key={optionIndex}>
                 <Form.Control
                   type="text"
-                  value={option}
+                  value={option.option}
                   onChange={e => changeOptions(e.target.value, optionIndex)}
                 />
                 <CloseButton onClick={() => removeOption(optionIndex)} style={{ marginLeft: "10px" }} />
@@ -124,7 +149,7 @@ function CustomisationForm({ customisations, handleCustomisations }) {
                 style={radioStyle}
                 onChange={() => setRequired(true)}/>
               <label htmlFor="optionalYes" style={{ width: "30px", paddingLeft: "5px", marginRight: "10px" }}>Yes</label>
-              <input type="radio" name="optional" id="optionalNo" value="no" style={radioStyle} onChange={() => setRequired(false)}/>
+              <input type="radio" name="optional" id="optionalNo" value="no" defaultChecked style={radioStyle} onChange={() => setRequired(false)}/>
               <label htmlFor="optionalNo" style={{ width:"30px", paddingLeft: "5px" }}>No</label>
             </div>
           </Form.Group>

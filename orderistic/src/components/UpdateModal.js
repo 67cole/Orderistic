@@ -1,7 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Image from 'react-bootstrap/Image';
 import React from "react";
 import { fileToDataUrl } from "./helper";
 import { UpdateItem } from "../api/MenuApi";
@@ -9,6 +8,8 @@ import { Row, Col } from "react-bootstrap";
 import ListGroup from 'react-bootstrap/ListGroup';
 import CustomisationItem from "./CustomisationItem";
 import CustomisationForm from "./CustomisationForm";
+import PreviewMenuCard from "./PreviewMenuCard";
+import Alert from 'react-bootstrap/Alert';
 
 function UpdateModal({ show, closeForm, element, setStates }) {
 
@@ -18,22 +19,36 @@ function UpdateModal({ show, closeForm, element, setStates }) {
   const [category, setCategory] = React.useState(element.category);
   const [image, setImage] = React.useState(element.image);
   const [customisations, setCustomisations] = React.useState(element.customisations);
+  const [showAlert, setShowAlert] = React.useState(false);
+  const [dietInfo, setDietInfo] = React.useState(element.dietInfo);
 
   function handleCustomisations(customisations) {
     setCustomisations(customisations)
   }
-  function submitForm() {
-    const item = {
-      name: name,
-      description: description,
-      price: price,
-      category: category,
-      image: image,
-      customisations: customisations
+  function checkForm() {
+    if (!name || !description || !category || !price) {
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 5000);
+      return false;
     }
-    UpdateItem(element.id, item);
-    closeForm();
-    setStates(image, name, description, price);
+    return true;
+  }
+  function submitForm() {
+    if (checkForm()) {
+      const item = {
+        name: name,
+        description: description,
+        price: price,
+        category: category,
+        image: image,
+        customisations: customisations,
+        time: element.time,
+        dietInfo: dietInfo
+      }
+      UpdateItem(element.id, item);
+      closeForm();
+      setStates(image, name, description, price);
+    }
   }
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])
@@ -44,10 +59,18 @@ function UpdateModal({ show, closeForm, element, setStates }) {
   return (
     <> 
     <Modal show={show} onHide={closeForm} centered size="lg">
+      {showAlert
+        ? <div style={{position: "fixed", top: "80px", zIndex: "1", left: "50%", transform: "translate(-50%, -50%)"}}>
+            <Alert variant="dark" onClose={() => setShowAlert(false)} dismissible>
+              Please fill in all the fields.
+            </Alert>
+          </div>
+        : <></>
+      }
       <Modal.Header closeButton>
       <Modal.Title>Update Item</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{ padding: "20px 40px 10px 40px" }}>
       <Form>
         <Row>
           <Col>
@@ -75,7 +98,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
         </Row>
         <Row>
           <Col>
-            <Form.Group className="mb-3" controlId="price">
+            <Form.Group controlId="price">
               <Form.Label>Price</Form.Label>
               <Form.Control
                   type="number"
@@ -85,14 +108,26 @@ function UpdateModal({ show, closeForm, element, setStates }) {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group controlId="formFile" className="mb-3">
+            <Form.Group controlId="formFile">
               <Form.Label>Image</Form.Label><br/>
               <Form.Control type="file" onChange={convertImg}/><br/>
-              {image ? <Image src={image} width="260px" fluid/> : <></>}
             </Form.Group>
           </Col>
         </Row>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <p>Preview</p>
+        </div>
+        <div style={{display: "flex", justifyContent: "center", marginBottom: "30px"}}>
 
+          <PreviewMenuCard 
+            element ={{
+              image: image,
+              name: name,
+              description: description,
+              price: price,
+            }}
+          />
+        </div>
         <Form.Group
         className="mb-3"
         controlId="exampleForm.ControlTextarea1"
@@ -100,7 +135,18 @@ function UpdateModal({ show, closeForm, element, setStates }) {
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
         </Form.Group>
-
+        <Form.Group
+        className="mb-3"
+        controlId="diet-info"
+        >
+          <Form.Label>Dietary Information</Form.Label>
+          <Form.Control 
+            as="textarea" 
+            rows={3}
+            value={dietInfo} 
+            onChange={e => setDietInfo(e.target.value)} 
+          />
+        </Form.Group>
         <CustomisationForm customisations={customisations} handleCustomisations={handleCustomisations}/>
         <ListGroup>
           {customisations.map((ctm, index) => (

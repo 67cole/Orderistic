@@ -1,0 +1,31 @@
+.big-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.orders-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttons-container {
+  display: flex;
+  width: 30%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.table-container {
+  width: 100vw;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
