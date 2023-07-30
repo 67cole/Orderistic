@@ -175,7 +175,6 @@ export async function returnOrderTime(orderID) {
     timeTaken += time;
   }
 
-  console.log(timeTaken);
   return timeTaken;
 }
 

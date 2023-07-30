@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import React from "react";
 
-function PreviewMenuCard({ element, showModal, openFoodInfo }) {
+function PreviewMenuCard({ element, showModal, openFoodInfo, quantity }) {
     // Style for the menu cards
     const imgStyle = {
       width: "210px",
@@ -16,7 +16,7 @@ function PreviewMenuCard({ element, showModal, openFoodInfo }) {
     };
   return(
     <>
-      <Card onClick={openFoodInfo} style={{...cardStyle, cursor: showModal ? "pointer": "default"}}>
+      <Card onClick={openFoodInfo} style={{...cardStyle, cursor: showModal ? "pointer": "default", marginBottom: "5px" }}>
         {element.image ? (
           <Card.Img
             variant="top"
@@ -32,11 +32,21 @@ function PreviewMenuCard({ element, showModal, openFoodInfo }) {
           <Card.Text style={{ fontSize: "14px" }}>
             {element.description}
           </Card.Text>
-          <Card.Text
-            style={{ position: "absolute", bottom: "10px", fontSize: "16px" }}
+          <div
+            style={{ position: "absolute", bottom: "10px" }}
           >
             ${parseFloat(element.price).toFixed(2)}
-          </Card.Text>
+          </div>
+          <div
+            style={{position: "absolute", bottom: "10px", right: "15px"}}
+          >
+            {quantity 
+              ? <>
+                  Qty: {quantity}
+                </>
+              : <></>
+            }
+          </div>
         </Card.Body>
       </Card>
     </>

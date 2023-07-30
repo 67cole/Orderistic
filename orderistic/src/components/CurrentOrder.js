@@ -39,6 +39,8 @@ function CurrentOrder({ index, element, menu }) {
           paddingBottom: "30px",
           backgroundColor: "white",
           marginBottom: "30px",
+          borderBottom: "1px solid #e5e5e5",
+          borderTop: "1px solid #e5e5e5"
         }}
       >
         <div style={{ ...center, marginTop: "20px" }}>

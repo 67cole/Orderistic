@@ -89,6 +89,8 @@ function FoodInfo({ show, closeForm, element }) {
     setQuantityList([]);
     setCheckboxList([]);
     setRadioList([]);
+    setQuantity(1);
+    setPrice(element.price);
     closeForm();
   }
   const loadingStyle = {

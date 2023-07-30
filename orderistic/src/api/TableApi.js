@@ -99,7 +99,6 @@ export async function removeHelp(num) {
   await updateDoc(doc(db, "tables", num.toString()), newData);
 }
 export async function requestBill(num) {
-  console.log("Bill requested");
   const newData = {
     bill: true,
   };
