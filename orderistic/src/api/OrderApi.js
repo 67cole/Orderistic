@@ -257,3 +257,36 @@ export async function returnOrderTime(orderID) {
   console.log(timeTaken);
   return timeTaken;
 }
+
+
+// Given a user, return all their current and previous orders
+export async function userOrders(user_id) {
+  const currdocRef = await getDocs(collection(db, "orders"));
+  const prevdocRef = await getDocs(collection(db, "ordersHist"));
+  const orders = {};
+
+  // array of dictionaries to represent ordered/completed
+  orders["ordered"] = [];
+  orders["completed"] = [];
+
+  // loop thru current orders first
+  currdocRef.forEach((doc) => {
+
+    if (doc.data()["uid"] === user_id) {
+      const orderInfo = doc.data();
+      orderInfo["id"] = doc.id;
+      orders["ordered"].push(orderInfo);
+    }
+  });
+
+  prevdocRef.forEach((doc) => {
+
+    if (doc.data()["uid"] === user_id) {
+      const orderInfo2 = doc.data();
+      orderInfo2["id"] = doc.id;
+      orders["completed"].push(orderInfo2);
+    }
+  });
+
+  return orders;
+}
