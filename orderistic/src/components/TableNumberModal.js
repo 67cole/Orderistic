@@ -46,6 +46,8 @@ export default function TableNumberModal() {
               className="m-1"
               onClick={() => handleTable(key + 1)}
               key={key}
+              variant="dark"
+              style={{ backgroundColor: "black"}}
             >
               {key + 1}
             </Button>

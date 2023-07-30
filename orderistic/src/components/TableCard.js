@@ -6,22 +6,19 @@ import { removeHelp, viewTables } from "../api/TableApi";
 import "./TableCard.css";
 
 export default function TableCard({ cards }) {
-  const q = query(collection(db, "tables"), where("help", "==", true));
-
   const [help, setHelp] = useState([]);
-
-  const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    const tables = [];
-    querySnapshot.forEach((doc) => {
-      tables.push(doc.data().number);
+  useEffect(() => {
+    const q = query(collection(db, "tables"), where("help", "==", true));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const tables = [];
+      querySnapshot.forEach((doc) => {
+        tables.push(doc.data().number);
+      });
+      setHelp(tables);
+      // console.log("Current tables that need help", tables.join(" "));
     });
-    setHelp(tables);
-    // console.log("Current tables that need help", tables.join(" "));
-  });
-
-  //   LEAVE UNSUBSCRIBE ON TO SAVE FIREBASE USAGE
-  // COMMENT IT OUT WHEN DEMONSTRATING!!!!
-  unsubscribe();
+    return (() => {unsubscribe()})
+  })
 
   async function handleHelp(num) {
     await removeHelp(num);

@@ -35,13 +35,13 @@ function Orders() {
   return (
     <>
       <MenuNav />
-      <p style={{ fontSize: "26px", fontWeight: "500", marginTop: "20px" }}>
+      <p style={{ fontSize: "50px", fontWeight: "500", marginTop: "20px" }}>
         Current Orders
       </p>
       {currOrders.map((element, index) => (
         <CurrentOrder key={index} element={element} menu={menu} index={index} />
       ))}
-      <p style={{ fontSize: "26px", fontWeight: "500", marginTop: "20px" }}>
+      <p style={{ fontSize: "50px", fontWeight: "500", marginTop: "20px" }}>
         Past Orders
       </p>
       {prevOrders.map((element, index) => (

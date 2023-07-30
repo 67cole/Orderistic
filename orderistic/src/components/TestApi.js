@@ -111,12 +111,10 @@ export default function TestApi() {
 
   async function handleGetReview() {
     const reviewList = await returnDishReview("D75SzzFfA8Jso9t29DBV");
-    console.log(reviewList)
   }
 
   async function handleUserReview() {
     const reviewList = await returnUserReview("kNvMvc7OZXWJzdp6ox2jkCve5Nf1");
-    console.log(reviewList)
   }
 
   async function handleRemoveReview() {
