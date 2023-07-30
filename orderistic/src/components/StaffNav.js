@@ -22,9 +22,6 @@ function StaffNav() {
     }
   }
   return (
-<<<<<<< HEAD
-    <Navbar variant="dark" style={{boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)", backgroundColor: "black"}} className="sticky-top nav-bar">
-=======
     <Navbar
       data-bs-theme="light"
       style={{
@@ -33,7 +30,6 @@ function StaffNav() {
       }}
       className="sticky-top nav-bar"
     >
->>>>>>> main
       <Container>
         <Navbar.Brand
           as={Link}
