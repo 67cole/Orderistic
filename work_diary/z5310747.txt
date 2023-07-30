@@ -39,3 +39,19 @@ Week 6:
 Week 7:
 - Pair coded with Colin to implement the order system
 - Realised that in the future, our timing algorithm may not be perfect due to amount of data required.
+- Fixed bugs regarding order system
+- Help meeting to identify potential problems in demo 2
+
+Week 8:
+- Completed retrospective B with team
+- Highlighted what we could do better in Sprint 3
+- Held meeting to delegate roles in Sprint 3
+- Assigned review function and project report role
+- Began implementing review functionality
+
+Week 9:
+- Finished review functionalities
+- Pair coded with Colin to fix orders
+- Held meeting to identify bugs and issues with Sprint 3
+- Began writing the project report
+

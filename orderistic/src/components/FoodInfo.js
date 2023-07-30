@@ -11,6 +11,7 @@ import QuantityOption from "./QuantityOption";
 import "./Modal.css";
 import { useAuth } from "../contexts/AuthContext";
 import timeout from "../api/Timeout";
+import RadioOption from "./RadioOption";
 
 function FoodInfo({ show, closeForm, element }) {
   const { tableNumber } = useAuth();
@@ -29,21 +30,22 @@ function FoodInfo({ show, closeForm, element }) {
     width: "100%",
     border: "0",
   };
-  const subheadingStyle = {
-    fontSize: "13px",
-    color: "grey",
-  };
+
   const { cart, setCart } = React.useContext(CartContext);
   const [quantity, setQuantity] = React.useState(1);
   const [price, setPrice] = React.useState(element.price);
-  const [customisationList, setCustomisationList] = React.useState({
-    checkbox: [],
-    quantity: [],
-  });
-  const [oneItem, setOneItem] = React.useState("");
+  const [checkboxList, setCheckboxList] = React.useState([]);
+  const [quantityList, setQuantityList] = React.useState([]);
+  const [radioList, setRadioList] = React.useState([]);
 
-  function handleCustomisationList(newList) {
-    setCustomisationList(newList);
+  function handleCheckboxList(newList) {
+    setCheckboxList(newList)
+  }
+  function handleQuantityList(newList) {
+    setQuantityList(newList)
+  }
+  function handleRadioList(newList) {
+    setRadioList(newList);
   }
   function addQuantity() {
     setPrice(parseFloat(price) + parseFloat(element.price));
@@ -58,16 +60,16 @@ function FoodInfo({ show, closeForm, element }) {
     setLoading(true);
     await timeout(250);
     let finalList = [
-      ...customisationList.checkbox,
-      ...customisationList.quantity,
-      oneItem,
+      ...checkboxList,
+      ...quantityList,
+      ...radioList,
     ];
     let cartItem = {
       id: element.id,
       quantity: quantity,
       price: element.price,
       customisations: finalList,
-      order_time: Math.floor(Date.now() / 1000),
+      order_time: Date.now(),
       finish_time: 0,
     };
     addToCart(tableNumber, cartItem);
@@ -84,12 +86,11 @@ function FoodInfo({ show, closeForm, element }) {
     }
     setLoading(false);
     setCart(tempCart);
+    setQuantityList([]);
+    setCheckboxList([]);
+    setRadioList([]);
     closeForm();
   }
-  function setItem(element) {
-    setOneItem(element);
-  }
-
   const loadingStyle = {
     position: "absolute",
     bottom: "15px",
@@ -152,73 +153,24 @@ function FoodInfo({ show, closeForm, element }) {
                   </div>
                   <div>
                     {customisation.select === "upTo" ? (
-                      <>
-                        <div style={subheadingStyle}>
-                          Choose up to {customisation.optionNum}{" "}
-                          {customisation.optionNum === 1 ? (
-                            <>item</>
-                          ) : (
-                            <>items</>
-                          )}
-                        </div>
-                        <Checkbox
-                          key={index}
-                          customisation={customisation}
-                          maxOptionNum={customisation.optionNum}
-                          list={customisationList}
-                          setList={handleCustomisationList}
-                        />
-                      </>
+                      <Checkbox
+                        key={index}
+                        customisation={customisation}
+                        list={checkboxList}
+                        setList={handleCheckboxList}
+                      />
                     ) : customisation.optionNum === 1 ? (
-                      <>
-                        <div style={subheadingStyle}>Choose 1 item</div>
-                        <div>
-                          {customisation.options.map((element, index) => (
-                            <div
-                              key={index}
-                              style={{ borderBottom: "1px solid #dfdfdf" }}
-                            >
-                              <label
-                                htmlFor={element}
-                                name={customisation.name}
-                                style={{
-                                  width: "93%",
-                                  paddingBottom: "10px",
-                                  paddingTop: "10px",
-                                  paddingLeft: "1px",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                {element}
-                              </label>
-                              <input
-                                type="radio"
-                                id={element}
-                                name={customisation.name}
-                                onChange={() => setItem(element)}
-                                style={{
-                                  accentColor: "black",
-                                  verticalAlign: "middle",
-                                  width: "17px",
-                                  height: "17px",
-                                }}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </>
+                      <RadioOption 
+                        customisation={customisation}
+                        list={radioList}
+                        setList={handleRadioList}
+                      />
                     ) : (
-                      <>
-                        <div style={subheadingStyle}>
-                          Choose {customisation.optionNum} items
-                        </div>
-                        <QuantityOption
-                          customisation={customisation}
-                          maxOptionNum={customisation.optionNum}
-                          list={customisationList}
-                          setList={handleCustomisationList}
-                        />
-                      </>
+                      <QuantityOption
+                        customisation={customisation}
+                        list={quantityList}
+                        setList={handleQuantityList}
+                      />
                     )}
                   </div>
                 </div>

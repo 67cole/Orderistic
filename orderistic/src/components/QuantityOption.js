@@ -2,7 +2,11 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-function QuantityOption({ customisation, maxOptionNum, list, setList }) {
+function QuantityOption({ customisation, list, setList }) {
+  const subheadingStyle = {
+    fontSize: "13px",
+    color: "grey",
+  };
   const [chosenOptions, setChosenOptions] = React.useState([]);
   const [quantities, setQuantities] = React.useState([]);
   const [chosenOptionNum, setChosenOptionNum] = React.useState(0);
@@ -19,26 +23,21 @@ function QuantityOption({ customisation, maxOptionNum, list, setList }) {
   }, [customisation])
 
   function addQuantity(index) {
-    let newCustomisations = [...list.quantity, chosenOptions[index]]
-    let newDict = {...list};
-    newDict.quantity = newCustomisations;
-    setList(newDict);
+    let newCustomisations = [...list, chosenOptions[index]]
+    setList(newCustomisations);
     setChosenOptionNum(chosenOptionNum + 1);
     let tempQuantities = [...quantities];
     tempQuantities[index] += 1;
     setQuantities(tempQuantities);
-
   }
   function subtractQuantity(index) {
-    let newCustomisations = [...list.quantity]
+    let newCustomisations = [...list]
     for (let i = 0; i < newCustomisations.length; i++) {
-      if (newCustomisations[i] === chosenOptions[index]) {
+      if (newCustomisations[i].id === chosenOptions[index].id) {
         newCustomisations.splice(i, 1);
       }
     }
-    let newDict = {...list};
-    newDict.quantity = newCustomisations;
-    setList(newDict);
+    setList(newCustomisations);
 
     setChosenOptionNum(chosenOptionNum - 1);
     let tempQuantities = [...quantities];
@@ -54,9 +53,12 @@ function QuantityOption({ customisation, maxOptionNum, list, setList }) {
   }
   return(
     <>
+      <div style={subheadingStyle}>
+        Choose {customisation.optionNum} items
+      </div>
       {customisation.options.map((element, index) => (
         <div key={index} style={{borderBottom: "1px solid #dfdfdf", padding: "10px 10px 10px 1px", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-          <span style={{ fontSize: "14px"}}>{element}</span>
+          <span style={{ fontSize: "14px"}}>{element.option}</span>
           <ButtonGroup >
             {quantities[index] > 0
               ? <>
@@ -68,7 +70,7 @@ function QuantityOption({ customisation, maxOptionNum, list, setList }) {
               : <>
                 </>
             }
-            <Button variant="light" style={buttonStyle} onClick={() => addQuantity(index)} disabled={chosenOptionNum === maxOptionNum}>+</Button>
+            <Button variant="light" style={buttonStyle} onClick={() => addQuantity(index)} disabled={chosenOptionNum === customisation.optionNum}>+</Button>
           </ButtonGroup>
         </div>
       ))}

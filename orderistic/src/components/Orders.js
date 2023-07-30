@@ -61,7 +61,7 @@ function Orders() {
           </div>
           <div style={center}>
             <CardGroup style={{ marginBottom: "16px" }}>
-              {element.food_delivered.map((food, index) => (
+              {element.food_completed.map((food, index) => (
                 <OrderCard
                   key={index}
                   menu={menu}

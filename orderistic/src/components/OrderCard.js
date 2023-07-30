@@ -21,7 +21,7 @@ function OrderCard({ menu, food, price }) {
 					</div>
 				</Card.Body>
 			</Card>
-			</div>
+		</div>
 	)
 }
 
