@@ -29,11 +29,15 @@ function CustomisationForm({ customisations, handleCustomisations }) {
   }
   function changeOptions(value, optionIndex) {
     let newOptions = [...options];
-    newOptions[optionIndex] = value;
+    newOptions[optionIndex].option = value;
     setOptions(newOptions);
   }
   function addOption() {
-    let newOptions = [...options, ""];
+    const newOption = {
+      id: generateID(),
+      option: ""
+    }
+    let newOptions = [...options, newOption];
     setOptions(newOptions);
   }
   function removeOption(optionIndex) {
@@ -112,7 +116,7 @@ function CustomisationForm({ customisations, handleCustomisations }) {
               <div style={{ display: "flex", alignItems: "center" }} key={optionIndex}>
                 <Form.Control
                   type="text"
-                  value={option}
+                  value={option.option}
                   onChange={e => changeOptions(e.target.value, optionIndex)}
                 />
                 <CloseButton onClick={() => removeOption(optionIndex)} style={{ marginLeft: "10px" }} />
@@ -145,7 +149,7 @@ function CustomisationForm({ customisations, handleCustomisations }) {
                 style={radioStyle}
                 onChange={() => setRequired(true)}/>
               <label htmlFor="optionalYes" style={{ width: "30px", paddingLeft: "5px", marginRight: "10px" }}>Yes</label>
-              <input type="radio" name="optional" id="optionalNo" value="no" checked style={radioStyle} onChange={() => setRequired(false)}/>
+              <input type="radio" name="optional" id="optionalNo" value="no" defaultChecked style={radioStyle} onChange={() => setRequired(false)}/>
               <label htmlFor="optionalNo" style={{ width:"30px", paddingLeft: "5px" }}>No</label>
             </div>
           </Form.Group>

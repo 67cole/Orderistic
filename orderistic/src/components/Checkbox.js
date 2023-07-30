@@ -1,6 +1,10 @@
 import React from "react";
 
-function Checkbox({ customisation, maxOptionNum, list, setList }) {
+function Checkbox({ customisation, list, setList }) {
+  const subheadingStyle = {
+    fontSize: "13px",
+    color: "grey",
+  };
   const [chosenNum, setChosenNum] = React.useState(0);
   const [checked, setChecked] = React.useState([]);
   const [options, setOptions] = React.useState([]);
@@ -15,39 +19,42 @@ function Checkbox({ customisation, maxOptionNum, list, setList }) {
     setOptions(tempList);
     setChecked(newChecked);
   }, [customisation])
+
   function handleClick(checkBool, index) {
     let tempChecked = [...checked];
     if (checkBool === true) {
       setChosenNum(chosenNum + 1);
       tempChecked[index] = true; 
-      let newCustomisations = [...list.checkbox, options[index]];
-      let newDict = {...list}
-      newDict.checkbox = newCustomisations;
-      setList(newDict);
+      let newCustomisations = [...list, options[index]];
+      setList(newCustomisations);
     }
     else {
       setChosenNum(chosenNum - 1);
       tempChecked[index] = false;
-      // Assuming all options have a different name
-      let newCustomisations = [...list.checkbox];
+      let newCustomisations = [...list];
       for (let i = 0; i < newCustomisations.length; i++) {
-        if (newCustomisations[i] === options[index]) {
+        if (newCustomisations[i].id === options[index].id) {
           newCustomisations.splice(i, 1);
         }
       }
-      let newDict = {...list}
-      newDict.checkbox = newCustomisations;
-      setList(newDict);
+      setList(newCustomisations);
     }
     setChecked(tempChecked);
-
   }
   return(
     <>
+      <div style={subheadingStyle}>
+        Choose up to {customisation.optionNum}{" "}
+        {customisation.optionNum === 1 ? (
+          <>item</>
+        ) : (
+          <>items</>
+        )}
+      </div>
       {customisation.options.map((element, index) => (
         <div key={index} style={{borderBottom: "1px solid #dfdfdf"}}>
-          <label htmlFor={index} name={customisation.name} style={{ width:"93%", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "1px", fontSize: "14px" }}>{element}</label>
-          <input type="checkbox" id={index} name={customisation.name} onClick={e => handleClick(e.target.checked, index)} disabled={(!checked[index] && chosenNum === maxOptionNum)} style={{ accentColor: "black", verticalAlign: "middle", width: "17px", height: "17px"}}/>
+          <label htmlFor={element.id} name={customisation.name} style={{ width:"93%", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "1px", fontSize: "14px" }}>{element.option}</label>
+          <input type="checkbox" id={element.id} name={customisation.name} onClick={e => handleClick(e.target.checked, index)} disabled={(!checked[index] && chosenNum === customisation.optionNum)} style={{ accentColor: "black", verticalAlign: "middle", width: "17px", height: "17px"}}/>
         </div>
       ))}
     </>
