@@ -1,7 +1,10 @@
 import Card from "react-bootstrap/Card";
 import React from "react";
+import Button from "react-bootstrap/Button";
+import ReviewModal from "./ReviewModal";
+import { returnDishRating } from "../api/ReviewApi";
 
-function PreviewMenuCard({ element, showModal, openFoodInfo, quantity }) {
+function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews }) {
     // Style for the menu cards
     const imgStyle = {
       width: "210px",
@@ -14,6 +17,24 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity }) {
       width: "583px",
       maxHeight: "500px",
     };
+    // For showing the review modal
+    const [showReview, setShowReview] = React.useState(false);
+    const [dishRating, setDishRating] = React.useState(0);
+    React.useEffect(() => {
+      returnDishRating(element.id).then((data) => {
+        setDishRating(data);
+      })
+    }, [element])
+    function openReviews(e) {
+      e.stopPropagation();
+      setShowReview(true);
+    } 
+    const closeReviews = (e) => {
+      if (e) {
+        e.stopPropagation();
+      }
+      setShowReview(false);
+    }
   return(
     <>
       <Card onClick={openFoodInfo} style={{...cardStyle, cursor: showModal ? "pointer": "default", marginBottom: "5px" }}>
@@ -32,6 +53,15 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity }) {
           <Card.Text style={{ fontSize: "14px" }}>
             {element.description}
           </Card.Text>
+          {reviews
+            ? <>
+                <Button onClick={e => openReviews(e)} style={{border: "none", color: "black", background: "none", boxShadow: "none", textDecoration: "underline", padding: "0"}}> 
+                  ★ {isNaN(dishRating) ? 0 : dishRating.toFixed(1)}
+                </Button>
+                <ReviewModal show={showReview} handleClose={e => closeReviews(e)} element={element}/>
+              </>
+            : <></>
+          }
           <div
             style={{ position: "absolute", bottom: "10px" }}
           >
