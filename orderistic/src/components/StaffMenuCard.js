@@ -5,7 +5,7 @@ import UpdateModal from "./UpdateModal";
 import React from "react";
 import { MenuContext } from "./StaffMenu";
 import { RemoveItem } from "../api/MenuApi";
-import Form from 'react-bootstrap/Form';
+
 function StaffMenuCard({ element }) {
   const { menu, setMenu } = React.useContext(MenuContext);
   const [image, setImage] = React.useState(element.image);
@@ -14,7 +14,7 @@ function StaffMenuCard({ element }) {
   const [price, setPrice] = React.useState(element.price);
   const [showRemove, setShowRemove] = React.useState(false);
   const [showUpdate, setShowUpdate] = React.useState(false);
-  const [recommend, setRecommend] = React.useState(false);
+
   React.useEffect(() => {}, [name]);
   function setStates(image, name, desc, price) {
     setImage(image);
@@ -26,7 +26,6 @@ function StaffMenuCard({ element }) {
   const showRemForm = () => setShowRemove(true);
   const closeUpdateForm = () => setShowUpdate(false);
   const showUpdateForm = () => setShowUpdate(true);
-  const onCheckChanged = () => setRecommend(!recommend);
 
   function remove() {
     RemoveItem(element["id"]);
@@ -58,16 +57,10 @@ function StaffMenuCard({ element }) {
         )}
         <Card.Body style={{ position: "relative" }}>
           <Card.Title>{name}</Card.Title>
-          <Card.Text style={{ fontSize: "14px", marginBottom: "5px" }}>{description}</Card.Text>
+          <Card.Text style={{ fontSize: "14px" }}>{description}</Card.Text>
           <Card.Text style={{ position: "absolute", bottom: "5px" }}>
             ${parseFloat(price).toFixed(2)}
           </Card.Text>
-          <Form.Check
-            type={'checkbox'}
-            id={`Recommend`}
-            label={`Recommend`}
-            onChange={onCheckChanged}
-          />
           <Button
             variant="outline-danger"
             onClick={showRemForm}
