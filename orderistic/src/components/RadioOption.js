@@ -1,12 +1,11 @@
 import React from "react";
 
-function RadioOption({ customisation, list, setList}) {
+function RadioOption({ customisation, list, setList, custList, handleCustList }) {
   const subheadingStyle = {
     fontSize: "13px",
     color: "grey",
   };
   const [oneItem, setOneItem] = React.useState({});
-
   function handleClick(element) {
     let tempList = [...list];
     if (oneItem) {
@@ -19,6 +18,20 @@ function RadioOption({ customisation, list, setList}) {
     tempList.push(element);
     setList(tempList);
     setOneItem(element);
+    
+    let tempCustList = [...custList];
+    let included = false;
+    for (let cust of tempCustList) {
+      if (cust.id === customisation.id) {
+        included = true;
+      }
+    }
+    if (!included) {
+      console.log("DSDS");
+      tempCustList = [...custList, customisation];
+      handleCustList(tempCustList)
+    }
+    
   }
   return(
     <>

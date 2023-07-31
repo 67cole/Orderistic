@@ -2,7 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-function QuantityOption({ customisation, list, setList }) {
+function QuantityOption({ customisation, list, setList, custList, handleCustList }) {
   const subheadingStyle = {
     fontSize: "13px",
     color: "grey",
@@ -25,12 +25,29 @@ function QuantityOption({ customisation, list, setList }) {
   function addQuantity(index) {
     let newCustomisations = [...list, chosenOptions[index]]
     setList(newCustomisations);
+    let tempChosenNum = chosenOptionNum + 1;
     setChosenOptionNum(chosenOptionNum + 1);
     let tempQuantities = [...quantities];
     tempQuantities[index] += 1;
     setQuantities(tempQuantities);
+    // Adding to the list of customisations that have been filled in
+    if (tempChosenNum === customisation.optionNum) {
+      let tempCustList = [...custList, customisation];
+      handleCustList(tempCustList);
+    }
   }
   function subtractQuantity(index) {
+    // Removes customisation from list of customisations that have been filled in
+    if (chosenOptionNum === customisation.optionNum) {
+      let tempCustList = [...custList];
+      for (let i = 0; i < tempCustList.length; i++) {
+        if (tempCustList[i].id === customisation.id) {
+          tempCustList.splice(i, 1);
+        }
+      }
+      handleCustList(tempCustList);
+    }
+    
     let newCustomisations = [...list]
     for (let i = 0; i < newCustomisations.length; i++) {
       if (newCustomisations[i].id === chosenOptions[index].id) {
