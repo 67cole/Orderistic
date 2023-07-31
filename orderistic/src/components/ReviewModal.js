@@ -56,6 +56,9 @@ function ReviewModal({ show, handleClose, element }) {
       review_id: generateID()
     }
     addReview(review);
+    let tempUserReviews = [...userReviews, review];
+    tempUserReviews.sort((date1, date2) => date2.date - date1.date)
+    setUserReviews(tempUserReviews);
     setName("");
     setCurrentRating(0);
     setCurrentReview("");
