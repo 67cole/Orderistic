@@ -21,7 +21,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
   const [customisations, setCustomisations] = React.useState(element.customisations);
   const [showAlert, setShowAlert] = React.useState(false);
   const [dietInfo, setDietInfo] = React.useState(element.dietInfo);
-  const [recommend, setRecommend] = React.useState(false);
+  const [recommend, setRecommend] = React.useState(element.recommend);
 
   function handleCustomisations(customisations) {
     setCustomisations(customisations)
@@ -159,6 +159,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
             type={'checkbox'}
             id={`Recommend`}
             label={`Recommend Item`}
+            checked={recommend}
             onChange={onCheckChanged}
           />
         </Form.Group>
