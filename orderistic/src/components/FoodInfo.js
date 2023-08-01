@@ -137,6 +137,9 @@ function FoodInfo({ show, closeForm, element }) {
       setRadioList([]);
       setQuantity(1);
       setPrice(element.price);
+      setRequired([]);
+      resetRequired();
+      setCustList([]);
       closeForm();
     }
     setLoading(false);
