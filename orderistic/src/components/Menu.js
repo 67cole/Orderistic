@@ -80,7 +80,7 @@ function Menu() {
   };
   const searchStyle = {
     width: "20%",
-    minWidth: "200px",
+    minWidth: "300px",
     marginTop: "20px",
     padding: "20px",
     fontSize: "20px",
@@ -119,7 +119,46 @@ function Menu() {
   return (
     <>
       <MenuNav />
-      {
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <div style={sideDrawerStyle}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="logo"
+            style={{ marginTop: "20px" }}
+            onClick={() => setOpen(true)}
+          >
+            <MenuIcon fontSize="large" />
+          </IconButton>
+          <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+            <Box p={2} width="250px" textAlign="center" role="presentation">
+              <Typography variant="h5" component="div">
+                Menu Categories
+                <Typography
+                  variant="h6"
+                  padding="20px"
+                  onClick={() => {
+                    setFilter(null);
+                    setOpen(false);
+                  }}
+                >
+                  <button type="button" class="btn btn-outline-dark">
+                    Full Menu
+                  </button>
+                </Typography>
+                {category()}
+              </Typography>
+            </Box>
+          </Drawer>
+        </div>
         <input
           style={searchStyle}
           type="text"
@@ -127,37 +166,6 @@ function Menu() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-      }
-      <div style={sideDrawerStyle}>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="logo"
-          onClick={() => setOpen(true)}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
-          <Box p={2} width="250px" textAlign="center" role="presentation">
-            <Typography variant="h5" component="div">
-              Menu Categories
-              <Typography
-                variant="h6"
-                padding="20px"
-                onClick={() => {
-                  setFilter(null);
-                  setOpen(false);
-                }}
-              >
-                <button type="button" class="btn btn-outline-dark">
-                  Full Menu
-                </button>
-              </Typography>
-              {category()}
-            </Typography>
-          </Box>
-        </Drawer>
       </div>
       <CartContext.Provider value={{ cart, setCart }}>
         <Container fluid style={{ display: "flex", justifyContent: "center" }}>
