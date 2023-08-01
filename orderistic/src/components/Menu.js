@@ -13,7 +13,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 import TableNumberModal from "./TableNumberModal";
 import CardSkeleton from "./CardSkeleton";
-import MenuSideDrawer from "./MenuSideDrawer";
 import { Drawer, Box, Typography, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -84,6 +83,7 @@ function Menu() {
     marginTop: "20px",
     padding: "20px",
     fontSize: "20px",
+    textAlign: "center",
   };
   const sideDrawerStyle = {
     display: "flex",
@@ -99,8 +99,9 @@ function Menu() {
     const uniqueCategory = Array.from(new Set(arrayCategory)).filter(
       (element) => element
     );
-    const categoryDisplay = uniqueCategory.map((element) => (
+    const categoryDisplay = uniqueCategory.map((element, index) => (
       <Typography
+        key={index}
         variant="h6"
         padding="20px"
         onClick={() => {
@@ -180,12 +181,13 @@ function Menu() {
                   if (filter) {
                     return (
                       element.category.includes(filter) &&
-                      element.name.toLowerCase().includes(search.toLowerCase())
+                      (element.name.toLowerCase().includes(search.toLowerCase()) || 
+                      element.description.toLowerCase().includes(search.toLowerCase()))
                     );
                   }
-                  return element.name
-                    .toLowerCase()
-                    .includes(search.toLowerCase());
+                  return (element.name.toLowerCase().includes(search.toLowerCase()) || 
+                    element.description.toLowerCase().includes(search.toLowerCase())
+                    );
                 }
                 if (filter) {
                   return element.category.includes(filter);

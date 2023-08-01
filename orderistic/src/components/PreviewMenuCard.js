@@ -39,9 +39,16 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews, 
       }
       setShowReview(false);
     }
-  return(
+  return (
     <>
-      <Card onClick={openFoodInfo} style={{...cardStyle, cursor: showModal ? "pointer": "default", marginBottom: "5px" }}>
+      <Card
+        onClick={openFoodInfo}
+        style={{
+          ...cardStyle,
+          cursor: showModal ? "pointer" : "default",
+          marginBottom: "5px",
+        }}
+      >
         {element.image ? (
           <Card.Img
             variant="top"
@@ -96,25 +103,16 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews, 
             (<>
             </>)}
           </div>
-          <div
-            style={{ position: "absolute", bottom: "10px" }}
-            >
+          <div style={{ position: "absolute", bottom: "10px" }}>
             ${parseFloat(element.price).toFixed(2)}
           </div>
-          <div
-            style={{position: "absolute", bottom: "10px", right: "15px"}}
-            >
-            {quantity 
-              ? <>
-                  Qty: {quantity}
-                </>
-              : <></>
-            }
+          <div style={{ position: "absolute", bottom: "10px", right: "15px" }}>
+            {quantity ? <>Qty: {quantity}</> : <></>}
           </div>
         </Card.Body>
       </Card>
     </>
-  )
+  );
 }
 
 export default PreviewMenuCard;
