@@ -26,7 +26,6 @@ function StarRating({ handleCurrentRating, openForm, newRating }) {
       setRating(0);
       setHoverRating(0);
     }
-
   }, [openForm, newRating])
   function changeRating(index) {
     if (index === rating) {

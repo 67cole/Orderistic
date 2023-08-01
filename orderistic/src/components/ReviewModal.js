@@ -64,6 +64,7 @@ function ReviewModal({ show, handleClose, element }) {
     setName("");
     setCurrentRating(0);
     setCurrentReview("");
+    setOpenForm(false);
   }
   function cancelReview() {
     setName("");
@@ -119,7 +120,7 @@ function ReviewModal({ show, handleClose, element }) {
           <Collapse in={openForm}>
             <div>
               <div style={center}>
-                <StarRating handleCurrentRating={handleCurrentRating} openForm={openForm}/>
+                <StarRating handleCurrentRating={handleCurrentRating} openForm={openForm} newRating={currentRating}/>
               </div>
               <Form.Group className="mb-3" controlId="review-name">
                 <Form.Label>Name</Form.Label>

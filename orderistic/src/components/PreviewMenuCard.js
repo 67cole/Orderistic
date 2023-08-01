@@ -5,7 +5,7 @@ import ReviewModal from "./ReviewModal";
 import { returnDishRating } from "../api/ReviewApi";
 
 
-function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews }) {
+function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews, customisations }) {
     // Style for the menu cards
     const imgStyle = {
       minWidth: "210px",
@@ -54,9 +54,22 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews }
         )}
         <Card.Body style={{ position: "relative" }}>
           <Card.Title style={{}}>{element.name}</Card.Title>
-          <Card.Text style={{ fontSize: "14px" }}>
+          <Card.Text style={{ fontSize: "14px", marginBottom: "0px" }}>
             {element.description}
           </Card.Text>
+          {customisations
+            ? <>
+                {customisations.map((cust, index) => {
+                  if (index === 0) {
+                    return <span key={index} style={{ fontSize: "12px", color: "grey" }}>{cust.option}</span>
+                  }
+                  else {
+                    return <span key={index} style={{ fontSize: "12px", color: "grey"}}>, {cust.option}</span>
+                  }
+                })}
+              </>
+            : <></>
+          }
           {reviews
             ? <>
                 <Button 
