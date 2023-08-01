@@ -1,9 +1,7 @@
 import React from "react";
 import Signup from "./Signup";
-import { Container } from "react-bootstrap";
 import { AuthProvider } from "../contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
@@ -12,7 +10,6 @@ import Menu from "./Menu";
 import StaffLogin from "./StaffLogin";
 import StaffDashboard from "./StaffDashboard";
 import TestApi from "./TestApi";
-import Nav from "./MenuNav";
 import Orders from "./Orders";
 import Cart from "./Cart";
 
@@ -35,7 +32,7 @@ function App() {
               exact
               element={
                 <PrivateRoute>
-                  <Dashboard />
+                  <Menu />
                 </PrivateRoute>
               }
             ></Route>

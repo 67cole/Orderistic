@@ -1,6 +1,4 @@
 import React from "react";
-import { returnFoodData } from "../api/MenuApi";
-import { Button } from "react-bootstrap";
 import "./KitchenOrderCard.css";
 import { completeItem, prepareItem } from "../api/OrderApi";
 
@@ -12,8 +10,7 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
   async function handleDelivered(itemId) {
     await completeItem(order[1], itemId);
   }
-  let date = new Date(order[0].time_ordered * 1000);
-
+  let date = new Date(order[0].time_ordered);
 
   return (
     <div className="console-container">
@@ -34,7 +31,7 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
           <div className="button-container">
             <p>{menu[item.id].name}</p>
             {item.customisations.map((customisation) => (
-              <p>&nbsp;{customisation}</p>
+              <p>&nbsp;{customisation.option}</p>
             ))}
             <p>&nbsp;| Quantity: {item.quantity}</p>
             <p
@@ -49,9 +46,11 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
         order[0].food_prepared &&
         order[0].food_prepared.map((item) => (
           <div className="button-container">
-            <p>
-              {menu[item.id].name} | Quantity: {item.quantity}
-            </p>
+            <p>{menu[item.id].name}</p>
+            {item.customisations.map((customisation) => (
+              <p>&nbsp;{customisation.option}</p>
+            ))}
+            <p>&nbsp;| Quantity: {item.quantity}</p>
             <p
               className="prepared-button"
               onClick={() => handleDelivered(item.id)}

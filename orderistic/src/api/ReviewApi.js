@@ -34,7 +34,9 @@ export async function returnUserReview(userID) {
     const querySnapshot = await getDocs(q);
     const reviewList = [];
     querySnapshot.forEach((doc) => {
-        reviewList.push(doc.data());
+        let review = doc.data();
+        review.review_id = doc.id;
+        reviewList.push(review);
     });
     return reviewList;
   }
@@ -68,4 +70,17 @@ export async function removeReview(reviewID) {
 //Allows customers to edit reviews on the menu HIMMY-21
 export async function updateReview(reviewID, newReview) {
     const res = await setDoc(doc(db, 'reviews', reviewID), newReview);
-  }
+}
+
+// Given the food ID, return the dish rating
+export async function returnDishRating(itemID) {
+  const q = query(collection(db, "reviews"), where("food_id", "==", itemID));
+  const querySnapshot = await getDocs(q);
+  let totalRating = 0;
+  let divisor = 0;
+  querySnapshot.forEach((doc) => {
+      totalRating += doc.data()["rating"];
+      divisor += 1;
+  });
+  return totalRating/divisor;
+}

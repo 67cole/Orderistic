@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import StaffNav from "./StaffNav";
-import { Button, Container, Row } from "react-bootstrap";
-import { orderedFoodByTime, returnOrderData } from "../api/OrderApi";
+import { Button, Container } from "react-bootstrap";
 import "./StaffOrders.css";
-import TableCard from "./TableCard";
 import { addTable, removeTable, viewTables } from "../api/TableApi";
-import TableSkeleton from "./TableSkeleton";
-import timeout from "../api/Timeout";
 import KitchenOrderCard from "./KitchenOrderCard";
 import {
   collection,
@@ -18,13 +14,13 @@ import {
 import { db } from "../firebase";
 import { returnFoodData } from "../api/MenuApi";
 import AssistanceBoard from "./AssistanceBoard";
+import OrderSkeleton from "./OrderSkeleton";
 
 export default function StaffOrders() {
   const [isLoading, setIsLoading] = useState(true);
   const [tableAmount, setTableAmount] = useState(0);
   const [orders, setOrders] = useState([]);
   const [menu, setMenu] = React.useState();
-
 
   React.useEffect(() => {
     const docRef = collection(db, "orders");
@@ -36,13 +32,10 @@ export default function StaffOrders() {
       });
       setOrders(qOrders);
     });
-    return () => {unsubscribe()}
-  }, [])
-
-
-  //   LEAVE UNSUBSCRIBE ON TO SAVE FIREBASE USAGE
-  // COMMENT IT OUT WHEN DEMONSTRATING!!!!
-  // unsubscribe();
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     viewTables().then((data) => {
@@ -71,8 +64,9 @@ export default function StaffOrders() {
       <StaffNav />
       <Container fluid style={{ display: "flex", justifyContent: "center" }}>
         <div className="big-container">
-          <div className="orders-container">
-            <h3>Waitery Console</h3>
+          <div className="orders-container" style={{ marginTop: "30px" }}>
+            <h3 style={{ marginBottom: "30px" }}>Waitery Console</h3>
+            {isLoading && <OrderSkeleton cards={5} />}
             {menu &&
               orders.map((order, index) => (
                 <KitchenOrderCard order={order} menu={menu} waiter={true} />
@@ -83,17 +77,11 @@ export default function StaffOrders() {
               alignItems: "center",
               flexDirection: "column",
               display: "flex",
+              marginTop: "30px",
             }}
             className="table-container"
           >
-            {/* <Row
-              className="g-4"
-              style={{ margin: "0px 20px 40px 20px", paddingBottom: "40px" }}
-            >
-              {isLoading && <TableSkeleton cards={tableAmount} />}
-              <TableCard cards={tableAmount} />
-            </Row> */}
-            <h3>Admin Console</h3>
+            <h3 style={{ marginBottom: "30px" }}>Admin Console</h3>
             <div className="stats-container">
               <b>{date.toJSON().slice(0, 10)}</b>
               <p> Total Sales: $69</p>
@@ -107,7 +95,7 @@ export default function StaffOrders() {
                 Remove Table
               </Button>
             </div>
-            <div className="orders-container">
+            <div className="orders-container" style={{ marginTop: "30px" }}>
               <h3>Assistance Tracker</h3>
               <AssistanceBoard />
             </div>
