@@ -10,36 +10,31 @@ import { removeBill, removeHelp, viewTables } from "../api/TableApi";
 import "./TableCard.css";
 
 export default function AssistanceBoard() {
-  const q = query(collection(db, "tables"), where("help", "==", true));
-
   const [help, setHelp] = useState([]);
-
-  const assistanceUnsubscribe = onSnapshot(q, (querySnapshot) => {
-    const tables = [];
-    querySnapshot.forEach((doc) => {
-      tables.push(doc.data().number);
-    });
-    setHelp(tables);
-  });
-
-  //   LEAVE UNSUBSCRIBE ON TO SAVE FIREBASE USAGE
-  // COMMENT IT OUT WHEN DEMONSTRATING!!!!
-
-  //assistanceUnsubscribe();
-
-  const q2 = query(collection(db, "tables"), where("bill", "==", true));
-
   const [bill, setBill] = useState([]);
-
-  const billUnsubscribe = onSnapshot(q2, (querySnapshot) => {
-    const tableBills = [];
-    querySnapshot.forEach((doc) => {
-      tableBills.push(doc.data().number);
+  React.useEffect(() => {
+    const q = query(collection(db, "tables"), where("help", "==", true));
+    const assistanceUnsubscribe = onSnapshot(q, (querySnapshot) => {
+      const tables = [];
+      querySnapshot.forEach((doc) => {
+        tables.push(doc.data().number);
+      });
+      setHelp(tables);
     });
-    setBill(tableBills);
-  });
+    return () => {assistanceUnsubscribe()};
+  }, [])
 
-  //billUnsubscribe();
+  React.useEffect(() => {
+    const q2 = query(collection(db, "tables"), where("bill", "==", true));
+    const billUnsubscribe = onSnapshot(q2, (querySnapshot) => {
+      const tableBills = [];
+      querySnapshot.forEach((doc) => {
+        tableBills.push(doc.data().number);
+      });
+      setBill(tableBills);
+    });
+    return () => {billUnsubscribe();}
+  })
 
   async function handleHelp(num) {
     await removeHelp(num);
