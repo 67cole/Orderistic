@@ -22,7 +22,8 @@ function AddModal({ show, closeForm }) {
   const [customisations, setCustomisations] = React.useState([]);
   const [showAlert, setShowAlert] = React.useState(false);
   const [dietInfo, setDietInfo] = React.useState("");
-  
+  const [recommend, setRecommend] = React.useState(false);
+
   function handleCustomisations(customisations) {
     setCustomisations(customisations)
   }
@@ -44,7 +45,8 @@ function AddModal({ show, closeForm }) {
         image: image,
         customisations: customisations,
         time: [],
-        dietInfo: dietInfo
+        dietInfo: dietInfo,
+        recommend: recommend,
       }
       AddItem(item)
         .then((data) => {
@@ -60,6 +62,7 @@ function AddModal({ show, closeForm }) {
       setCategory("");
       setImage("");
       setCustomisations([]);
+      setRecommend(false);
     }
   }
   function convertImg(e) {
@@ -68,6 +71,7 @@ function AddModal({ show, closeForm }) {
         setImage(data);
       })
   }
+  const onCheckChanged = () => setRecommend(!recommend);
 
   return (
     <> 
@@ -161,6 +165,17 @@ function AddModal({ show, closeForm }) {
             value={dietInfo} 
             onChange={e => setDietInfo(e.target.value)} 
           />
+        <Form.Group
+        className="mt-3"
+        controlId="recommend"
+        >
+          <Form.Check
+            type={'checkbox'}
+            id={`Recommend`}
+            label={`Recommend Item`}
+            onChange={onCheckChanged}
+          />
+        </Form.Group>
         </Form.Group>
         <CustomisationForm customisations={customisations} handleCustomisations={handleCustomisations}/>
         <ListGroup>

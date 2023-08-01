@@ -21,6 +21,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
   const [customisations, setCustomisations] = React.useState(element.customisations);
   const [showAlert, setShowAlert] = React.useState(false);
   const [dietInfo, setDietInfo] = React.useState(element.dietInfo);
+  const [recommend, setRecommend] = React.useState(element.recommend);
 
   function handleCustomisations(customisations) {
     setCustomisations(customisations)
@@ -43,7 +44,8 @@ function UpdateModal({ show, closeForm, element, setStates }) {
         image: image,
         customisations: customisations,
         time: element.time,
-        dietInfo: dietInfo
+        dietInfo: dietInfo,
+        recommend: recommend,
       }
       UpdateItem(element.id, item);
       closeForm();
@@ -56,6 +58,8 @@ function UpdateModal({ show, closeForm, element, setStates }) {
         setImage(data);
       })
   }
+  const onCheckChanged = () => setRecommend(!recommend);
+
   return (
     <> 
     <Modal show={show} onHide={closeForm} centered size="lg">
@@ -145,6 +149,18 @@ function UpdateModal({ show, closeForm, element, setStates }) {
             rows={3}
             value={dietInfo} 
             onChange={e => setDietInfo(e.target.value)} 
+          />
+        </Form.Group>
+        <Form.Group
+        className="mb-3"
+        controlId="recommend"
+        >
+          <Form.Check
+            type={'checkbox'}
+            id={`Recommend`}
+            label={`Recommend Item`}
+            checked={recommend}
+            onChange={onCheckChanged}
           />
         </Form.Group>
         <CustomisationForm customisations={customisations} handleCustomisations={handleCustomisations}/>
