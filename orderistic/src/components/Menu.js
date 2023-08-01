@@ -79,11 +79,12 @@ function Menu() {
     borderRadius: "6px",
   };
   const searchStyle = {
-    width: "20%",
+    width: "40%",
     minWidth: "200px",
     marginTop: "20px",
     padding: "20px",
     fontSize: "20px",
+    textAlign: "center",
   };
   const sideDrawerStyle = {
     display: "flex",
@@ -172,12 +173,13 @@ function Menu() {
                   if (filter) {
                     return (
                       element.category.includes(filter) &&
-                      element.name.toLowerCase().includes(search.toLowerCase())
+                      (element.name.toLowerCase().includes(search.toLowerCase()) || element.description.toLowerCase().includes(search.toLowerCase()))
                     );
                   }
-                  return element.name
+                  return (element.name
                     .toLowerCase()
-                    .includes(search.toLowerCase());
+                    .includes(search.toLowerCase()) || 
+                    element.description.toLowerCase().includes(search.toLowerCase()));
                 }
                 if (filter) {
                   return element.category.includes(filter);
