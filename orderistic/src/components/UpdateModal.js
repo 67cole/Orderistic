@@ -172,10 +172,10 @@ function UpdateModal({ show, closeForm, element, setStates }) {
       </Form>
       </Modal.Body>
       <Modal.Footer>
-      <Button variant="primary" onClick={submitForm}>
+      <Button variant="dark" onClick={submitForm}>
           Update
       </Button>
-      <Button variant="secondary" onClick={closeForm}>
+      <Button variant="outline-light" onClick={closeForm} style={{ color: "black", borderColor: "#dfdfdf"}}>
           Close
       </Button>
       </Modal.Footer>

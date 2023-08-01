@@ -133,7 +133,7 @@ function CustomisationItem({ customisations, index, element, handleCustomisation
             </div>
           </Form.Group>
             <Button variant="outline-dark" onClick={saveChanges}>Save</Button>
-            <Button variant="light" style={{ marginLeft: "10px", border: "0" }} onClick={discardChanges}>Cancel</Button>
+            <Button variant="outline-light" style={{ marginLeft: "10px", borderColor: "#dfdfdf", color: "black" }} onClick={discardChanges}>Cancel</Button>
           </div>
         </Collapse>
         <RemoveModal show={showRemove} closeForm={closeRemForm} remove={() => removeCustomisation(index)}/>
