@@ -74,7 +74,7 @@ function CurrentOrder({ index, element, menu }) {
             <CardGroup
               style={{ marginBottom: "16px", justifyContent: "center" }}
             >
-              {element.food_delivered.map((food, index) => (
+              {element.food_prepared.map((food, index) => (
                 <OrderCard key={index} menu={menu} food={food} />
               ))}
             </CardGroup>
