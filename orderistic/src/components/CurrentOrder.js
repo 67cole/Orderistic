@@ -64,7 +64,7 @@ function CurrentOrder({ index, element, menu }) {
           <div style={{ ...center, width: "30%", flexDirection: "column" }}>
             <div style={{ ...center }}>Estimated Time:</div>
             <div style={{ ...center, fontSize: "70px" }}>
-              {orderTime} minutes
+              {orderTime} {orderTime === 1 ? "minute" : "minutes"}
             </div>
           </div>
           <div style={{ ...center, display: "inline-block", width: "30%" }}>
@@ -72,7 +72,7 @@ function CurrentOrder({ index, element, menu }) {
               <p>To be delivered</p>{" "}
             </div>
             <CardGroup
-              style={{ marginBottom: "16px", justifyContent: "space-evenly" }}
+              style={{ marginBottom: "16px", justifyContent: "center" }}
             >
               {element.food_delivered.map((food, index) => (
                 <OrderCard key={index} menu={menu} food={food} />

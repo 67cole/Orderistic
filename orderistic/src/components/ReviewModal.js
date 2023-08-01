@@ -34,6 +34,9 @@ function ReviewModal({ show, handleClose, element }) {
     })
     if (currentUser) {
       returnUserReview(currentUser.uid).then((data) => {
+        data = data.filter(review => 
+          review.food_id === element.id
+        )
         data.sort((date1, date2) => date2.date - date1.date);
         setUserReviews(data);
       })
@@ -100,9 +103,9 @@ function ReviewModal({ show, handleClose, element }) {
           </div>
           <div style={center}>
           <Button 
-            variant="light" 
+            variant="outline-light" 
             style={{ 
-              backgroundColor: "white", 
+              color: "black",
               border: "1px solid #dfdfdf", 
               borderRadius: "20px", 
               padding: "3px 12px 3px 12px", 
@@ -138,10 +141,10 @@ function ReviewModal({ show, handleClose, element }) {
                 />
               </Form.Group>
               <div style={center}>
-              <Button variant="dark" disabled={currentRating === 0 || name === ""} style={{marginRight: "5px", boxShadow: "none"}} onClick={addCurrentReview}>
+              <Button variant="dark" disabled={currentRating === 0 || name === ""} style={{marginRight: "5px", boxShadow: "none", borderRadius: "10px"}} onClick={addCurrentReview}>
                 Post
               </Button>
-              <Button variant="dark" style={{ boxShadow: "none" }} onClick={cancelReview}>
+              <Button variant="outline-light" style={{ color: "black", boxShadow: "none", border: "1px solid #dfdfdf", borderRadius: "10px" }} onClick={cancelReview}>
                 Cancel
               </Button>
               </div>
@@ -152,50 +155,56 @@ function ReviewModal({ show, handleClose, element }) {
               <Review key={review.review_id} review={review} handleUserReviews={handleUserReviews} userReviews={userReviews}/>
             ))}
           </div>
-          <div>
-            <Button 
-              variant="outline-light" 
-              style={{ 
-                border: "1px solid #dfdfdf", 
-                borderRadius: "20px", 
-                padding: "3px 12px 3px 12px", 
-                boxShadow: "none",
-                marginRight: "5px",
-                color: "black"
-              }} 
-              onClick={sortByDate}
-            >
-              Newest
-            </Button>
-            <Button 
-              variant="outline-light" 
-              style={{ 
-                border: "1px solid #dfdfdf", 
-                borderRadius: "20px", 
-                padding: "3px 12px 3px 12px", 
-                boxShadow: "none",
-                marginRight: "5px",
-                color: "black"
-              }} 
-              onClick={sortByHighestRating}
-            >
-              Highest
-            </Button>
-            <Button 
-              variant="outline-light" 
-              style={{ 
-                border: "1px solid #dfdfdf", 
-                borderRadius: "20px", 
-                padding: "3px 12px 3px 12px", 
-                boxShadow: "none",
-                color: "black"
-              }} 
-              onClick={sortByLowestRating}
-            >
-              Lowest
-            </Button>
-          </div>
-          <div>
+          {reviews.length === 0 && userReviews.length === 0
+            ? <div style={center}>
+                No reviews yet.
+              </div>
+            : <div>
+                <Button 
+                  variant="outline-light" 
+                  style={{ 
+                    border: "1px solid #dfdfdf", 
+                    borderRadius: "20px", 
+                    padding: "3px 12px 3px 12px", 
+                    boxShadow: "none",
+                    marginRight: "5px",
+                    color: "black"
+                  }} 
+                  onClick={sortByDate}
+                >
+                  Newest
+                </Button>
+                <Button 
+                  variant="outline-light" 
+                  style={{ 
+                    border: "1px solid #dfdfdf", 
+                    borderRadius: "20px", 
+                    padding: "3px 12px 3px 12px", 
+                    boxShadow: "none",
+                    marginRight: "5px",
+                    color: "black"
+                  }} 
+                  onClick={sortByHighestRating}
+                >
+                  Highest
+                </Button>
+                <Button 
+                  variant="outline-light" 
+                  style={{ 
+                    border: "1px solid #dfdfdf", 
+                    borderRadius: "20px", 
+                    padding: "3px 12px 3px 12px", 
+                    boxShadow: "none",
+                    color: "black"
+                  }} 
+                  onClick={sortByLowestRating}
+                >
+                  Lowest
+                </Button>
+              </div>
+          }
+          
+          <div style={{ marginBottom: "10px" }}>
           {reviews.map((review, index) => (
               <Review key={index} review={review}/>
             ))}

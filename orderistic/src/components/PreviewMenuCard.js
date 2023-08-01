@@ -8,6 +8,7 @@ import { returnDishRating } from "../api/ReviewApi";
 function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews }) {
     // Style for the menu cards
     const imgStyle = {
+      minWidth: "210px",
       width: "210px",
       objectFit: "cover",
       height: "100%",

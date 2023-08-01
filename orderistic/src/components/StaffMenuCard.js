@@ -37,7 +37,8 @@ function StaffMenuCard({ element }) {
     setMenu(tempMenu);
   }
   const imgStyle = {
-    width: "200px",
+    minWidth: "210px",
+    width: "210px",
     objectFit: "cover",
     height: "100%",
   };
@@ -45,6 +46,7 @@ function StaffMenuCard({ element }) {
     flexDirection: "row",
     height: "200px",
     width: "100%",
+    maxHeight: "500px",
   };
   return (
     <>
@@ -68,9 +70,9 @@ function StaffMenuCard({ element }) {
             Remove
           </Button>
           <Button
-            variant="light"
+            variant="outline-light"
             onClick={showUpdateForm}
-            style={{ position: "absolute", top: "10px", right: "10px" }}
+            style={{ position: "absolute", top: "10px", right: "10px", border: "none"}}
           >
             ✏️
           </Button>
