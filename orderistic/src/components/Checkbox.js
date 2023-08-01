@@ -1,6 +1,6 @@
 import React from "react";
 
-function Checkbox({ customisation, list, setList }) {
+function Checkbox({ customisation, list, setList, custList, handleCustList }) {
   const subheadingStyle = {
     fontSize: "13px",
     color: "grey",
@@ -22,13 +22,21 @@ function Checkbox({ customisation, list, setList }) {
 
   function handleClick(checkBool, index) {
     let tempChecked = [...checked];
+    let tempChosenNum = 0;
     if (checkBool === true) {
+      tempChosenNum = chosenNum + 1;
       setChosenNum(chosenNum + 1);
       tempChecked[index] = true; 
       let newCustomisations = [...list, options[index]];
       setList(newCustomisations);
+
+      if (tempChosenNum === 1) {
+        let tempCustList = [...custList, customisation];
+        handleCustList(tempCustList);
+      }
     }
     else {
+      tempChosenNum = chosenNum - 1;
       setChosenNum(chosenNum - 1);
       tempChecked[index] = false;
       let newCustomisations = [...list];
@@ -40,6 +48,16 @@ function Checkbox({ customisation, list, setList }) {
       setList(newCustomisations);
     }
     setChecked(tempChecked);
+
+    if (tempChosenNum === 0) {
+      let tempCustList = [...custList];
+      for (let i = 0; i < tempCustList.length; i++) {
+        if (tempCustList[i].id === customisation.id) {
+          tempCustList.splice(i, 1);
+        }
+      }
+      handleCustList(tempCustList);
+    }
   }
   return(
     <>

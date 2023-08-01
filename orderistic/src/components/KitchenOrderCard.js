@@ -14,7 +14,6 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
   }
   let date = new Date(order[0].time_ordered * 1000);
 
-
   return (
     <div className="console-container">
       {waiter && order[0].food_prepared.length !== 0 && (
@@ -34,7 +33,7 @@ export default function KitchenOrderCard({ order, menu, waiter = false }) {
           <div className="button-container">
             <p>{menu[item.id].name}</p>
             {item.customisations.map((customisation) => (
-              <p>&nbsp;{customisation}</p>
+              <p>&nbsp;{customisation.option}</p>
             ))}
             <p>&nbsp;| Quantity: {item.quantity}</p>
             <p

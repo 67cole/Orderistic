@@ -37,7 +37,20 @@ function FoodInfo({ show, closeForm, element }) {
   const [checkboxList, setCheckboxList] = React.useState([]);
   const [quantityList, setQuantityList] = React.useState([]);
   const [radioList, setRadioList] = React.useState([]);
+  const [required, setRequired] = React.useState([]);
+  const [custList, setCustList] = React.useState([]);
 
+  React.useEffect(() => {
+    let tempRequired = [];
+    for (let i = 0; i < element.customisations.length; i++) {
+      tempRequired.push(true);
+    }
+    setRequired(tempRequired);
+  }, [element])
+
+  function handleCustList(newList) {
+    setCustList(newList);
+  }
   function handleCheckboxList(newList) {
     setCheckboxList(newList)
   }
@@ -55,6 +68,37 @@ function FoodInfo({ show, closeForm, element }) {
     setPrice(parseFloat(price) - parseFloat(element.price));
     setQuantity(quantity - 1);
   }
+  function checkRequired() {
+    let valid = true;
+    let tempRequired = [...required];
+    for (let i = 0; i < element.customisations.length; i++) {
+      if (element.customisations[i].required) {
+        let optionChosen = false;
+        for (let cust of custList) {
+          if (cust.id === element.customisations[i].id) {
+            optionChosen = true
+          }
+        }
+        if (!optionChosen) {
+          tempRequired[i] = false;
+          valid = false;
+        }
+        else {
+          tempRequired[i] = true;
+        }
+        setRequired(tempRequired);
+      }
+    }
+
+    return valid;
+  }
+  function resetRequired() {
+    let tempRequired = [];
+    for (let i = 0; i < element.customisations.length; i++) {
+      tempRequired.push(true);
+    }
+    setRequired(tempRequired);
+  }
   // Adding the food to the cart
   async function addToOrder() {
     setLoading(true);
@@ -64,34 +108,38 @@ function FoodInfo({ show, closeForm, element }) {
       ...quantityList,
       ...radioList,
     ];
-    let cartItem = {
-      id: element.id,
-      quantity: quantity,
-      price: element.price,
-      customisations: finalList,
-      order_time: Date.now(),
-      finish_time: 0,
-    };
-    addToCart(tableNumber, cartItem);
-    let tempCart = [...cart];
-    let found = false;
-    for (let item of tempCart) {
-      if (item.id === cartItem.id) {
-        found = true;
-        item.quantity += cartItem.quantity;
+    resetRequired();
+    if (checkRequired()) {
+      let cartItem = {
+        id: element.id,
+        quantity: quantity,
+        price: element.price,
+        customisations: finalList,
+        order_time: Date.now(),
+        finish_time: 0,
+      };
+      addToCart(tableNumber, cartItem);
+      let tempCart = [...cart];
+      let found = false;
+      for (let item of tempCart) {
+        if (item.id === cartItem.id) {
+          found = true;
+          item.quantity += cartItem.quantity;
+        }
       }
-    }
-    if (found === false) {
-      tempCart.push(cartItem);
+      if (found === false) {
+        tempCart.push(cartItem);
+      }
+      
+      setCart(tempCart);
+      setQuantityList([]);
+      setCheckboxList([]);
+      setRadioList([]);
+      setQuantity(1);
+      setPrice(element.price);
+      closeForm();
     }
     setLoading(false);
-    setCart(tempCart);
-    setQuantityList([]);
-    setCheckboxList([]);
-    setRadioList([]);
-    setQuantity(1);
-    setPrice(element.price);
-    closeForm();
   }
   const loadingStyle = {
     position: "absolute",
@@ -151,7 +199,17 @@ function FoodInfo({ show, closeForm, element }) {
                 <div key={index} style={{ marginBottom: "10px" }}>
                   <div style={{ fontWeight: "500", fontSize: "17px" }}>
                     {customisation.name}{" "}
-                    {customisation.required ? "(Required)" : <></>}
+                    {customisation.required 
+                      ? (required[index] 
+                          ? <span style={{ color: "black" }}>
+                              (Required)
+                            </span>
+                          : <span style={{ color: "red" }}>
+                              (Required)
+                            </span>
+                        )
+                      : <></>
+                    }
                   </div>
                   <div>
                     {customisation.select === "upTo" ? (
@@ -160,18 +218,24 @@ function FoodInfo({ show, closeForm, element }) {
                         customisation={customisation}
                         list={checkboxList}
                         setList={handleCheckboxList}
+                        custList={custList}
+                        handleCustList={handleCustList}
                       />
                     ) : customisation.optionNum === 1 ? (
                       <RadioOption 
                         customisation={customisation}
                         list={radioList}
                         setList={handleRadioList}
+                        custList={custList}
+                        handleCustList={handleCustList}
                       />
                     ) : (
                       <QuantityOption
                         customisation={customisation}
                         list={quantityList}
                         setList={handleQuantityList}
+                        custList={custList}
+                        handleCustList={handleCustList}
                       />
                     )}
                   </div>

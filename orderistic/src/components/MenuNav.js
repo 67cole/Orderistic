@@ -66,6 +66,7 @@ function MenuNav() {
       />
       <TableNumberModal />
       <Navbar
+        variant="dark"
         style={{
           boxShadow: "1px 0px 5px 1px rgba(0, 0, 0, 0.05)",
           backgroundColor: "black",

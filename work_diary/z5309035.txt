@@ -32,4 +32,15 @@ Started working on Sprint 2 functionalities.
 Brainstormed on how to implement search and categories.
 
 Week 7
-Started on implementing Spring 2 functionalities.
+Started on implementing Sprint 2 functionalities.
+Implement search and filter user stories (filters the category by clicking on the sidebar)
+Fixed bug when seach and filter were used together.
+
+Week 8
+Finished our demo and noted down some improvements/fixes from tutor.
+Had a meeting after demo to discuss about our retrospective.
+Recommendation user stories delegated to me.
+
+Week 9
+Started on brainstorming on how we envision the recommendation.
+Started on implementing recommendation.
