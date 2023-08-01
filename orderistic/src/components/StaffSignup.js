@@ -27,7 +27,7 @@ export default function StaffSignup() {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      navigate("/staff-dashboard");
+      navigate("/staff-menu");
     } catch (error2) {
       setError("Failed to create an account");
     }
