@@ -83,8 +83,7 @@ export default function StaffOrders() {
           >
             <h3 style={{ marginBottom: "30px" }}>Admin Console</h3>
             <div className="stats-container">
-              <b>{date.toJSON().slice(0, 10)}</b>
-              <p> Total Sales: $69</p>
+              <b>Current date: {date.toJSON().slice(0, 10)}</b>
               <p>Number of Tables: {tableAmount}</p>
             </div>
             <div className="buttons-container">

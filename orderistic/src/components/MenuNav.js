@@ -35,7 +35,7 @@ function MenuNav() {
     await requestHelp(tableNumber);
   }
   async function handleBill() {
-    setOpen(true);
+    setBillOpen(true);
     await requestBill(tableNumber);
   }
 
@@ -58,7 +58,7 @@ function MenuNav() {
         autoHideDuration={2000}
       />
       <Snackbar
-        open={open}
+        open={billOpen}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         message={`Bill requested for table ${tableNumber}`}
         onClose={() => setBillOpen(false)}
