@@ -14,7 +14,6 @@ import PreviewMenuCard from "./PreviewMenuCard";
 function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
   const { cart, setCart } = React.useContext(CartContext);
   const [total, setTotal] = React.useState(0);
-  const changeTotal = (newTotal) => setTotal(newTotal);
   const { tableNumber, currentUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [completeCart, setCompleteCart] = React.useState([]);
@@ -120,11 +119,9 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
               <ListGroup>
                 {cart.map((element, index) => (
                   <CartItem
-                    key={index}
+                    key={element.cartItemId}
                     info={menu[element.id]}
                     index={index}
-                    total={total}
-                    changeTotal={changeTotal}
                   />
                 ))}
                 <Card

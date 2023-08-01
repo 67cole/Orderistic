@@ -12,6 +12,7 @@ import "./Modal.css";
 import { useAuth } from "../contexts/AuthContext";
 import timeout from "../api/Timeout";
 import RadioOption from "./RadioOption";
+import { generateID } from "./helper";
 
 function FoodInfo({ show, closeForm, element }) {
   const { tableNumber } = useAuth();
@@ -117,6 +118,7 @@ function FoodInfo({ show, closeForm, element }) {
         customisations: finalList,
         order_time: Date.now(),
         finish_time: 0,
+        cartItemId: generateID()
       };
       addToCart(tableNumber, cartItem);
       let tempCart = [...cart];
