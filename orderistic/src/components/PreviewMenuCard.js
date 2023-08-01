@@ -22,10 +22,12 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews }
     const [showReview, setShowReview] = React.useState(false);
     const [dishRating, setDishRating] = React.useState(0);
     React.useEffect(() => {
-      returnDishRating(element.id).then((data) => {
-        setDishRating(data);
-      })
-    }, [element])
+      if (reviews) {
+        returnDishRating(element.id).then((data) => {
+          setDishRating(data);
+        })
+      }
+    }, [element, reviews])
     function openReviews(e) {
       e.stopPropagation();
       setShowReview(true);
