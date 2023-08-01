@@ -44,7 +44,7 @@ function AddModal({ show, closeForm }) {
         category: category,
         image: image,
         customisations: customisations,
-        time: [],
+        time: [300],
         dietInfo: dietInfo,
         recommend: recommend,
       }

@@ -15,13 +15,14 @@ function CurrentOrder({ index, element, menu }) {
   React.useEffect(() => {
     returnOrderTime(element.id).then((data) => {
       let tempTime = Math.ceil(
-        (element.time_ordered/60000 + data - Date.now()/60000)
+        (element.time_ordered/60000 + data / 60 - Date.now()/60000)
       );
+      console.log(tempTime);
       if (tempTime < 0 || isNaN(data)) {
         tempTime = 0;
       }
       setOrderTime(tempTime);
-      setEstimateTime(data);
+      setEstimateTime(data / 60);
     });
   }, [element]);
   React.useEffect(() => {

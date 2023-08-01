@@ -76,17 +76,17 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews }
             : <></>
           }
           <div
-            style={{ position: "absolute", bottom: "10px" }}
-            >
-            ${parseFloat(element.price).toFixed(2)}
-          </div>
-          <div
-          style={{ position: "absolute", bottom: "10px", right: "10px" }}
+          style={{ paddingTop: "5px" }}
           >
             {element.recommend ? ("✨ Chef's Recommendation ✨"
             ):
             (<>
             </>)}
+          </div>
+          <div
+            style={{ position: "absolute", bottom: "10px" }}
+            >
+            ${parseFloat(element.price).toFixed(2)}
           </div>
           <div
             style={{position: "absolute", bottom: "10px", right: "15px"}}
