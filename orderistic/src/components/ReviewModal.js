@@ -154,41 +154,41 @@ function ReviewModal({ show, handleClose, element }) {
           </div>
           <div>
             <Button 
-              variant="light" 
+              variant="outline-light" 
               style={{ 
-                backgroundColor: "white", 
                 border: "1px solid #dfdfdf", 
                 borderRadius: "20px", 
                 padding: "3px 12px 3px 12px", 
                 boxShadow: "none",
-                marginRight: "5px"
+                marginRight: "5px",
+                color: "black"
               }} 
               onClick={sortByDate}
             >
               Newest
             </Button>
             <Button 
-              variant="light" 
+              variant="outline-light" 
               style={{ 
-                backgroundColor: "white", 
                 border: "1px solid #dfdfdf", 
                 borderRadius: "20px", 
                 padding: "3px 12px 3px 12px", 
                 boxShadow: "none",
-                marginRight: "5px"
+                marginRight: "5px",
+                color: "black"
               }} 
               onClick={sortByHighestRating}
             >
               Highest
             </Button>
             <Button 
-              variant="light" 
+              variant="outline-light" 
               style={{ 
-                backgroundColor: "white", 
                 border: "1px solid #dfdfdf", 
                 borderRadius: "20px", 
                 padding: "3px 12px 3px 12px", 
-                boxShadow: "none"
+                boxShadow: "none",
+                color: "black"
               }} 
               onClick={sortByLowestRating}
             >
