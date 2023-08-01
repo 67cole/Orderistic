@@ -109,11 +109,16 @@ function FoodInfo({ show, closeForm, element }) {
       ...quantityList,
       ...radioList,
     ];
+    let count = 0;
+    for (let item of finalList) {
+      count += item.id;
+    }
     resetRequired();
     if (checkRequired()) {
       let cartItem = {
         id: element.id,
         quantity: quantity,
+        totalCustomId: count,
         price: element.price,
         customisations: finalList,
         order_time: Date.now(),

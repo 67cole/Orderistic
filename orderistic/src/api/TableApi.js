@@ -68,7 +68,7 @@ export async function addToCart(num, item) {
   const docSnap = await getDoc(docRef);
   let cartData = docSnap.data()["cart"];
   for (var i in cartData) {
-    if (cartData[i].id === item.id) {
+    if (cartData[i].id === item.id && cartData[i].totalCustomId == item["totalCustomId"]) {
       cartData[i].quantity += item.quantity;
       const newData = {
         cart: cartData,
