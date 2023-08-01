@@ -6,6 +6,7 @@ import CardGroup from "react-bootstrap/CardGroup";
 import OrderCard from "./OrderCard";
 import CurrentOrder from "./CurrentOrder";
 import { userOrders } from "../api/OrderApi";
+import CurrentOrderSkeleton from "./CurrentOrderSkeleton";
 
 function Orders() {
   const center = {
@@ -16,6 +17,7 @@ function Orders() {
   const [currOrders, setCurrOrders] = React.useState([]);
   const [prevOrders, setPrevOrders] = React.useState([]);
   const [menu, setMenu] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     userOrders(currentUser.uid).then((data) => {
@@ -26,9 +28,10 @@ function Orders() {
         order.time_finished = date.toLocaleDateString();
       }
       setPrevOrders(tempPrev);
-    })
+    });
     returnFoodData().then((menuData) => {
       setMenu(menuData);
+      setLoading(false);
     });
   }, [currentUser]);
 
@@ -38,6 +41,7 @@ function Orders() {
       <p style={{ fontSize: "50px", fontWeight: "500", marginTop: "20px" }}>
         Current Orders
       </p>
+      {loading && <CurrentOrderSkeleton cards={3} />}
       {currOrders.map((element, index) => (
         <CurrentOrder key={index} element={element} menu={menu} index={index} />
       ))}
