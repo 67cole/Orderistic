@@ -41,6 +41,7 @@ export async function addTable() {
     number: newTableNumber,
     cart: [],
     help: false,
+    bill: false,
   };
   await setDoc(doc(db, "tables", newTableNumber.toString()), tableData);
 }
