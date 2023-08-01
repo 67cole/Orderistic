@@ -13,7 +13,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
 import TableNumberModal from "./TableNumberModal";
 import CardSkeleton from "./CardSkeleton";
-import MenuSideDrawer from "./MenuSideDrawer";
 import { Drawer, Box, Typography, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
