@@ -99,8 +99,9 @@ function Menu() {
     const uniqueCategory = Array.from(new Set(arrayCategory)).filter(
       (element) => element
     );
-    const categoryDisplay = uniqueCategory.map((element) => (
+    const categoryDisplay = uniqueCategory.map((element, index) => (
       <Typography
+        key={index}
         variant="h6"
         padding="20px"
         onClick={() => {
