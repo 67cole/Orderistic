@@ -173,13 +173,13 @@ function Menu() {
                   if (filter) {
                     return (
                       element.category.includes(filter) &&
-                      (element.name.toLowerCase().includes(search.toLowerCase()) || element.description.toLowerCase().includes(search.toLowerCase()))
+                      (element.name.toLowerCase().includes(search.toLowerCase()) || 
+                      element.description.toLowerCase().includes(search.toLowerCase()))
                     );
                   }
-                  return (element.name
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) || 
-                    element.description.toLowerCase().includes(search.toLowerCase()));
+                  return (element.name.toLowerCase().includes(search.toLowerCase()) || 
+                    element.description.toLowerCase().includes(search.toLowerCase())
+                    );
                 }
                 if (filter) {
                   return element.category.includes(filter);
