@@ -129,7 +129,7 @@ function FoodInfo({ show, closeForm, element }) {
       let tempCart = [...cart];
       let found = false;
       for (let item of tempCart) {
-        if (item.id === cartItem.id) {
+        if (item.id === cartItem.id && cartItem.totalCustomId === item["totalCustomId"]) {
           found = true;
           item.quantity += cartItem.quantity;
         }
