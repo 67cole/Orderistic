@@ -6,7 +6,7 @@ import { addToCart, removeFromCart } from "../api/TableApi";
 import { CartContext } from "./Menu.js";
 import { useAuth } from "../contexts/AuthContext";
 
-function CartItem({ info, index, total, changeTotal }) {
+function CartItem({ info, index }) {
   const { tableNumber } = useAuth();
   const { cart, setCart } = React.useContext(CartContext);
   const [price, setPrice] = React.useState(
@@ -22,7 +22,6 @@ function CartItem({ info, index, total, changeTotal }) {
     flexDirection: "row",
     height: "210px",
     width: "100%",
-    // maxHeight: "500px",
     borderTop: "0px",
     borderRight: "0px",
     borderLeft: "0px",
@@ -42,18 +41,24 @@ function CartItem({ info, index, total, changeTotal }) {
   function subtractQuantity() {
     setPrice(info.price * (quantity - 1));
     setQuantity(quantity - 1);
-    changeTotal(parseFloat(total) - parseFloat(info.price));
     let tempItem = { ...cart[index] };
     tempItem.quantity = 1;
     removeFromCart(tableNumber, tempItem);
+    
+    let tempCart = [...cart];
+    tempCart[index].quantity -= 1;
+    setCart(tempCart);
   }
   function addQuantity() {
     setPrice(info.price * (quantity + 1));
     setQuantity(quantity + 1);
-    changeTotal(parseFloat(total) + parseFloat(info.price));
     let tempItem = { ...cart[index] };
     tempItem.quantity = 1;
     addToCart(tableNumber, tempItem);
+
+    let tempCart = [...cart];
+    tempCart[index].quantity += 1;
+    setCart(tempCart);
   }
   function removeItem() {
     removeFromCart(tableNumber, cart[index]);
