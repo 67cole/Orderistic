@@ -9,9 +9,9 @@ function RemoveModal({ show, closeForm, remove }) {
   }
   return (
     <>
-      <Modal show={show} onHide={closeForm} centered>
+      <Modal show={show} onHide={closeForm} size="sm" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Are you sure you want to remove this item?</Modal.Title>
+          <Modal.Title>Remove this item?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Button

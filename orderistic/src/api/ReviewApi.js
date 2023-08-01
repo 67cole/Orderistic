@@ -34,7 +34,9 @@ export async function returnUserReview(userID) {
     const querySnapshot = await getDocs(q);
     const reviewList = [];
     querySnapshot.forEach((doc) => {
-        reviewList.push(doc.data());
+        let review = doc.data();
+        review.review_id = doc.id;
+        reviewList.push(review);
     });
     return reviewList;
   }

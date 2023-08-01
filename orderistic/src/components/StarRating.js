@@ -1,6 +1,6 @@
 import React from "react";
 
-function StarRating({ handleCurrentRating }) {
+function StarRating({ handleCurrentRating, openForm, newRating }) {
   const [rating, setRating] = React.useState(0);
   const [hoverRating, setHoverRating] = React.useState(0);
   const stars = ["★", "★", "★", "★", "★"];
@@ -17,6 +17,17 @@ function StarRating({ handleCurrentRating }) {
     ...starStyle,
     color: "#fabb05",
   }
+  React.useEffect(() => {
+    if (newRating) {
+      setRating(newRating);
+      setHoverRating(0);
+    }
+    else {
+      setRating(0);
+      setHoverRating(0);
+    }
+
+  }, [openForm, newRating])
   function changeRating(index) {
     if (index === rating) {
       setRating(0);

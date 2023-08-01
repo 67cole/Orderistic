@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import StarRating from './StarRating';
 import Collapse from 'react-bootstrap/Collapse';
 import Review from './Review';
-import { generateID } from './helper';
 
 function ReviewModal({ show, handleClose, element }) {
   const center = {
@@ -23,9 +22,13 @@ function ReviewModal({ show, handleClose, element }) {
   const [name, setName] = React.useState("");
   const [currentRating, setCurrentRating] = React.useState(0);
   const [openForm, setOpenForm] = React.useState(false);
-
   React.useEffect(() => {
     returnDishReview(element.id).then((data) => {
+      if (currentUser) {
+        data = data.filter(review => 
+          review.user_id !== currentUser.uid  
+        )
+      }
       data.sort((date1, date2) => date2.date - date1.date);
       setReviews(data);
     })
@@ -36,15 +39,12 @@ function ReviewModal({ show, handleClose, element }) {
       })
     }
   }, [element, currentUser])
-
+  function handleUserReviews(newReviewList) {
+    setUserReviews(newReviewList)
+  }
   function handleCurrentRating(newRating) {
     setCurrentRating(newRating);
   }
-  // function checkReview() {
-  //   if (!name) {
-
-  //   }
-  // }
   function addCurrentReview() {
     const review = {
       name: name,
@@ -53,7 +53,6 @@ function ReviewModal({ show, handleClose, element }) {
       food_id: element.id,
       user_id: currentUser ? currentUser.uid : "",
       rating: currentRating,
-      review_id: generateID()
     }
     addReview(review);
     let tempUserReviews = [...userReviews, review];
@@ -65,9 +64,24 @@ function ReviewModal({ show, handleClose, element }) {
   }
   function cancelReview() {
     setName("");
-    setCurrentRating(0);
     setCurrentReview("");
+    setCurrentRating(0);
     setOpenForm(false);
+  }
+  function sortByDate() {
+    let tempReviews = [...reviews];
+    tempReviews.sort((date1, date2) => date2.date - date1.date);
+    setReviews(tempReviews);
+  }
+  function sortByHighestRating() {
+    let tempReviews = [...reviews];
+    tempReviews.sort((review1, review2) => review2.rating - review1.rating);
+    setReviews(tempReviews);
+  }
+  function sortByLowestRating() {
+    let tempReviews = [...reviews];
+    tempReviews.sort((review1, review2) => review1.rating - review2.rating);
+    setReviews(tempReviews);
   }
   return(
     <div onClick ={(e) => e.stopPropagation()}>
@@ -102,9 +116,9 @@ function ReviewModal({ show, handleClose, element }) {
           <Collapse in={openForm}>
             <div>
               <div style={center}>
-                <StarRating handleCurrentRating={handleCurrentRating}/>
+                <StarRating handleCurrentRating={handleCurrentRating} openForm={openForm}/>
               </div>
-              <Form.Group className="mb-3" controlId="review">
+              <Form.Group className="mb-3" controlId="review-name">
                 <Form.Label>Name</Form.Label>
                 <Form.Control 
                   type="text" 
@@ -113,17 +127,18 @@ function ReviewModal({ show, handleClose, element }) {
                   onChange={(e) => setName(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="review">
-                <Form.Label>Place a review</Form.Label>
+              <Form.Group className="mb-3" controlId="review-details">
+                <Form.Label>Details</Form.Label>
                 <Form.Control 
                   as="textarea" 
+                  size="sm" 
                   rows={3}
                   value={currentReview}
                   onChange={(e) => setCurrentReview(e.target.value)}
                 />
               </Form.Group>
               <div style={center}>
-              <Button variant="dark" style={{marginRight: "5px", boxShadow: "none"}} onClick={addCurrentReview}>
+              <Button variant="dark" disabled={currentRating === 0 || name === ""} style={{marginRight: "5px", boxShadow: "none"}} onClick={addCurrentReview}>
                 Post
               </Button>
               <Button variant="dark" style={{ boxShadow: "none" }} onClick={cancelReview}>
@@ -134,7 +149,7 @@ function ReviewModal({ show, handleClose, element }) {
             </Collapse>
           <div style={{borderTop: "1px solid #dfdfdf", marginTop: "20px", marginBottom: "20px"}}>
             {userReviews.map((review) => (
-              <Review review={review}/>
+              <Review key={review.review_id} review={review} handleUserReviews={handleUserReviews} userReviews={userReviews}/>
             ))}
           </div>
           <div>
@@ -145,15 +160,44 @@ function ReviewModal({ show, handleClose, element }) {
                 border: "1px solid #dfdfdf", 
                 borderRadius: "20px", 
                 padding: "3px 12px 3px 12px", 
-                boxShadow: "none"
+                boxShadow: "none",
+                marginRight: "5px"
               }} 
+              onClick={sortByDate}
             >
               Newest
             </Button>
+            <Button 
+              variant="light" 
+              style={{ 
+                backgroundColor: "white", 
+                border: "1px solid #dfdfdf", 
+                borderRadius: "20px", 
+                padding: "3px 12px 3px 12px", 
+                boxShadow: "none",
+                marginRight: "5px"
+              }} 
+              onClick={sortByHighestRating}
+            >
+              Highest
+            </Button>
+            <Button 
+              variant="light" 
+              style={{ 
+                backgroundColor: "white", 
+                border: "1px solid #dfdfdf", 
+                borderRadius: "20px", 
+                padding: "3px 12px 3px 12px", 
+                boxShadow: "none"
+              }} 
+              onClick={sortByLowestRating}
+            >
+              Lowest
+            </Button>
           </div>
           <div>
-          {reviews.map((review) => (
-              <Review review={review}/>
+          {reviews.map((review, index) => (
+              <Review key={index} review={review}/>
             ))}
           </div>
         </Modal.Body>

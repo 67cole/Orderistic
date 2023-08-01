@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import ReviewModal from "./ReviewModal";
 import { returnDishRating } from "../api/ReviewApi";
 
+
 function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews }) {
     // Style for the menu cards
     const imgStyle = {
@@ -55,7 +56,16 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews }
           </Card.Text>
           {reviews
             ? <>
-                <Button onClick={e => openReviews(e)} style={{border: "none", color: "black", background: "none", boxShadow: "none", textDecoration: "underline", padding: "0"}}> 
+                <Button 
+                  onClick={e => openReviews(e)} 
+                  variant="outline-dark"
+                  style={{ 
+                    borderRadius:"20px", 
+                    boxShadow: "none", 
+                    padding: "0px 5px 0px 5px",
+                    borderColor: "#dfdfdf"
+                  }}
+                > 
                   ★ {isNaN(dishRating) ? 0 : dishRating.toFixed(1)}
                 </Button>
                 <ReviewModal show={showReview} handleClose={e => closeReviews(e)} element={element}/>
