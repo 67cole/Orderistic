@@ -27,7 +27,6 @@ function RadioOption({ customisation, list, setList, custList, handleCustList })
       }
     }
     if (!included) {
-      console.log("DSDS");
       tempCustList = [...custList, customisation];
       handleCustList(tempCustList)
     }
