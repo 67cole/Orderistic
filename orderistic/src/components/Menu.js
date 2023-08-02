@@ -11,10 +11,7 @@ import MenuNav from "./MenuNav";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { validStaff } from "../api/AuthApi";
-import TableNumberModal from "./TableNumberModal";
 import CardSkeleton from "./CardSkeleton";
-import { Drawer, Box, Typography, IconButton } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 
 export const CartContext = React.createContext();
 
@@ -81,38 +78,31 @@ function Menu() {
     width: "20%",
     minWidth: "300px",
     marginTop: "20px",
-    padding: "20px",
+    padding: "10px 0px 10px 0px",
     fontSize: "20px",
     textAlign: "center",
   };
-  const sideDrawerStyle = {
-    display: "flex",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  };
   const [search, setSearch] = React.useState("");
-  const [open, setOpen] = React.useState(false);
   const [filter, setFilter] = React.useState("");
-
+  
   function category() {
     const arrayCategory = menu.map((element) => element.category);
     const uniqueCategory = Array.from(new Set(arrayCategory)).filter(
       (element) => element
     );
+    
     const categoryDisplay = uniqueCategory.map((element, index) => (
-      <Typography
-        key={index}
-        variant="h6"
-        padding="20px"
+      <span key={index} style={{backgroundColor: "white", margin: "0px 2.5px 0px 2.5px", borderRadius: "20px", padding: "2px 0px 7px 0px"}}>
+      <Button 
+        variant="outline-dark"
         onClick={() => {
           setFilter(element);
-          setOpen(false);
         }}
+        style={{ boxShadow: "none", borderRadius: "20px", padding: "3px 12px 3px 12px", border: "1px solid #dfdfdf" }}
       >
-        <button type="button" class="btn btn-outline-dark">
-          {element}
-        </button>
-      </Typography>
+        {element}
+      </Button>
+    </span>
     ));
 
     return categoryDisplay;
@@ -120,7 +110,6 @@ function Menu() {
   return (
     <>
       <MenuNav />
-
       <div
         style={{
           display: "flex",
@@ -128,38 +117,6 @@ function Menu() {
           alignItems: "center",
         }}
       >
-        <div style={sideDrawerStyle}>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="logo"
-            style={{ marginTop: "20px" }}
-            onClick={() => setOpen(true)}
-          >
-            <MenuIcon fontSize="large" />
-          </IconButton>
-          <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
-            <Box p={2} width="250px" textAlign="center" role="presentation">
-              <Typography variant="h5" component="div">
-                Menu Categories
-                <Typography
-                  variant="h6"
-                  padding="20px"
-                  onClick={() => {
-                    setFilter(null);
-                    setOpen(false);
-                  }}
-                >
-                  <button type="button" class="btn btn-outline-dark">
-                    Full Menu
-                  </button>
-                </Typography>
-                {category()}
-              </Typography>
-            </Box>
-          </Drawer>
-        </div>
         <input
           style={searchStyle}
           type="text"
@@ -168,6 +125,21 @@ function Menu() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
+      <div style={{ marginTop: "20px" }}>
+        <span style={{backgroundColor: "white", margin: "0px 2.5px 0px 2.5px", borderRadius: "20px", padding: "2px 0px 7px 0px"}}>
+        <Button
+          variant="outline-dark"
+          onClick={() => {
+            setFilter(null);
+          }}
+          style={{boxShadow: "none", borderRadius: "20px", padding: "3px 12px 3px 12px", border: "1px solid #dfdfdf"}}
+        >
+          Full Menu
+        </Button>
+        </span>
+        {category()}
+      </div>
+        
       <CartContext.Provider value={{ cart, setCart }}>
         <Container fluid style={{ display: "flex", justifyContent: "center" }}>
           <Row
