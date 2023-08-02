@@ -21,12 +21,14 @@ function Orders() {
 
   React.useEffect(() => {
     userOrders(currentUser.uid).then((data) => {
+      data.ordered.sort((order1, order2) => order2.time_ordered - order1.time_ordered);
       setCurrOrders(data.ordered);
       let tempPrev = [...data.completed];
       for (let order of tempPrev) {
         let date = new Date(order.time_finished);
         order.time_finished = date.toLocaleDateString();
       }
+      tempPrev.sort((order1, order2) => order2.time_finished - order1.time_finished);
       setPrevOrders(tempPrev);
     });
     returnFoodData().then((menuData) => {

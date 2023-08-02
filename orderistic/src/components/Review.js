@@ -114,7 +114,7 @@ function Review({ review, handleUserReviews, userReviews }) {
   }
   return(
     <>
-      <div style={{ borderBottom: "1px solid #dfdfdf", padding: "20px 0px 20px 20px"}}>
+      <div style={{ borderBottom: "1px solid #dfdfdf", padding: "20px 10px 30px 20px"}}>
         <span style={{ fontWeight: "500"}}>
         {review.name}&nbsp;
         </span>

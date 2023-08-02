@@ -101,7 +101,7 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
             <p>Total: ${finalTotal.toFixed(2)}</p>
             {completeCart.map((element, index) => (
               <div key={index}>
-                <PreviewMenuCard  element={menu[element.id]} showModal={false} quantity={element.quantity}/>
+                <PreviewMenuCard element={menu[element.id]} showModal={false} quantity={element.quantity} customisations={element.customisations}/>
               </div>
             ))}
           </Modal.Body>
