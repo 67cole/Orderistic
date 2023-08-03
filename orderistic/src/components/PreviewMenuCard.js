@@ -22,6 +22,7 @@ function PreviewMenuCard({ element, showModal, openFoodInfo, quantity, reviews, 
     // For showing the review modal
     const [showReview, setShowReview] = React.useState(false);
     const [dishRating, setDishRating] = React.useState(0);
+    // Obtain average dish rating from firebase database
     React.useEffect(() => {
       if (reviews) {
         returnDishRating(element.id).then((data) => {

@@ -12,7 +12,6 @@ import PreviewMenuCard from "./PreviewMenuCard";
 import Alert from 'react-bootstrap/Alert';
 
 function UpdateModal({ show, closeForm, element, setStates }) {
-
   const [name, setName] = React.useState(element.name);
   const [description, setDescription] = React.useState(element.description);
   const [price, setPrice] = React.useState(parseFloat(element.price).toFixed(2));
@@ -26,6 +25,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
   function handleCustomisations(customisations) {
     setCustomisations(customisations)
   }
+  // Checks form to check if there are any empty inputs
   function checkForm() {
     if (!name || !description || !category || !price) {
       setShowAlert(true);
@@ -34,6 +34,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
     }
     return true;
   }
+  // Updates form and states
   function submitForm() {
     if (checkForm()) {
       const item = {
@@ -52,6 +53,7 @@ function UpdateModal({ show, closeForm, element, setStates }) {
       setStates(image, name, description, price);
     }
   }
+  // Converts image to base64
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])
       .then((data) => {

@@ -4,7 +4,6 @@ import {
   setDoc,
   doc,
   getDocs,
-  onSnapshot,
   addDoc,
   deleteDoc,
   getDoc,
@@ -57,12 +56,12 @@ export async function AddItem(item) {
 
 //Allows staff to remove items from the menu HIMMY-22
 export async function RemoveItem(id) {
-  const res = await deleteDoc(doc(db, 'menu', id));
+  await deleteDoc(doc(db, 'menu', id));
 }
 
 //Allows staff to update items on the menu HIMMY-21
 export async function UpdateItem(id, item) {
-  const res = await setDoc(doc(db, 'menu', id), item);
+  await setDoc(doc(db, 'menu', id), item);
 }
 
 

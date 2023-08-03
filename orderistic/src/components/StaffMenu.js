@@ -17,7 +17,7 @@ function StaffMenu() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-
+  // Checking if current user is staff, if not, navigates user to regular menu
   async function checkStaff() {
     if ((await validStaff(currentUser.email)) === false) {
       navigate("/menu");
@@ -26,7 +26,7 @@ function StaffMenu() {
   checkStaff();
   const [show, setShow] = React.useState(false);
   const [menu, setMenu] = React.useState([]);
-
+  // Obtains menu data and adds id of menu item as a key to menu list
   React.useEffect(() => {
     returnFoodData().then((data) => {
       let tempMenu = [];
@@ -40,6 +40,7 @@ function StaffMenu() {
       setMenu(tempMenu);
     });
   }, []);
+  // Opening and closing the modal for adding an item
   const closeForm = () => setShow(false);
   const showForm = () => setShow(true);
   return (

@@ -1,10 +1,8 @@
 import { db } from "../firebase";
 import {
   collection,
-  setDoc,
   doc,
   getDocs,
-  onSnapshot,
   orderBy,
   limit,
   addDoc,
@@ -48,7 +46,7 @@ export async function viewOrder() {
 
 // Allows staff to add order (HIMMY-19)
 export async function addOrder(item) {
-  const res = await addDoc(collection(db, "orders"), item);
+  await addDoc(collection(db, "orders"), item);
 }
 
 export async function orderedFoodByTime() {
@@ -65,7 +63,7 @@ export async function orderedFoodByTime() {
 
 //Allows staff to remove order (HIMMY-22)
 export async function removeOrder(id) {
-  const res = await deleteDoc(doc(db, "orders", id));
+  await deleteDoc(doc(db, "orders", id));
 }
 
 //Allows chef to check off items in prepared and moves order to orderHist if they are complete
@@ -160,14 +158,9 @@ export async function returnOrderTime(orderID) {
   // keep time counter in SECONDS
   let timeTaken = 0;
 
-  // find all timing for food starting with completed
-  const completed = order.data()["food_delivered"];
-  for (var i in completed) {
-    // quantity x food average time for time
-    let time = completed[i].quantity * dishTime(completed[i].id);
-    timeTaken += time;
-  }
-
+  // find all timing for food being delivered
+  const delivering = order.data()["food_prepared"];
+  timeTaken += delivering.length;
   // moving to still processing
   const ordered = order.data()["food_ordered"];
   for (var j in ordered) {

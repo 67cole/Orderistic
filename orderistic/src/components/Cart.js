@@ -10,7 +10,7 @@ import { sendOrder } from "../api/TableApi";
 import timeout from "../api/Timeout";
 import { CartContext } from "./Menu.js";
 import PreviewMenuCard from "./PreviewMenuCard";
-
+// Cart and checkout screens 
 function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
   const { cart, setCart } = React.useContext(CartContext);
   const [total, setTotal] = React.useState(0);
@@ -18,7 +18,7 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
   const [loading, setLoading] = useState(false);
   const [completeCart, setCompleteCart] = React.useState([]);
   const [finalTotal, setFinalTotal] = React.useState(0);
-
+  // Calculates total everytime the cart changes
   React.useEffect(() => {
     let sum = 0;
     for (let item of cart) {
@@ -40,7 +40,7 @@ function Cart({ show, closeCart, menu, setOrderComplete, orderComplete }) {
     position: "fixed",
     bottom: "20px",
   };
-
+  // Checks out cart and sends order to kitchen
   async function handleCheckout() {
     setLoading(true);
     await timeout(500);

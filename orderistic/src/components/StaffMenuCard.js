@@ -15,18 +15,19 @@ function StaffMenuCard({ element }) {
   const [showRemove, setShowRemove] = React.useState(false);
   const [showUpdate, setShowUpdate] = React.useState(false);
 
-  React.useEffect(() => {}, [name]);
   function setStates(image, name, desc, price) {
     setImage(image);
     setName(name);
     setDescription(desc);
     setPrice(price);
   }
+  // Opens and closes the remove modal 
   const closeRemForm = () => setShowRemove(false);
   const showRemForm = () => setShowRemove(true);
+  // Opens and closes the update modal
   const closeUpdateForm = () => setShowUpdate(false);
   const showUpdateForm = () => setShowUpdate(true);
-
+  // Removes food item from the menu 
   function remove() {
     RemoveItem(element["id"]);
     let tempMenu = [...menu];

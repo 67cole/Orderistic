@@ -10,7 +10,6 @@ function MenuCard({ element }) {
     setShow(true);
   } 
   const closeFoodInfo = () => setShow(false);
-
   return (
     <>
       <PreviewMenuCard element={element} showModal={true} openFoodInfo={openFoodInfo} reviews={true}/>

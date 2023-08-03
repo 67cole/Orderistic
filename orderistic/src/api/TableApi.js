@@ -5,12 +5,8 @@ import {
   setDoc,
   doc,
   getDocs,
-  onSnapshot,
-  addDoc,
   deleteDoc,
   getDoc,
-  query,
-  where,
   updateDoc,
 } from "firebase/firestore";
 
@@ -64,7 +60,6 @@ export async function viewCart(num) {
 
 // Adds item to cart
 export async function addToCart(num, item) {
-  const collectionRef = collection(db, "tables");
   const docRef = doc(db, "tables", num.toString());
   const docSnap = await getDoc(docRef);
   let cartData = docSnap.data()["cart"];
@@ -115,7 +110,6 @@ export async function removeBill(num) {
 
 // Removes item from cart
 export async function removeFromCart(num, item) {
-  const collectionRef = collection(db, "tables");
   const docRef = doc(db, "tables", num.toString());
   const docSnap = await getDoc(docRef);
   let cartData = docSnap.data()["cart"];

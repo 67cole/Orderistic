@@ -15,7 +15,7 @@ export function fileToDataUrl (file) {
   reader.readAsDataURL(file);
   return dataUrlPromise;
 }
-  
+// Generates a unique id
 export function generateID() {
   return Math.floor(Date.now() * Math.random()).toString();
 }

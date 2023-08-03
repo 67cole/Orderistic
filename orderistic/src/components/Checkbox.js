@@ -1,5 +1,5 @@
 import React from "react";
-
+// Checkbox component
 function Checkbox({ customisation, list, setList, custList, handleCustList }) {
   const subheadingStyle = {
     fontSize: "13px",
@@ -7,19 +7,15 @@ function Checkbox({ customisation, list, setList, custList, handleCustList }) {
   };
   const [chosenNum, setChosenNum] = React.useState(0);
   const [checked, setChecked] = React.useState([]);
-  const [options, setOptions] = React.useState([]);
-
+  // Initialises checked to contain a list of booleans
   React.useEffect(() => {
-    let tempList = [];
     let newChecked = [];
     for (let i = 0; i < customisation.options.length; i++) {
       newChecked.push(false);
-      tempList.push(customisation.options[i]);
     }
-    setOptions(tempList);
     setChecked(newChecked);
   }, [customisation])
-
+  // Adds or removes the chosen customisation to the customisation list when checkbox is selected
   function handleClick(checkBool, index) {
     let tempChecked = [...checked];
     let tempChosenNum = 0;
@@ -27,7 +23,7 @@ function Checkbox({ customisation, list, setList, custList, handleCustList }) {
       tempChosenNum = chosenNum + 1;
       setChosenNum(chosenNum + 1);
       tempChecked[index] = true; 
-      let newCustomisations = [...list, options[index]];
+      let newCustomisations = [...list, customisation.options[index]];
       setList(newCustomisations);
 
       if (tempChosenNum === 1) {
@@ -41,7 +37,7 @@ function Checkbox({ customisation, list, setList, custList, handleCustList }) {
       tempChecked[index] = false;
       let newCustomisations = [...list];
       for (let i = 0; i < newCustomisations.length; i++) {
-        if (newCustomisations[i].id === options[index].id) {
+        if (newCustomisations[i].id === customisation.options[index].id) {
           newCustomisations.splice(i, 1);
         }
       }
