@@ -8,7 +8,7 @@ import { addToCart } from "../api/TableApi";
 import { CartContext } from "./Menu.js";
 import Checkbox from "./Checkbox";
 import QuantityOption from "./QuantityOption";
-import Styles from"./Modal.module.css";
+import Styles from "./Modal.module.css";
 import { useAuth } from "../contexts/AuthContext";
 import timeout from "../api/Timeout";
 import RadioOption from "./RadioOption";
@@ -23,7 +23,7 @@ function FoodInfo({ show, closeForm, element }) {
     maxWidth: "50%",
     objectFit: "cover",
     height: "auto",
-    width: "auto"
+    width: "50%"
   };
   const cardStyle = {
     flexDirection: "row",
