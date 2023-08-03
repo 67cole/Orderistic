@@ -44,3 +44,11 @@ Recommendation user stories delegated to me.
 Week 9
 Started on brainstorming on how we envision the recommendation.
 Started on implementing recommendation.
+Assisted team in debugging and fixing bugs
+
+Week 10
+Team meeting to discuss which sections we will be working on.
+Started working on the report (installation and manual section).
+Had a meeting to discuss how we will approach our final demo.
+Discussed on which parts we will be presenting during the demo.
+
