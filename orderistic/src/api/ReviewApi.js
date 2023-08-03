@@ -64,12 +64,12 @@ export async function returnReviewData() {
 
 //Allows staff to remove reviews
 export async function removeReview(reviewID) {
-    const res = await deleteDoc(doc(db, 'reviews', reviewID));
+    await deleteDoc(doc(db, 'reviews', reviewID));
   }
 
 //Allows customers to edit reviews on the menu HIMMY-21
 export async function updateReview(reviewID, newReview) {
-    const res = await setDoc(doc(db, 'reviews', reviewID), newReview);
+    await setDoc(doc(db, 'reviews', reviewID), newReview);
 }
 
 // Given the food ID, return the dish rating

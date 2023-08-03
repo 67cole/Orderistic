@@ -18,12 +18,13 @@ function Orders() {
   const [prevOrders, setPrevOrders] = React.useState([]);
   const [menu, setMenu] = React.useState({});
   const [loading, setLoading] = React.useState(true);
-
+  // Obtains menu data and orders made by the current user 
   React.useEffect(() => {
     userOrders(currentUser.uid).then((data) => {
       data.ordered.sort((order1, order2) => order2.time_ordered - order1.time_ordered);
       setCurrOrders(data.ordered);
       let tempPrev = [...data.completed];
+      // Converting date in ms to locale date format
       for (let order of tempPrev) {
         let date = new Date(order.time_finished);
         order.time_finished = date.toLocaleDateString();

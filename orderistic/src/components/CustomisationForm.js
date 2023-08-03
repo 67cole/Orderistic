@@ -5,7 +5,7 @@ import React from 'react';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { generateID } from "./helper";
 import Alert from 'react-bootstrap/Alert';
-
+// Form component when adding a new component
 function CustomisationForm({ customisations, handleCustomisations }) {
   const radioStyle = {
     accentColor: "black", 
@@ -27,11 +27,13 @@ function CustomisationForm({ customisations, handleCustomisations }) {
   function changeName(value) {
     setCustName(value);
   }
+  // Changes the text of the option for the customisation
   function changeOptions(value, optionIndex) {
     let newOptions = [...options];
     newOptions[optionIndex].option = value;
     setOptions(newOptions);
   }
+  // Adds an option to the customisation
   function addOption() {
     const newOption = {
       id: generateID(),
@@ -40,11 +42,13 @@ function CustomisationForm({ customisations, handleCustomisations }) {
     let newOptions = [...options, newOption];
     setOptions(newOptions);
   }
+  // Removes an option to the customisation
   function removeOption(optionIndex) {
     let newOptions = [...options];
     newOptions.splice(optionIndex, 1);
     setOptions(newOptions);
   }
+  // Ensures that a customisation name given and if options have been added
   function checkCustomisation() {
     if (!custName || !optionNum) {
       setShowAlert(true);
@@ -53,6 +57,7 @@ function CustomisationForm({ customisations, handleCustomisations }) {
     }
     return true;
   }
+  // Finalises the customisation and adds it to the customisation list.
   function addCustomisation() {
     if (checkCustomisation()) {
       const customisation = {
@@ -69,11 +74,13 @@ function CustomisationForm({ customisations, handleCustomisations }) {
       setOptions([]);
     }
   }
+  // Cancels the customisation and resets states used
   function discardCustomisation() {
     setShowForm(false);
     setCustName("");
     setOptions([]);
   }
+  // Updates the amount of options a customer can choose in the customisation
   function changeNumber(value) {
     if (value !== "") {
       setOptionNum(parseInt(value));

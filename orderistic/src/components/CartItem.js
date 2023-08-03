@@ -5,7 +5,7 @@ import React from "react";
 import { addToCart, removeFromCart } from "../api/TableApi";
 import { CartContext } from "./Menu.js";
 import { useAuth } from "../contexts/AuthContext";
-
+// Displays each individual cart item in the cart
 function CartItem({ info, index }) {
   const { tableNumber } = useAuth();
   const { cart, setCart } = React.useContext(CartContext);
@@ -13,6 +13,7 @@ function CartItem({ info, index }) {
     cart[index].price * cart[index].quantity
   );
   const [quantity, setQuantity] = React.useState(cart[index].quantity);
+
   const imgStyle = {
     width: "200px",
     objectFit: "cover",
@@ -38,6 +39,7 @@ function CartItem({ info, index }) {
     border: "0",
     boxShadow: "none",
   };
+  // Subtracts the quantity of an item and updates the price and cart
   function subtractQuantity() {
     setPrice(info.price * (quantity - 1));
     setQuantity(quantity - 1);
@@ -49,6 +51,7 @@ function CartItem({ info, index }) {
     tempCart[index].quantity -= 1;
     setCart(tempCart);
   }
+  // Adds the quantity of an item and updates the price and cart
   function addQuantity() {
     setPrice(info.price * (quantity + 1));
     setQuantity(quantity + 1);
@@ -60,6 +63,7 @@ function CartItem({ info, index }) {
     tempCart[index].quantity += 1;
     setCart(tempCart);
   }
+  // Removes an item from the cart
   function removeItem() {
     removeFromCart(tableNumber, cart[index]);
     let tempCart = [...cart];

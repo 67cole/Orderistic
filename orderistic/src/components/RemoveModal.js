@@ -1,8 +1,9 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import React from "react";
-
+// Modal component for removing items
 function RemoveModal({ show, closeForm, remove }) {
+  // Calls remove function passed in as a prop and closes modal
   function removeFunction() {
     remove();
     closeForm();

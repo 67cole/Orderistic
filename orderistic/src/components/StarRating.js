@@ -17,6 +17,7 @@ function StarRating({ handleCurrentRating, openForm, newRating }) {
     ...starStyle,
     color: "#fabb05",
   }
+  // Resets rating when form is closed and sets rating to new rating if prop is passed.  
   React.useEffect(() => {
     if (newRating) {
       setRating(newRating);

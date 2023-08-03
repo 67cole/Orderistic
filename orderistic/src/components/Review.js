@@ -5,7 +5,7 @@ import { removeReview, updateReview } from "../api/ReviewApi";
 import Collapse from 'react-bootstrap/Collapse';
 import Form from 'react-bootstrap/Form';
 import StarRating from "./StarRating";
-
+// Individual review component 
 function Review({ review, handleUserReviews, userReviews }) {
   const [date, setDate] = React.useState(0);
   const [dateText, setDateText] = React.useState("");
@@ -18,13 +18,13 @@ function Review({ review, handleUserReviews, userReviews }) {
   function handleNewRating(newRating) {
     setNewRating(newRating);
   }
-
+  // Opening and closing edit form for a review
   const openEdit = () => setEditForm(true);
   const closeEdit = () => setEditForm(false);
-
+  // Opening and closing remove modal
   const openRemove = () => setShowRemove(true);
   const closeRemove = () => setShowRemove(false);
-
+  // Converting date to use relative time format
   React.useEffect(() => {
     const timeDiffSec = (Date.now() - review.date) / 1000;
     const timeDiffMin = timeDiffSec / 60;
@@ -74,7 +74,6 @@ function Review({ review, handleUserReviews, userReviews }) {
     ...starStyle,
     color: "#fabb05",
   }
-  
   function removeCurrentReview() {
     removeReview(review.review_id);
     let tempUserReviews = [...userReviews];
@@ -106,6 +105,7 @@ function Review({ review, handleUserReviews, userReviews }) {
     handleUserReviews(tempUserReviews);
     closeEdit()
   }
+  // Discards the current edit
   function cancelEdit() {
     setNewName(review.name);
     setNewRating(review.rating);

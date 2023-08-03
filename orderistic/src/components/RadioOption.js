@@ -1,11 +1,12 @@
 import React from "react";
-
+// Component for radio option in food information page
 function RadioOption({ customisation, list, setList, custList, handleCustList }) {
   const subheadingStyle = {
     fontSize: "13px",
     color: "grey",
   };
   const [oneItem, setOneItem] = React.useState({});
+  // Adds selected option to customisation list that is sent to database when dish is added to order
   function handleClick(element) {
     let tempList = [...list];
     if (oneItem) {
@@ -30,7 +31,6 @@ function RadioOption({ customisation, list, setList, custList, handleCustList })
       tempCustList = [...custList, customisation];
       handleCustList(tempCustList)
     }
-    
   }
   return(
     <>

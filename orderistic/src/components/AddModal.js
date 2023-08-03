@@ -11,7 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import CustomisationItem from "./CustomisationItem";
 import PreviewMenuCard from "./PreviewMenuCard";
 import Alert from 'react-bootstrap/Alert';
-
+// Modal to add an item to the menu
 function AddModal({ show, closeForm }) {
   const { menu, setMenu } = React.useContext(MenuContext);
   const [name, setName] = React.useState("");
@@ -27,6 +27,8 @@ function AddModal({ show, closeForm }) {
   function handleCustomisations(customisations) {
     setCustomisations(customisations)
   }
+  const onCheckChanged = () => setRecommend(!recommend);
+  // Function to check if the entered inputs are filled in and not empty
   function checkForm() {
     if (!name || !description || !category || !price) {
       setShowAlert(true);
@@ -35,6 +37,7 @@ function AddModal({ show, closeForm }) {
     }
     return true;
   }
+  // Submits and resets the form and adds the item to menu
   function submitForm() {
     if (checkForm()) {
       const item = {
@@ -65,14 +68,13 @@ function AddModal({ show, closeForm }) {
       setRecommend(false);
     }
   }
+  // Converts image to base64
   function convertImg(e) {
     fileToDataUrl(e.target.files[0])
       .then((data) => {
         setImage(data);
       })
   }
-  const onCheckChanged = () => setRecommend(!recommend);
-
   return (
     <> 
 

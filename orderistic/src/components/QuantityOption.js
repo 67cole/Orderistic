@@ -1,29 +1,24 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
+// Component for quantity option in food information page
 function QuantityOption({ customisation, list, setList, custList, handleCustList }) {
   const subheadingStyle = {
     fontSize: "13px",
     color: "grey",
   };
-  const [chosenOptions, setChosenOptions] = React.useState([]);
   const [quantities, setQuantities] = React.useState([]);
   const [chosenOptionNum, setChosenOptionNum] = React.useState(0);
-
+  // Initialising the quantities list to be all zeroes.
   React.useEffect(() => {
-    let chosenOptionList = [];
     let tempQuantities = [];
     for (let i = 0; i < customisation.options.length; i++) {
-      chosenOptionList.push(customisation.options[i]);
       tempQuantities.push(0);
     }
     setQuantities(tempQuantities);
-    setChosenOptions(chosenOptionList);
   }, [customisation])
-
   function addQuantity(index) {
-    let newCustomisations = [...list, chosenOptions[index]]
+    let newCustomisations = [...list, customisation.options[index]]
     setList(newCustomisations);
     let tempChosenNum = chosenOptionNum + 1;
     setChosenOptionNum(chosenOptionNum + 1);
@@ -50,7 +45,7 @@ function QuantityOption({ customisation, list, setList, custList, handleCustList
     
     let newCustomisations = [...list]
     for (let i = 0; i < newCustomisations.length; i++) {
-      if (newCustomisations[i].id === chosenOptions[index].id) {
+      if (newCustomisations[i].id === customisation.options[index].id) {
         newCustomisations.splice(i, 1);
       }
     }

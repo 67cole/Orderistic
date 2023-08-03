@@ -18,6 +18,7 @@ export const CartContext = React.createContext();
 function Menu() {
   const { currentUser, tableNumber } = useAuth();
   const navigate = useNavigate();
+  // Checks if the current user is a staff and navigates them to staff menu if they are staff
   async function checkStaff() {
     if (
       currentUser !== null &&
@@ -42,7 +43,7 @@ function Menu() {
   }
 
   const showCart = () => setShow(true);
-
+  // Gets menu data and adds ID as one of the keys
   React.useEffect(() => {
     returnFoodData().then((data) => {
       setMenuDict(data);
@@ -57,7 +58,7 @@ function Menu() {
       setMenu(tempMenu);
     });
   }, []);
-
+  // Loads the cart for chosen table number
   function loadCart() {
     viewCart(tableNumber).then((data) => {
       setCart(data);
@@ -84,7 +85,7 @@ function Menu() {
   };
   const [search, setSearch] = React.useState("");
   const [filter, setFilter] = React.useState("");
-  
+  // Filters menu items into and creates a category button component 
   function category() {
     const arrayCategory = menu.map((element) => element.category);
     const uniqueCategory = Array.from(new Set(arrayCategory)).filter(

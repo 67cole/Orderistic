@@ -3,7 +3,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import OrderCard from "./OrderCard";
 import React from "react";
 import { returnOrderTime } from "../api/OrderApi";
-
+// Current order card component in orders page
 function CurrentOrder({ index, element, menu }) {
   const center = {
     display: "flex",
@@ -11,7 +11,7 @@ function CurrentOrder({ index, element, menu }) {
   };
   const [orderTime, setOrderTime] = React.useState(0);
   const [estimateTime, setEstimateTime] = React.useState(0);
-
+  // Obtains estimated time of order and calculates remaining time using current time.
   React.useEffect(() => {
     returnOrderTime(element.id).then((data) => {
       let tempTime = Math.ceil(
@@ -24,10 +24,12 @@ function CurrentOrder({ index, element, menu }) {
       setEstimateTime(data / 60);
     });
   }, [element]);
+  // Creates an interval which updates the estimated time every minute
   React.useEffect(() => {
     const timer = setInterval(() => changeTime(), 60000);
     return () => clearInterval(timer);
   }, []);
+  // Updates the estimated time to decrease by 1 minute
   function changeTime() {
     setOrderTime((s) => (s === 0 ? 0 : s - 1));
   }
@@ -48,10 +50,18 @@ function CurrentOrder({ index, element, menu }) {
             Order {index + 1}
           </p>
         </div>
+        <div style={{...center, marginBottom: "20px"}}>
+          <div style={{ ...center, width: "30%", flexDirection: "column" }}>
+            <div style={{ ...center }}>Estimated Time:</div>
+            <div style={{ ...center, fontSize: "70px" }}>
+              {orderTime} {orderTime === 1 ? "minute" : "minutes"}
+            </div>
+          </div>
+        </div>
         <div style={center}>
           <div style={{ display: "inline-block", width: "30%" }}>
             <div style={center}>
-              <p>In Progress</p>
+              <p>Cooking</p>
             </div>
             <CardGroup
               style={{ marginBottom: "16px", justifyContent: "center" }}
@@ -61,12 +71,6 @@ function CurrentOrder({ index, element, menu }) {
               ))}
             </CardGroup>
           </div>
-          <div style={{ ...center, width: "30%", flexDirection: "column" }}>
-            <div style={{ ...center }}>Estimated Time:</div>
-            <div style={{ ...center, fontSize: "70px" }}>
-              {orderTime} {orderTime === 1 ? "minute" : "minutes"}
-            </div>
-          </div>
           <div style={{ ...center, display: "inline-block", width: "30%" }}>
             <div style={center}>
               <p>To be delivered</p>{" "}
@@ -75,6 +79,18 @@ function CurrentOrder({ index, element, menu }) {
               style={{ marginBottom: "16px", justifyContent: "center" }}
             >
               {element.food_prepared.map((food, index) => (
+                <OrderCard key={index} menu={menu} food={food} />
+              ))}
+            </CardGroup>
+          </div>
+          <div style={{ ...center, display: "inline-block", width: "30%" }}>
+            <div style={center}>
+              <p>Delivered</p>{" "}
+            </div>
+            <CardGroup
+              style={{ marginBottom: "16px", justifyContent: "center" }}
+            >
+              {element.food_delivered.map((food, index) => (
                 <OrderCard key={index} menu={menu} food={food} />
               ))}
             </CardGroup>

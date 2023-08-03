@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Collapse from 'react-bootstrap/Collapse';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { generateID } from './helper';
-
+// Component for a customisation in the modals to update or add an item.
 function CustomisationItem({ customisations, index, element, handleCustomisations }) {
   const textStyle = {
     paddingBottom: "5px", 
@@ -25,16 +25,20 @@ function CustomisationItem({ customisations, index, element, handleCustomisation
   const [newRequired, setNewRequired] = React.useState(element.required);
   const [newOptionNum, setNewOptionNum] = React.useState(element.optionNum);
   const [newSelect, setNewSelect] = React.useState(element.select);
+  // Functions to open and close the remove confirmation modal.
   const closeRemForm = () => setShowRemove(false);
   const showRemForm = () => setShowRemove(true);
+
   function removeCustomisation(index) {
     let newCustom = [...customisations];
     newCustom.splice(index, 1);
     handleCustomisations(newCustom);
   }
+  // Allows user to edit the customisation
   function editCustomisation() {
     setEditing(true);
   }
+  // Changes an option when different text is entered
   function changeOptions(value, index) {
     let tempOptions = [...newOptions];
     tempOptions[index].option = value;
@@ -45,6 +49,7 @@ function CustomisationItem({ customisations, index, element, handleCustomisation
     setNewOptions(element.options);
     setEditing(false);
   }
+  // Adds updated customisation information to the customisation list
   function saveChanges() {
     let newCustom = [...customisations];
     newCustom[index].name = newName;

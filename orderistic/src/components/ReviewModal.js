@@ -23,6 +23,7 @@ function ReviewModal({ show, handleClose, element }) {
   const [currentRating, setCurrentRating] = React.useState(0);
   const [openForm, setOpenForm] = React.useState(false);
   React.useEffect(() => {
+    // Obtains all dish reviews for a dish and filters out the reviews made by the user
     returnDishReview(element.id).then((data) => {
       if (currentUser) {
         data = data.filter(review => 
@@ -32,6 +33,7 @@ function ReviewModal({ show, handleClose, element }) {
       data.sort((date1, date2) => date2.date - date1.date);
       setReviews(data);
     })
+    // If current user is not a guest, it will obtain all reviews made by the user for the dish.
     if (currentUser) {
       returnUserReview(currentUser.uid).then((data) => {
         data = data.filter(review => 
@@ -48,6 +50,7 @@ function ReviewModal({ show, handleClose, element }) {
   function handleCurrentRating(newRating) {
     setCurrentRating(newRating);
   }
+  // Adding review and resetting the form
   function addCurrentReview() {
     const review = {
       name: name,

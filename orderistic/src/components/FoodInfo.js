@@ -8,12 +8,12 @@ import { addToCart } from "../api/TableApi";
 import { CartContext } from "./Menu.js";
 import Checkbox from "./Checkbox";
 import QuantityOption from "./QuantityOption";
-import "./Modal.css";
+import Styles from "./Modal.module.css";
 import { useAuth } from "../contexts/AuthContext";
 import timeout from "../api/Timeout";
 import RadioOption from "./RadioOption";
 import { generateID } from "./helper";
-
+// Component for showing the food information for an individual dish
 function FoodInfo({ show, closeForm, element }) {
   const { tableNumber } = useAuth();
 
@@ -23,7 +23,7 @@ function FoodInfo({ show, closeForm, element }) {
     maxWidth: "50%",
     objectFit: "cover",
     height: "auto",
-    width: "auto"
+    width: "50%"
   };
   const cardStyle = {
     flexDirection: "row",
@@ -40,7 +40,7 @@ function FoodInfo({ show, closeForm, element }) {
   const [radioList, setRadioList] = React.useState([]);
   const [required, setRequired] = React.useState([]);
   const [custList, setCustList] = React.useState([]);
-
+  // Initialise required list to handle customisations that are required
   React.useEffect(() => {
     let tempRequired = [];
     for (let i = 0; i < element.customisations.length; i++) {
@@ -61,14 +61,17 @@ function FoodInfo({ show, closeForm, element }) {
   function handleRadioList(newList) {
     setRadioList(newList);
   }
+  // Adds quantity and adjusts total price
   function addQuantity() {
     setPrice(parseFloat(price) + parseFloat(element.price));
     setQuantity(quantity + 1);
   }
+  // Subtracts quantity and adjusts total price
   function subtractQuantity() {
     setPrice(parseFloat(price) - parseFloat(element.price));
     setQuantity(quantity - 1);
   }
+  // Checks if all required options have been filled in
   function checkRequired() {
     let valid = true;
     let tempRequired = [...required];
@@ -93,6 +96,7 @@ function FoodInfo({ show, closeForm, element }) {
 
     return valid;
   }
+  // Resets the required list 
   function resetRequired() {
     let tempRequired = [];
     for (let i = 0; i < element.customisations.length; i++) {
@@ -100,7 +104,7 @@ function FoodInfo({ show, closeForm, element }) {
     }
     setRequired(tempRequired);
   }
-  // Adding the food to the cart
+  // Adding the food to the cart and resetting cart on com
   async function addToOrder() {
     setLoading(true);
     await timeout(250);
@@ -162,7 +166,7 @@ function FoodInfo({ show, closeForm, element }) {
       <Modal
         show={show}
         onHide={closeForm}
-        dialogClassName="modal-size"
+        dialogClassName={Styles.modalsize}
         centered
         style={{ flexDirection: "row" }}
       >
