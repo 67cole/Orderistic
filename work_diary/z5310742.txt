@@ -37,3 +37,11 @@ Week 8
 - Finished off the food information page by adding the ability to add options to dishes.
 - Created and styled the orders page which shows current and previous orders.
 - Next week, I will be working on reviews and improving on the orders page.
+Week 9
+- Added functionality for reviews so I can view and post reviews.
+- Styled review page.
+- Had a meeting to list out all the remaining items and assigned accordingly.
+Week 10
+- Fixed bugs with food information page, order pages and cart.
+- Improved style by adding comments and moving inline styles to css modules
+- Assigned sections of the report to each team member
