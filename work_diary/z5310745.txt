@@ -44,4 +44,13 @@ Week 8:
 - Delegated tasks for the next and final sprint to work towards
 
 Week 9:
-- Worked with other members to refine definitions of what is in the database
+- Worked with other members to refine definitions of what is in the Orders database
+- Started working on reviews with other members to focus on what's required to extract information from the backend
+- Pair programmed with Jonathan to work on redefining Orders to personalise for each user
+- Worked with front-end members to compile back end functions required for Menu API's
+
+Week 10:
+- Finalised coding in preparation for Demo
+- Wrote more comments to for neater code quality and assist members in understanding back end work
+- Attempted more error and edge case testing to fix up small issues and bugs
+- Worked on writing the Project Report to finalise everything
