@@ -1,11 +1,10 @@
 # capstone-project-3900w18ahimmybutler
-capstone-project-3900w18ahimmybutler created by GitHub Classroom
 
-## Installation
+# Installation
 
 Prerequisites: 
-Node.js
-Web Browser
+- Node.js
+- Web Browser
 
 
 1. Open the terminal and navigate to the desired folder to unzip the project file
