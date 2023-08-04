@@ -34,9 +34,7 @@ export default function StaffSignup() {
 
     setLoading(false);
   }
-  const menu = () => {
-    navigate("../menu");
-  };
+
   return (
     <>
       <div className="main-container">
@@ -76,11 +74,6 @@ export default function StaffSignup() {
         </Card>
         <div className="w-100 text-center mt-2">
           Already have an account? <Link to="/staff-login">Log In</Link>
-        </div>
-        <div className="text-center mt-2">
-          <button type="button" className="btn btn-primary" onClick={menu}>
-            Continue as guest
-          </button>
         </div>
       </div>
     </>
