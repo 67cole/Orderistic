@@ -1,24 +1,20 @@
 import React from "react";
-import Signup from "./Signup";
+import Signup from "./authentication/Signup";
 import { AuthProvider } from "../contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import Login from "./Login";
-import ForgotPassword from "./ForgotPassword";
-import UpdateProfile from "./UpdateProfile";
-import Menu from "./Menu";
-import StaffLogin from "./StaffLogin";
-import StaffDashboard from "./StaffDashboard";
+import Login from "./authentication/Login";
+import ForgotPassword from "./authentication/ForgotPassword";
+import Menu from "./menu/Menu";
+import StaffLogin from "./authentication/StaffLogin";
 import TestApi from "./TestApi";
-import Orders from "./Orders";
-import Cart from "./Cart";
+import Orders from "./orders/Orders";
+import Cart from "./cart/Cart";
 
-import StaffMenu from "./StaffMenu";
-import StaffSignup from "./StaffSignup";
-import OrderComplete from "./OrderComplete";
-import StaffTables from "./StaffTables";
-import StaffOrders from "./StaffOrders";
-import KitchenOrders from "./KitchenOrders";
+import StaffMenu from "./menu/StaffMenu";
+import StaffSignup from "./authentication/StaffSignup";
+import StaffOrders from "./workflow-console/StaffOrders";
+import KitchenOrders from "./workflow-console/KitchenOrders";
 function App() {
   document.body.style.backgroundColor = "#edeff3";
 
@@ -37,15 +33,6 @@ function App() {
               }
             ></Route>
             <Route
-              path="/staff-dashboard"
-              exact
-              element={
-                <PrivateRoute>
-                  <StaffDashboard />
-                </PrivateRoute>
-              }
-            ></Route>
-            <Route
               path="/test-api"
               exact
               element={
@@ -55,29 +42,11 @@ function App() {
               }
             ></Route>
             <Route
-              path="/update-profile"
-              exact
-              element={
-                <PrivateRoute>
-                  <UpdateProfile />
-                </PrivateRoute>
-              }
-            ></Route>
-            <Route
               path="/staff-menu"
               exact
               element={
                 <PrivateRoute>
                   <StaffMenu />
-                </PrivateRoute>
-              }
-            ></Route>
-            <Route
-              path="/staff-tables"
-              exact
-              element={
-                <PrivateRoute>
-                  <StaffTables />
                 </PrivateRoute>
               }
             ></Route>
@@ -105,7 +74,6 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/staff-login" element={<StaffLogin />} />
             <Route path="/staff-signup" element={<StaffSignup />} />
-            <Route path="/order-complete" element={<OrderComplete />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>
