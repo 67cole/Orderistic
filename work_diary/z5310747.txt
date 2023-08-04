@@ -53,5 +53,9 @@ Week 9:
 - Finished review functionalities
 - Pair coded with Colin to fix orders
 - Held meeting to identify bugs and issues with Sprint 3
-- Began writing the project report
-
+- Began writing the project report and setting up the report
+Week 10:
+- Final meeting before demo to rehearse
+- Helped identify bugs and debug regarding cart items
+- Finalised software quality
+- Finished part for report
