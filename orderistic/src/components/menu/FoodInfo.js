@@ -13,6 +13,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import timeout from "../../api/Timeout";
 import RadioOption from "./RadioOption";
 import { generateID } from "./helper";
+import { dishTime } from "../../api/MenuApi";
 // Component for showing the food information for an individual dish
 function FoodInfo({ show, closeForm, element }) {
   const { tableNumber } = useAuth();
@@ -40,6 +41,7 @@ function FoodInfo({ show, closeForm, element }) {
   const [radioList, setRadioList] = React.useState([]);
   const [required, setRequired] = React.useState([]);
   const [custList, setCustList] = React.useState([]);
+  const [waitTime, setWaitTime] = React.useState(0);
   // Initialise required list to handle customisations that are required
   React.useEffect(() => {
     let tempRequired = [];
@@ -47,6 +49,9 @@ function FoodInfo({ show, closeForm, element }) {
       tempRequired.push(true);
     }
     setRequired(tempRequired);
+    dishTime(element.id).then((data) => {
+      setWaitTime(Math.ceil(data / 60));
+    })
   }, [element]);
 
   function handleCustList(newList) {
@@ -181,7 +186,7 @@ function FoodInfo({ show, closeForm, element }) {
             />
             <div style={{ padding: "30px 30px 10px 30px" }}>
               <Card.Title style={{ fontSize: "26px", marginBottom: "0px" }}>
-                {element.name}
+                {element.name} ({waitTime} {waitTime === 1 ? "minute" : "minutes"})
               </Card.Title>
               <Card.Text style={{ marginBottom: "4px", fontWeight: "500" }}>
                 ${parseFloat(element.price).toFixed(2)}
@@ -202,7 +207,7 @@ function FoodInfo({ show, closeForm, element }) {
             <div
               style={{
                 overflowY: "auto",
-                height: "55%",
+                maxHeight: "55%",
                 paddingLeft: "30px",
                 paddingRight: "15px",
               }}
@@ -252,7 +257,6 @@ function FoodInfo({ show, closeForm, element }) {
                 </div>
               ))}
             </div>
-
             <Card.Text
               style={{ position: "absolute", bottom: "7px", right: "160px" }}
             >
