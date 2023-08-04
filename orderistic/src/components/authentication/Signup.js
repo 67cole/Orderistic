@@ -26,7 +26,7 @@ export default function Signup() {
       await signup(emailRef.current.value, passwordRef.current.value);
       navigate("/");
     } catch (error2) {
-      setError("Failed to create an account");
+      setError("Password must be greater than 6 characters.");
     }
 
     setLoading(false);

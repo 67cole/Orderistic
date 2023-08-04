@@ -29,7 +29,9 @@ export default function StaffSignup() {
       await signup(emailRef.current.value, passwordRef.current.value);
       navigate("/staff-menu");
     } catch (error2) {
-      setError("Failed to create an account");
+      setError(
+        "Failed to create an account. Password must be greater than 6 characters"
+      );
     }
 
     setLoading(false);
