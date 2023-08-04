@@ -36,14 +36,6 @@ export async function returnOrderData() {
   return orderMenu;
 }
 
-// Allows all users to view the order (HIMMY-19)
-export async function viewOrder() {
-  const querySnapshot = await getDocs(collection(db, "orders"));
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-  });
-}
-
 // Allows staff to add order (HIMMY-19)
 export async function addOrder(item) {
   await addDoc(collection(db, "orders"), item);
