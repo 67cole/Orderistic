@@ -30,3 +30,28 @@ Added security for staff menu, i.e., cannot be accessed by customers.
 Created new API functions for staff and users
 Supervised both front-end and back-end tickets.
 As Scrum Master initiated team meetings on Sunday and Monday.
+
+Week 6:
+As the scrum master, organised a meeting to discuss Sprint 2 functions
+Delegated more tasks to team members
+
+Week 7: 
+Worked on my assigned user stories for kitchen console.
+Added card skeletons to api calling functions
+Organised peer progamming session with frontend members
+
+Week 8:
+Worked on the waitery console and improved UI for kitchen console.
+Finished request bill and request assistance buttons and respective backend
+Fixing up minor bugs with API calls to firebase
+
+Week 9:
+Completed waitery console and kitchen console in preparation for our final project demo
+Edited my other teammembers functions/code to ensure they work properly
+Consulted with frontend team members for how we want the UI to look on the waitery consoles
+
+Week 10: 
+Cleaning up code quality and adding comments to functions
+Moved the components to their respective folders, e.g. menu, cart, reviews
+Worked on my report section: third party functionalities and challenges
+

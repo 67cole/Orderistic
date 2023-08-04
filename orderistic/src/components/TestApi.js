@@ -1,120 +1,171 @@
-import React, { useState } from "react";
-import { Card, Button, Alert } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { AddItem, AddItems, ViewMenu, RemoveItem, UpdateItem, returnFoodData, returnSpecificFood } from "../api/MenuApi";
-import { returnOrderData, viewOrder, addOrder, removeOrder, completeItem, returnOrderTime } from "../api/OrderApi";
-import { addTable, removeTable, viewTables, addToCart, removeFromCart, viewCart, sendOrder, returnOrdersForTable } from "../api/TableApi";
-import { addReview, removeReview, returnDishReview, returnUserReview, updateReview } from "../api/ReviewApi";
+import {
+  AddItem,
+  RemoveItem,
+  UpdateItem,
+  returnFoodData,
+  returnSpecificFood,
+} from "../api/MenuApi";
+import {
+  returnOrderData,
+  viewOrder,
+  completeItem,
+  returnOrderTime,
+} from "../api/OrderApi";
+import {
+  addTable,
+  removeTable,
+  viewTables,
+  addToCart,
+  removeFromCart,
+  viewCart,
+  sendOrder,
+  returnOrdersForTable,
+} from "../api/TableApi";
+import {
+  addReview,
+  removeReview,
+  returnDishReview,
+  returnUserReview,
+  updateReview,
+} from "../api/ReviewApi";
+
+// Testing backend functions through our frontend.
+// Page consists of buttons that call our api, with results obtained in console
 
 export default function TestApi() {
-  const [error, setError] = useState("");
-  const { currentUser, logout } = useAuth();
-
-  const navigate = useNavigate();
-
-  async function handleMenu() {
-    ViewMenu();
-  }
+  const { currentUser } = useAuth();
 
   async function handleFoodData() {
-    returnFoodData();
+    const res = await returnFoodData();
+    console.log(res);
   }
 
   async function handleSpecificFood() {
-    returnSpecificFood("D75SzzFfA8Jso9t29DBV");
+    const res = await returnSpecificFood("D75SzzFfA8Jso9t29DBV");
+    console.log(res);
   }
 
   async function handleAdd() {
-    AddItem({name: "Ramen",
-    category: "Main",
-    price: 14,
-    description: "Silky beef broth",
-    rating: 5,
-    time: []});
+    const res = await AddItem({
+      name: "Ramen",
+      category: "Main",
+      price: 14,
+      description: "Silky beef broth",
+      rating: 5,
+      time: [],
+    });
+
+    console.log(res);
   }
 
   async function handleRemove() {
     // Needs to be replaced with however you are going to retrieve the id
-    RemoveItem("WTAqMRJBQyK2tDXJoFqf");
+    const res = await RemoveItem("WTAqMRJBQyK2tDXJoFqf");
+    console.log(res);
   }
 
   async function handleUpdate() {
     // Needs to be replaced with however you are going to retrieve the id
     // and information of updated item
-    UpdateItem("WTAqMRJBQyK2tDXJoFqf", {name: "Ramen",
-    category: "Main",
-    price: 14,
-    description: "Silky beef broth with Colin Juice",
-    rating: 5,
-    time: []});
+    const res = await UpdateItem("WTAqMRJBQyK2tDXJoFqf", {
+      name: "Ramen",
+      category: "Main",
+      price: 14,
+      description: "Silky beef broth with Colin Juice",
+      rating: 5,
+      time: [],
+    });
+    console.log(res);
   }
 
   // Order test functions
   async function handleOrder() {
-    viewOrder();
+    const res = await viewOrder();
+    console.log(res);
   }
 
   async function handleOrderData() {
-    returnOrderData();
+    const res = await returnOrderData();
+    console.log(res);
   }
 
   async function handleAddTable() {
-    addTable();
+    const res = await addTable();
+    console.log(res);
   }
 
   async function handleRemoveTable() {
-    removeTable();
+    const res = await removeTable();
+    console.log(res);
   }
 
   async function handleViewTables() {
-    viewTables();
+    const res = await viewTables();
+    console.log(res);
   }
 
   async function handleAddToCart() {
-    addToCart(1, "AqB8ijUpU1bvR7Dl3n5x");
+    const res = await addToCart(1, "AqB8ijUpU1bvR7Dl3n5x");
+    console.log(res);
   }
 
   async function handleRemoveFromCart() {
-    removeFromCart(1, "WTAqMRJBQyK2tDXJoFqf");
+    const res = await removeFromCart(1, "WTAqMRJBQyK2tDXJoFqf");
+    console.log(res);
   }
 
   async function handleViewCart() {
-    viewCart(1);
+    const res = await viewCart(1);
+    console.log(res);
   }
 
   async function handleSendOrder() {
-    sendOrder(1);
+    const res = await sendOrder(1);
+    console.log(res);
   }
 
   async function handleCompleteItem() {
     // parameters are orderID, itemID
-    completeItem("twYk1Wtom47wszEwhYJb","AqB8ijUpU1bvR7Dl3n5x");
+    const res = await completeItem(
+      "twYk1Wtom47wszEwhYJb",
+      "AqB8ijUpU1bvR7Dl3n5x"
+    );
+    console.log(res);
   }
 
   async function checkTableOrders() {
-    returnOrdersForTable(5);
+    const res = await returnOrdersForTable(5);
+    console.log(res);
   }
 
   async function checkOrderTime() {
-    returnOrderTime("ZyRCAauYy21E9Sefc8Op");
+    const res = await returnOrderTime("ZyRCAauYy21E9Sefc8Op");
+    console.log(res);
   }
 
   async function handleAddReview() {
-    addReview({food_id: "D75SzzFfA8Jso9t29DBV",
-    rating: 3,
-    review: "Delicious",
-    user_id: "kNvMvc7OZXWJzdp6ox2jkCve5Nf1",
-    date: Date.now()
+    const res = await addReview({
+      food_id: "D75SzzFfA8Jso9t29DBV",
+      rating: 3,
+      review: "Delicious",
+      user_id: "kNvMvc7OZXWJzdp6ox2jkCve5Nf1",
+      date: Date.now(),
     });
+    console.log(res);
   }
 
   async function handleGetReview() {
     const reviewList = await returnDishReview("D75SzzFfA8Jso9t29DBV");
+    console.log(reviewList);
   }
 
   async function handleUserReview() {
     const reviewList = await returnUserReview("kNvMvc7OZXWJzdp6ox2jkCve5Nf1");
+    console.log(reviewList);
   }
 
   async function handleRemoveReview() {
@@ -122,13 +173,14 @@ export default function TestApi() {
   }
 
   async function handleEditReview() {
-    const newData = {food_id: "D75SzzFfA8Jso9t29DBV",
-    rating: 1,
-    review: "terrible",
-    user_id: "kNvMvc7OZXWJzdp6ox2jkCve5Nf1",
-    date: Date.now()
+    const newData = {
+      food_id: "D75SzzFfA8Jso9t29DBV",
+      rating: 1,
+      review: "terrible",
+      user_id: "kNvMvc7OZXWJzdp6ox2jkCve5Nf1",
+      date: Date.now(),
     };
-    updateReview("nAGdwyTfRk2dtX9kaOVX", newData)
+    updateReview("nAGdwyTfRk2dtX9kaOVX", newData);
   }
 
   return (
@@ -137,13 +189,16 @@ export default function TestApi() {
         <Card.Body>
           <h2 className="text-center mb-4">Firebase Tests</h2>
           <strong>Email:</strong> {currentUser.email}
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleMenu}>
-            View Menu
-          </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleFoodData}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleFoodData}
+          >
             View Food Data
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleSpecificFood}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleSpecificFood}
+          >
             Return Specific Food
           </Button>
           <Button className="btn btn-primary w-100 mt-3" onClick={handleAdd}>
@@ -158,57 +213,105 @@ export default function TestApi() {
           <Button className="btn btn-primary w-100 mt-3" onClick={handleOrder}>
             View Order
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleOrderData}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleOrderData}
+          >
             View Order Data
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleAddTable}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleAddTable}
+          >
             Add Table
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleRemoveTable}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleRemoveTable}
+          >
             Remove Table
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleViewTables}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleViewTables}
+          >
             View Tables
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleAddToCart}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleAddToCart}
+          >
             Add to Cart
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleRemoveFromCart}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleRemoveFromCart}
+          >
             Remove from Cart
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleViewCart}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleViewCart}
+          >
             View Cart
           </Button>
-          <Link to="/staff-dashboard" className="btn btn-danger w-100 mt-3">
+          <Link to="/staff-menu" className="btn btn-danger w-100 mt-3">
             Go Back
           </Link>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleSendOrder}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleSendOrder}
+          >
             Send Order
-          </Button>          
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleCompleteItem}>
+          </Button>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleCompleteItem}
+          >
             Complete Item
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={checkTableOrders}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={checkTableOrders}
+          >
             Table Order
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={checkOrderTime}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={checkOrderTime}
+          >
             Order Time Check
-          </Button>      
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleAddReview}>
+          </Button>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleAddReview}
+          >
             Add Review
-          </Button>   
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleGetReview}>
+          </Button>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleGetReview}
+          >
             Get Review
           </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleUserReview}>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleUserReview}
+          >
             Get User Review
-          </Button> 
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleRemoveReview}>
+          </Button>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleRemoveReview}
+          >
             Remove Review
-          </Button> 
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleEditReview}>
+          </Button>
+          <Button
+            className="btn btn-primary w-100 mt-3"
+            onClick={handleEditReview}
+          >
             Edit Review
-          </Button> 
+          </Button>
         </Card.Body>
       </Card>
     </>

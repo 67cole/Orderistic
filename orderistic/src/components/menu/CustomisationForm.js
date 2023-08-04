@@ -74,12 +74,14 @@ function CustomisationForm({ customisations, handleCustomisations }) {
       setOptions([]);
     }
   }
+
   // Cancels the customisation and resets states used
   function discardCustomisation() {
     setShowForm(false);
     setCustName("");
     setOptions([]);
   }
+
   // Updates the amount of options a customer can choose in the customisation
   function changeNumber(value) {
     if (value !== "") {
