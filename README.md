@@ -3,7 +3,7 @@ capstone-project-3900w18ahimmybutler created by GitHub Classroom
 
 ## Installation
 
-## Prerequisites: 
+Prerequisites: 
 Node.js
 Web Browser
 
