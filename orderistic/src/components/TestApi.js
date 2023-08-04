@@ -255,7 +255,7 @@ export default function TestApi() {
           >
             View Cart
           </Button>
-          <Link to="/staff-dashboard" className="btn btn-danger w-100 mt-3">
+          <Link to="/staff-menu" className="btn btn-danger w-100 mt-3">
             Go Back
           </Link>
           <Button
