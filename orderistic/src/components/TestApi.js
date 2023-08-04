@@ -11,7 +11,6 @@ import {
 } from "../api/MenuApi";
 import {
   returnOrderData,
-  viewOrder,
   completeItem,
   returnOrderTime,
 } from "../api/OrderApi";
@@ -79,12 +78,6 @@ export default function TestApi() {
       rating: 5,
       time: [],
     });
-    console.log(res);
-  }
-
-  // Order test functions
-  async function handleOrder() {
-    const res = await viewOrder();
     console.log(res);
   }
 
@@ -209,9 +202,6 @@ export default function TestApi() {
           </Button>
           <Button className="btn btn-primary w-100 mt-3" onClick={handleUpdate}>
             Update Item
-          </Button>
-          <Button className="btn btn-primary w-100 mt-3" onClick={handleOrder}>
-            View Order
           </Button>
           <Button
             className="btn btn-primary w-100 mt-3"
