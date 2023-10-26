@@ -1,4 +1,4 @@
-# capstone-project-Orderistic
+# Orderistic
 
 # Installation
 
